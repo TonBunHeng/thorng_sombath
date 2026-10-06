@@ -1,0 +1,147 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-10-06T04:42:41.773Z",
+  "sections": {
+    "hero": {
+      "title": "Hero Cover Section",
+      "folder": "/img/hero",
+      "aspectRatio": "16:9 or 3:2 (Desktop) / 9:16 or 3:4 (Mobile)",
+      "files": [
+        {
+          "name": "hero-2000.webp",
+          "role": "Desktop Large",
+          "width": 2000
+        },
+        {
+          "name": "hero-1280.webp",
+          "role": "Desktop Standard",
+          "width": 1280
+        },
+        {
+          "name": "hero-m-2000.webp",
+          "role": "Mobile Retina",
+          "width": 2000
+        },
+        {
+          "name": "hero-m-1280.webp",
+          "role": "Mobile Standard",
+          "width": 1280
+        },
+        {
+          "name": "hero-m-640.webp",
+          "role": "Mobile Compact",
+          "width": 640
+        }
+      ]
+    },
+    "couple": {
+      "title": "Couple Portrait & Envelope Gate Backdrop",
+      "folder": "/img/couple",
+      "aspectRatio": "4:5 (Scalloped frame)",
+      "files": [
+        {
+          "name": "cozy-2000.webp",
+          "role": "Retina Backdrop / Portrait",
+          "width": 2000
+        },
+        {
+          "name": "cozy-1280.webp",
+          "role": "Standard Backdrop / Portrait",
+          "width": 1280
+        },
+        {
+          "name": "cozy-640.webp",
+          "role": "Mobile Portrait",
+          "width": 640
+        }
+      ]
+    },
+    "words": {
+      "title": "Invitation Words Section (Arch Frame)",
+      "folder": "/img/words",
+      "aspectRatio": "3:4.3 (Arch)",
+      "files": [
+        {
+          "name": "words-1280.webp",
+          "role": "Standard Arch Photo",
+          "width": 1280
+        },
+        {
+          "name": "words-640.webp",
+          "role": "Mobile Arch Photo",
+          "width": 640
+        }
+      ]
+    },
+    "story": {
+      "title": "Love Story / Photo Sessions Timeline",
+      "folder": "/img/story",
+      "aspectRatio": "3:2 (landscape) & 2:3 (portrait)",
+      "prefix": "s1..s12 (each in -640.webp and -1280.webp)"
+    },
+    "pond": {
+      "title": "Wishing Pond Section",
+      "folder": "/img/pond",
+      "files": [
+        {
+          "name": "pond-w-2000.webp",
+          "role": "Water Shader Surface 2000px"
+        },
+        {
+          "name": "pond-w-1280.webp",
+          "role": "Water Shader Surface 1280px"
+        },
+        {
+          "name": "pond-2000.webp",
+          "role": "Fallback Lotus Canvas 2000px"
+        },
+        {
+          "name": "pond-1280.webp",
+          "role": "Fallback Lotus Canvas 1280px"
+        },
+        {
+          "name": "pond-640.webp",
+          "role": "Fallback Lotus Canvas 640px"
+        }
+      ]
+    },
+    "gallery": {
+      "title": "Photo Album Gallery",
+      "folder": "/img/gallery",
+      "config": "/img/gallery/gallery.json",
+      "namingRule": "{PHOTO_ID}-640.webp (thumbnail) and {PHOTO_ID}-1600.webp (lightbox)"
+    },
+    "gift": {
+      "title": "Digital Gift Bank QR Cards",
+      "folder": "/img/gift",
+      "files": [
+        {
+          "name": "aba.webp",
+          "role": "ABA Bank QR Pay Card"
+        },
+        {
+          "name": "khqr.webp",
+          "role": "Bakong / KHQR Pay Card"
+        }
+      ]
+    },
+    "textures": {
+      "title": "Traditional Paper Textures",
+      "folder": "/img/textures",
+      "files": [
+        {
+          "name": "paper-olive.webp",
+          "role": "Olive cardstock for envelope"
+        },
+        {
+          "name": "paper-cream.webp",
+          "role": "Cream cardstock for inner card"
+        },
+        {
+          "name": "paper-lining.webp",
+          "role": "Lining cardstock for envelope flap"
+        }
+      ]
+    }
+  }
+}
