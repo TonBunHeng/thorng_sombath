@@ -8,14 +8,18 @@ export const weddingData = {
     groom: {
       km: "ហ៊ាន សម្បត្តិ",
       en: "Hean SamBath",
+      shortKm: "សម្បត្តិ",
+      shortEn: "SamBath",
       initialKm: "ស",
       initialEn: "S"
     },
     bride: {
       km: "តុន ចាន់ថង",
       en: "Ton ChanThorng",
-      initialKm: "ច",
-      initialEn: "C"
+      shortKm: "ថង",
+      shortEn: "Thorng",
+      initialKm: "ថ",
+      initialEn: "T"
     }
   },
   families: {

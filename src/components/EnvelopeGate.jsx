@@ -8,6 +8,9 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
   const [isOpening, setIsOpening] = useState(false);
   const gateRef = useRef(null);
 
+  const groomShort = wedding.couple.groom.shortKm || wedding.couple.groom.km.split(" ").pop();
+  const brideShort = wedding.couple.bride.shortKm || wedding.couple.bride.km.split(" ").pop();
+
   useEffect(() => {
     const handlePointerMove = (e) => {
       if (isOpening) return;
@@ -171,8 +174,8 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                 <div className="e2__card-inner">
                   <div className="e2__card-kicker">{t.kicker}</div>
                   <Lockup
-                    groom={wedding.couple.groom.km.split(" ").pop()}
-                    bride={wedding.couple.bride.km.split(" ").pop()}
+                    groom={groomShort}
+                    bride={brideShort}
                     className="lk-card"
                   />
                   <div className="e2__card-invite">{t.inviteTo}</div>
@@ -206,8 +209,8 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                   </svg>
                   <div className="e2__flap-logo">
                     <Lockup
-                      groom={wedding.couple.groom.km.split(" ").pop()}
-                      bride={wedding.couple.bride.km.split(" ").pop()}
+                      groom={groomShort}
+                      bride={brideShort}
                       className="lk-env"
                     />
                   </div>

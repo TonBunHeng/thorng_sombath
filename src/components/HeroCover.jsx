@@ -13,8 +13,8 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
   const heroRef = useRef(null);
 
   const dateObj = formatDate(wedding.date, lang);
-  const groomShort = wedding.couple.groom.km.split(" ").pop();
-  const brideShort = wedding.couple.bride.km.split(" ").pop();
+  const groomShort = wedding.couple.groom.shortKm || wedding.couple.groom.km.split(" ").pop();
+  const brideShort = wedding.couple.bride.shortKm || wedding.couple.bride.km.split(" ").pop();
 
   // 0. Pre-initialize hidden states so there is zero pop/flash while covered
   useEffect(() => {

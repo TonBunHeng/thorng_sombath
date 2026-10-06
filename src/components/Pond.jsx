@@ -9,8 +9,12 @@ export function Pond({ wedding, t, lang }) {
   const canvasRef = useRef(null);
   const stickyRef = useRef(null);
 
-  const groomShort = lang === "km" ? wedding.couple.groom.km.split(" ").pop() : wedding.couple.groom.en.split(" ").pop();
-  const brideShort = lang === "km" ? wedding.couple.bride.km.split(" ").pop() : wedding.couple.bride.en.split(" ").pop();
+  const groomShort = lang === "km"
+    ? (wedding.couple.groom.shortKm || wedding.couple.groom.km.split(" ").pop())
+    : (wedding.couple.groom.shortEn || wedding.couple.groom.en.split(" ").pop());
+  const brideShort = lang === "km"
+    ? (wedding.couple.bride.shortKm || wedding.couple.bride.km.split(" ").pop())
+    : (wedding.couple.bride.shortEn || wedding.couple.bride.en.split(" ").pop());
 
   useEffect(() => {
     let pondInstance = null;
