@@ -226,6 +226,7 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                     <Lockup
                       groom={groomShort}
                       bride={brideShort}
+                      crest={false}
                       className="lk-env"
                     />
                   </div>

@@ -52,40 +52,102 @@
   filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.45));
 }
 
+.lockup {
+  aspect-ratio: 600 / 470;
+  width: 100%;
+  position: relative;
+  container-type: inline-size;
+}
+
+.lk-orn {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: visible;
+}
+
+.lk-name {
+  font-family: "Moulpali", var(--f-moul);
+  white-space: nowrap;
+  letter-spacing: 0;
+  background: var(--foil-grad);
+  color: #0000;
+  background-position: 30%;
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: .3em .1em .45em;
+  font-size: 23cqw;
+  font-weight: 400;
+  line-height: 1;
+  position: absolute;
+}
+
+.lk-groom {
+  top: 9%;
+  left: 2%;
+}
+
+.lk-bride {
+  top: 41%;
+  right: 1%;
+}
+
+.lk-swash {
+  fill: none;
+  stroke: url(#g-foil);
+  stroke-width: 3px;
+  stroke-linecap: round;
+}
+
+.lk-swash2 {
+  stroke-width: 2.2px;
+}
+
+.lk-heart, .kb-fill {
+  fill: url(#g-foil);
+}
+
+.kb-line {
+  fill: none;
+  stroke: url(#g-foil);
+  stroke-width: 1.6px;
+  stroke-linecap: round;
+}
+
+.lk-butterfly {
+  width: 14%;
+  position: absolute;
+  top: 18%;
+  right: 6%;
+  transform: rotate(16deg);
+}
+
+.lk-butterfly svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
 .e2__flap-logo {
   position: absolute;
-  top: 9%;
-  left: 12%;
-  right: 12%;
-  height: 56%;
+  top: 7%;
+  left: 27%;
+  right: 27%;
 }
 
 .e2__flap-logo .lockup {
-  aspect-ratio: 600 / 400;
+  aspect-ratio: 600 / 470;
   width: 100%;
-  height: 100%;
 }
 
-.e2__flap-logo .lk-groom {
-  top: 10%;
-  left: 8%;
-  font-size: 15cqw;
-}
-
-.e2__flap-logo .lk-bride {
-  top: 42%;
-  left: 48%;
-  right: auto;
-  font-size: 16.5cqw;
-}
-
-.e2__flap-logo .lk-butterfly {
-  width: 13%;
-  position: absolute;
-  top: 18%;
-  left: 68%;
-  right: auto;
-  transform: rotate(18deg);
+.e2__flap-logo .lk-name {
+  filter: drop-shadow(0 1px 1px #00000059);
 }
 
 .e2__emboss .kbach-corner {

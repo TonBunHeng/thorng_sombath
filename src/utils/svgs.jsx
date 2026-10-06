@@ -36,24 +36,65 @@ export function SvgDefs() {
   );
 }
 
+const Ju = "M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z";
+const Yu = "M0 -6 C-3 -20 -2 -36 4 -50";
+const Xu = "M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18";
+
+export function KbachCrestSvg({ foilId = "g-foil" }) {
+  const fill = `url(#${foilId})`;
+  return (
+    <>
+      <g transform="translate(0 -14) scale(1.25)">
+        <path className="kb-fill" fill={fill} d={Ju} />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
+      </g>
+      <g transform="translate(-10 -12) rotate(-24) scale(1.0)">
+        <path className="kb-fill" fill={fill} d={Ju} />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
+      </g>
+      <g transform="translate(10 -12) rotate(24) scale(1.0)">
+        <path className="kb-fill" fill={fill} d={Ju} transform="scale(-1 1)" />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
+      </g>
+      <g transform="translate(-22 -8) rotate(-52) scale(.82)">
+        <path className="kb-fill" fill={fill} d={Ju} />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
+      </g>
+      <g transform="translate(22 -8) rotate(52) scale(.82)">
+        <path className="kb-fill" fill={fill} d={Ju} transform="scale(-1 1)" />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
+      </g>
+      <g transform="translate(-34 -2) rotate(-78) scale(.62)">
+        <path className="kb-fill" fill={fill} d={Ju} />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
+      </g>
+      <g transform="translate(34 -2) rotate(78) scale(.62)">
+        <path className="kb-fill" fill={fill} d={Ju} transform="scale(-1 1)" />
+        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
+      </g>
+      <path className="kb-line kb-curl" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(-58 4) scale(1.3)" />
+      <path className="kb-line kb-curl" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(58 4) scale(-1.3 1.3)" />
+      <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d="M-92 6 C-60 10 -30 -2 0 -2 C30 -2 60 10 92 6" />
+      <path className="kb-fill" fill={fill} d="M-14 -2 C-10 -12 10 -12 14 -2 C8 0 -8 0 -14 -2 Z" />
+      <circle className="kb-fill" fill={fill} cx="0" cy="-118" r="3" />
+    </>
+  );
+}
+
 export function Crest({ className = "kbach-crest", style = {} }) {
   return (
     <svg className={className} viewBox="-110 -135 220 150" style={style} aria-hidden="true">
       <defs>
         <linearGradient id="crest-g" x1="0" y1="0" x2="1" y2=".35">
-          <stop offset="0" stopColor="#9c7124" />
-          <stop offset=".45" stopColor="#fbefc0" />
-          <stop offset="1" stopColor="#d9b15a" />
+          <stop offset="0%" stopColor="#9c7124" />
+          <stop offset="25%" stopColor="#d9b15a" />
+          <stop offset="45%" stopColor="#fbefc0" />
+          <stop offset="62%" stopColor="#d9b15a" />
+          <stop offset="85%" stopColor="#9c7124" />
+          <stop offset="100%" stopColor="#d9b15a" />
         </linearGradient>
       </defs>
-      <g fill="url(#crest-g)">
-        <path d="M0 -14 C-12 -34 -17 -59 -7 -81 C0 -99 15 -110 26 -120 C34 -126 44 -122 42 -112 C41 -105 33 -105 33 -111 C26 -102 17 -94 19 -81 C20 -66 30 -61 29 -48 C27 -31 15 -21 0 -14 Z" />
-        <path transform="translate(-12 -12) rotate(-30) scale(.9)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-        <path transform="translate(12 -12) rotate(30) scale(-.9 .9)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-        <path transform="translate(-26 -6) rotate(-62) scale(.7)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-        <path transform="translate(26 -6) rotate(62) scale(-.7 .7)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-      </g>
-      <path d="M-92 6 C-60 10 -30 -2 0 -2 C30 -2 60 10 92 6" fill="none" stroke="url(#crest-g)" strokeWidth="2" />
+      <KbachCrestSvg foilId="crest-g" />
     </svg>
   );
 }
@@ -242,48 +283,19 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
       <circle cx="70" cy="70" r="44" fill="none" stroke="#5e400f" strokeOpacity=".55" strokeWidth="1.4" />
       <circle cx="70" cy="70" r="39" fill="none" stroke="#f3dc9c" strokeOpacity=".35" strokeWidth=".8" strokeDasharray="1.6 3" />
       <g filter="url(#wax-press)" transform="translate(70 92) scale(.36)" className="wax-crest">
-        <g transform="translate(0 -14) scale(1.25)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
-        </g>
-        <g transform="translate(-10 -12) rotate(-24) scale(1.0)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
-        </g>
-        <g transform="translate(10 -12) rotate(24) scale(1.0)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" transform="scale(-1 1)" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" transform="scale(-1 1)" />
-        </g>
-        <g transform="translate(-22 -8) rotate(-52) scale(.82)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
-        </g>
-        <g transform="translate(22 -8) rotate(52) scale(.82)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" transform="scale(-1 1)" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" transform="scale(-1 1)" />
-        </g>
-        <g transform="translate(-34 -2) rotate(-78) scale(.62)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
-        </g>
-        <g transform="translate(34 -2) rotate(78) scale(.62)">
-          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" transform="scale(-1 1)" />
-          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" transform="scale(-1 1)" />
-        </g>
-        <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18" transform="translate(-58 4) scale(1.3)" />
-        <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18" transform="translate(58 4) scale(-1.3 1.3)" />
-        <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M-92 6 C-60 10 -30 -2 0 -2 C30 -2 60 10 92 6" />
-        <path fill="url(#seal-foil)" d="M-14 -2 C-10 -12 10 -12 14 -2 C8 0 -8 0 -14 -2 Z" />
-        <circle fill="url(#seal-foil)" cx="0" cy="-118" r="3" />
+        <KbachCrestSvg foilId="seal-foil" />
       </g>
     </svg>
   );
 }
 
-export function Lockup({ groom, bride, className = "" }) {
+export function Lockup({ groom = "រស្មី", bride = "ភក្តី", crest = true, className = "" }) {
+  const groomName = groom || "រស្មី";
+  const brideName = bride || "ភក្តី";
+
   return (
-    <div className={`lockup ${className}`} role="img" aria-label={`${groom} & ${bride}`}>
-      <svg className="lk-orn" viewBox="0 0 600 440" aria-hidden="true">
+    <div className={`lockup ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>
+      <svg className="lk-orn" viewBox="0 0 600 470" aria-hidden="true">
         <defs>
           <linearGradient id="lk-foil" x1="0" y1="0" x2="1" y2="0.35">
             <stop offset="0%" stopColor="#9c7124" />
@@ -294,50 +306,40 @@ export function Lockup({ groom, bride, className = "" }) {
             <stop offset="100%" stopColor="#d9b15a" />
           </linearGradient>
           <filter id="lk-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="1" stdDeviation="1" floodColor="#000000" floodOpacity="0.4" />
+            <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#000000" floodOpacity="0.4" />
           </filter>
         </defs>
-        {/* Lotus on top of groom's name */}
-        <g transform="translate(160, 8) scale(0.36)" stroke="url(#lk-foil)" strokeWidth="1.6" strokeLinejoin="round" fill="none" filter="url(#lk-glow)">
-          <path d="M60 18 C73 38 73 70 60 90 C47 70 47 38 60 18 Z" />
-          <path d="M60 90 C40 82 26 62 28 38 C42 46 54 62 60 90 Z" />
-          <path d="M60 90 C80 82 94 62 92 38 C78 46 66 62 60 90 Z" />
-          <path d="M60 92 C34 94 14 80 8 62 C26 61 46 71 60 92 Z" />
-          <path d="M60 92 C86 94 106 80 112 62 C94 61 74 71 60 92 Z" />
-          <path d="M18 104 Q60 94 102 104" />
-          <path d="M34 112 Q60 106 86 112" />
-        </g>
-        {/* Swash with heart loop under groom */}
+        {crest && (
+          <g className="lk-crest" transform="translate(300 60) scale(.5)">
+            <KbachCrestSvg foilId="g-foil" />
+          </g>
+        )}
         <path
           className="lk-swash"
-          d="M 50 205 C 110 232 165 228 195 210 C 218 194 218 174 200 170 C 184 166 178 186 194 198 C 218 216 240 208 250 200"
+          d="M40 292 C110 318 170 314 206 296 C236 280 238 254 220 250 C202 246 196 272 214 284 C240 302 262 294 272 284"
           fill="none"
-          stroke="url(#lk-foil)"
-          strokeWidth="3.2"
+          stroke="url(#g-foil)"
+          strokeWidth="3"
           strokeLinecap="round"
-          filter="url(#lk-glow)"
+        />
+        <path
+          className="lk-swash lk-swash2"
+          d="M318 446 C392 460 476 456 566 438"
+          fill="none"
+          stroke="url(#g-foil)"
+          strokeWidth="2.2"
+          strokeLinecap="round"
         />
         <path
           className="lk-heart"
-          d="M 248 222 C 242 212 228 216 230 227 C 232 236 248 244 248 250 C 248 244 264 236 266 227 C 268 216 254 212 248 222 Z"
-          fill="url(#lk-foil)"
-          filter="url(#lk-glow)"
-        />
-        {/* Swash under bride */}
-        <path
-          className="lk-swash lk-swash2"
-          d="M 270 340 C 335 356 415 352 490 335"
-          fill="none"
-          stroke="url(#lk-foil)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          filter="url(#lk-glow)"
+          d="M266 316 C259 304 244 308 246 321 C248 332 266 341 266 348 C266 341 284 332 286 321 C288 308 273 304 266 316 Z"
+          fill="url(#g-foil)"
         />
       </svg>
-      <span className="lk-name lk-groom" aria-hidden="true">{groom}</span>
-      <span className="lk-name lk-bride" aria-hidden="true">{bride}</span>
-      <div className="lk-butterfly">
-        <Butterfly />
+      <span className="lk-name lk-groom" aria-hidden="true">{groomName}</span>
+      <span className="lk-name lk-bride" aria-hidden="true">{brideName}</span>
+      <div className="lk-butterfly" aria-hidden="true">
+        <Butterfly className="is-resting" />
       </div>
     </div>
   );

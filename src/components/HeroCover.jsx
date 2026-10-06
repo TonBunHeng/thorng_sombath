@@ -23,6 +23,7 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
       gsap.set(".cover__corners .kbach-corner", { opacity: 0, scale: 0.6 });
       gsap.set(".cover__crest", { opacity: 0, y: 20 });
       gsap.set(".cover__kicker, .cover__sub", { opacity: 0, y: 16 });
+      gsap.set(".cover__lockup .lk-crest > *", { opacity: 0, scale: 0.4, transformOrigin: "50% 100%" });
       gsap.set(".cover__lockup .lk-groom", { clipPath: "inset(0% 100% 0% 0%)" });
       gsap.set(".cover__lockup .lk-bride", { clipPath: "inset(0% 100% 0% 0%)" });
       gsap.set(".cover__lockup .lk-swash", { strokeDasharray: 300, strokeDashoffset: 300 });
@@ -56,6 +57,11 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
 
       // Lockup signature reveal
       tl.to(
+        ".cover__lockup .lk-crest > *",
+        { opacity: 1, scale: 1, duration: 1.0, stagger: 0.04, ease: "power2.out" },
+        0.2
+      )
+      .to(
         ".cover__lockup .lk-groom",
         { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "power2.inOut" },
         0.5
