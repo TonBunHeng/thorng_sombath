@@ -64,12 +64,7 @@ export function Finale({ wedding, t, lang, onShowToast }) {
     return () => ctx.revert();
   }, []);
 
-  const isMobile = typeof navigator !== "undefined" && /android|iphone|ipad/i.test(navigator.userAgent);
   const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(shareTitle)}`;
-  const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
-  const msUrl = isMobile
-    ? `fb-messenger://share/?link=${encodeURIComponent(currentUrl)}`
-    : `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
 
   const handleCopy = async () => {
     try {
@@ -113,18 +108,6 @@ export function Finale({ wedding, t, lang, onShowToast }) {
               <Icon name="telegram" />
               <span>
                 <small>{t.shareVia} </small>Telegram
-              </span>
-            </a>
-            <a className="share share--ms btn" href={msUrl} target="_blank" rel="noopener noreferrer">
-              <Icon name="messenger" />
-              <span>
-                <small>{t.shareVia} </small>Messenger
-              </span>
-            </a>
-            <a className="share share--fb btn" href={fbUrl} target="_blank" rel="noopener noreferrer">
-              <Icon name="facebook" />
-              <span>
-                <small>{t.shareVia} </small>Facebook
               </span>
             </a>
             <button className="share share--copy btn" type="button" onClick={handleCopy}>

@@ -95,7 +95,7 @@ export function InvitationWords({ wedding, t, lang }) {
               <p>
                 {gp.father[lang]}
                 <br />
-                {lang === "km" ? "និង" : "& "}
+                {lang === "km" ? "" : "&"}
                 {gp.mother[lang]}
               </p>
             </div>
@@ -104,7 +104,7 @@ export function InvitationWords({ wedding, t, lang }) {
               <p>
                 {bp.father[lang]}
                 <br />
-                {lang === "km" ? "និង" : "& "}
+                {lang === "km" ? "" : "&"}
                 {bp.mother[lang]}
               </p>
             </div>

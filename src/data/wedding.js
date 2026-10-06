@@ -24,15 +24,19 @@ export const weddingData = {
   },
   families: {
     groom: {
-      father: { km: "លោក ហ៊ាន សុខន", en: "Mr. Hean Sokhon" },
-      mother: { km: "លោកស្រី យ៉ាន់ ចាន់ណារ៉ា", en: "Mrs. Yann Chanara" }
+      father: { km: "លោក ស ហ៊ុន", en: "Mr. Sa Hun" },
+      mother: { km: "លោកស្រី សយ ចំរើន", en: "Mrs. Say Chamroeun" }
     },
+
     bride: {
-      father: { km: "លោក ហែម សាវឿន", en: "Mr. Hem Savoeun" },
-      mother: { km: "លោកស្រី សៅ ណឺង", en: "Mrs. Sao Neung" }
+      father: { km: "លោក ប៊ុន ភ្លន់", en: "Mr. Bun Phloun" },
+      mother: { km: "លោកស្រី ទឹម សុីថា", en: "Mrs. Tim Sitha" }
     }
   },
+
+
   date: "2026-11-15T07:00:00+07:00",
+
   timeIsPlaceholder: true,
   dateIsPlaceholder: false,
   lunar: {
@@ -41,16 +45,16 @@ export const weddingData = {
   },
   venue: {
     name: {
-      km: "ភូមិព្រែកហូរ (ខាងលិច)",
-      en: "Prek Ho Village (West)"
+      km: "ផ្ទះខាងស្រី",
+      en: "Bride's House"
     },
     address: {
-      km: "សង្កាត់ព្រែកហូរ ក្រុងតាខ្មៅ ខេត្តកណ្តាល",
-      en: "Prek Ho, Ta Khmau, Kandal Province"
+      km: "ភូមិកំពង់ថ្គូវ២ ឃុំកំពងថ្គូវ ស្រុកក្រឡាញ់ ខេត្តសៀមរាប",
+      en: "Kampong Thkov 2, Kampong Thkov, Krong Kralanh, Siem Reap Province"
     },
-    lat: 11.45128,
-    lng: 104.93335,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=11.45128,104.93335",
+    lat: 13.5908269,
+    lng: 103.4134261,
+    mapsUrl: "https://maps.app.goo.gl/ckeD83ayD5FMJhg6A",
     note: {
       km: "",
       en: ""
@@ -139,15 +143,15 @@ export const weddingData = {
     enabled: true,
     accounts: [
       {
-        side: { km: "តុន ចាន់ថង", en: "Ton ChanThorng" },
+        side: { km: "ហ៊ាន សម្បត្តិ", en: "Hean Sombath" },
         bank: "KHQR",
-        name: "តុន ចាន់ថង",
+        name: "ហ៊ាន សម្បត្តិ",
         qr: "/img/gift/khqr.webp"
       },
       {
         side: { km: "តុន ចាន់ថង", en: "Ton ChanThorng" },
         bank: "ABA PAY",
-        name: "CHANTHORNG TON",
+        name: "TON CHANTHORNG",
         qr: "/img/gift/aba.webp"
       }
     ]

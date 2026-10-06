@@ -24,7 +24,8 @@ import { Gift } from "./components/Gift";
 import { Finale } from "./components/Finale";
 import { Lightbox } from "./components/Lightbox";
 import { CustomCursor } from "./components/CustomCursor";
-import { Toast, VineProgress, RsvpPill } from "./components/FloatingControls";
+import { Toast, VineProgress, RsvpPill, ScrollTopBtn } from "./components/FloatingControls";
+import { smoothScrollTo } from "./utils/scroll";
 
 export function App() {
   const [lang, setLang] = useState(() => {
@@ -158,6 +159,7 @@ export function App() {
   // Lenis smooth scrolling & scroll tracking
   useEffect(() => {
     let lenis = null;
+    let tickerCallback = null;
     const isDesktop = window.innerWidth >= 1024 && matchMedia("(pointer: fine)").matches;
 
     if (isDesktop && isGateOpen) {
@@ -165,12 +167,15 @@ export function App() {
         lerp: 0.085,
         wheelMultiplier: 0.9
       });
+      window.__lenis = lenis;
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+      lenis.on("scroll", ScrollTrigger.update);
+
+      tickerCallback = (time) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(tickerCallback);
+      gsap.ticker.lagSmoothing(0);
     }
 
     const handleScroll = () => {
@@ -181,12 +186,30 @@ export function App() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    if (lenis) {
+      lenis.on("scroll", handleScroll);
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (tickerCallback) gsap.ticker.remove(tickerCallback);
+      window.__lenis = null;
       if (lenis) lenis.destroy();
     };
   }, [isGateOpen]);
+
+  const handleLocationClick = (e) => {
+    if (e) e.preventDefault();
+    const venueEl = document.getElementById("venue");
+    if (venueEl) {
+      smoothScrollTo(venueEl, { duration: 1.5 });
+    }
+  };
+
+  const handleScrollToTop = (e) => {
+    if (e) e.preventDefault();
+    smoothScrollTo(0, { duration: 1.5 });
+  };
 
   const handleOpenLightbox = (index, photos) => {
     setLightbox({
@@ -239,13 +262,25 @@ export function App() {
         lang={lang}
         onToggleLang={handleToggleLang}
         musicUrl={weddingData.music}
+        isLightboxOpen={lightbox.isOpen}
       />
 
       {/* Side scroll vine indicator */}
       <VineProgress progress={scrollProgress} />
 
-      {/* Quick location floating button */}
-      <RsvpPill label={t.location} isVisible={showRsvpPill} />
+      {/* Floating action buttons: Back to Top & Location */}
+      <div className="floating-actions">
+        <ScrollTopBtn
+          label={t.toTop}
+          isVisible={showRsvpPill && !lightbox.isOpen}
+          onClick={handleScrollToTop}
+        />
+        <RsvpPill
+          label={t.location}
+          isVisible={showRsvpPill && !lightbox.isOpen}
+          onClick={handleLocationClick}
+        />
+      </div>
 
       {/* Main Content Sections */}
       <main id="main">

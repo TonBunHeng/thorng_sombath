@@ -77,6 +77,7 @@ export const translations = {
     shareKicker: "ចែករំលែកធៀបការ",
     galleryTitle: "អនុស្សាវរីយ៍មុនថ្ងៃមង្គល",
     location: "ទីតាំង",
+    toTop: "ឡើងលើ",
     viewGallery: "ទស្សនារូបភាព"
   },
   en: {
@@ -153,6 +154,7 @@ export const translations = {
     shareKicker: "Share the invitation",
     galleryTitle: "Memories before the vows",
     location: "Location",
+    toTop: "Top",
     viewGallery: "View gallery"
   }
 };

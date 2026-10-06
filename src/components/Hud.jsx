@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Crest } from "../utils/svgs";
 import { toggleMusic, subscribeMusic, getIsMusicPlaying } from "../utils/audio";
+import { smoothScrollTo } from "../utils/scroll";
 
-export function Hud({ lang, onToggleLang, musicUrl }) {
+export function Hud({ lang, onToggleLang, musicUrl, isLightboxOpen = false }) {
   const [isPlaying, setIsPlaying] = useState(() => getIsMusicPlaying());
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -29,8 +30,17 @@ export function Hud({ lang, onToggleLang, musicUrl }) {
   };
 
   return (
-    <header className={`hud ${isScrolled ? "is-scrolled" : ""}`}>
-      <a className="hud__mono" href="#hero" id="hud-mono" aria-label="Top">
+    <header className={`hud ${isScrolled ? "is-scrolled" : ""} ${isLightboxOpen ? "is-hidden" : ""}`}>
+      <a
+        className="hud__mono"
+        href="#hero"
+        id="hud-mono"
+        aria-label="Top"
+        onClick={(e) => {
+          e.preventDefault();
+          smoothScrollTo(0, { duration: 1.4 });
+        }}
+      >
         <Crest />
       </a>
       <div className="hud__right">

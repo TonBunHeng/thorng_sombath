@@ -3,6 +3,7 @@ import { CornerGroup, Crest, Lockup } from "../utils/svgs";
 import { initEmbers } from "../utils/canvasEffects";
 import { formatDate } from "../data/i18n";
 import { pictures } from "../data/pictures";
+import { smoothScrollTo } from "../utils/scroll";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -184,7 +185,14 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
         <div className="cover__venue">
           <span>{wedding.venue.name[lang]}</span> · <span>{wedding.venue.address[lang]}</span>
         </div>
-        <a className="cover__cue" href="#words">
+        <a
+          className="cover__cue"
+          href="#words"
+          onClick={(e) => {
+            e.preventDefault();
+            smoothScrollTo("#words", { duration: 1.2 });
+          }}
+        >
           <span>{t.scrollOpen}</span>
           <i></i>
         </a>
