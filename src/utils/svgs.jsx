@@ -16,7 +16,7 @@ export function SvgDefs() {
           <path id="clip-scallop-path" d="M0 0H1V1H0Z" />
         </clipPath>
         <clipPath id="clip-flap" clipPathUnits="objectBoundingBox">
-          <path d="M0 0 L1 0 Q0.96 0.28 0.88 0.44 Q0.76 0.64 0.62 0.82 Q0.54 0.92 0.5 1 Q0.46 0.92 0.38 0.82 Q0.24 0.64 0.12 0.44 Q0.04 0.28 0 0 Z" />
+          <path d="M 0.0000 0.0000 C 0.0416 0.0427, 0.0784 0.1099, 0.0920 0.1680 C 0.1348 0.2125, 0.1732 0.2821, 0.1880 0.3420 C 0.2331 0.3887, 0.2747 0.4615, 0.2920 0.5240 C 0.3387 0.5710, 0.3827 0.6446, 0.4020 0.7080 C 0.4240 0.7500, 0.4520 0.8050, 0.4700 0.8700 C 0.4840 0.9200, 0.4920 0.9650, 0.5000 0.9650 C 0.5080 0.9650, 0.5160 0.9200, 0.5300 0.8700 C 0.5480 0.8050, 0.5760 0.7500, 0.5980 0.7080 C 0.6447 0.6610, 0.6887 0.5874, 0.7080 0.5240 C 0.7531 0.4773, 0.7947 0.4045, 0.8120 0.3420 C 0.8548 0.2975, 0.8932 0.2279, 0.9080 0.1680 C 0.9496 0.1253, 0.9864 0.0581, 1.0000 0.0000 Z" />
         </clipPath>
         <radialGradient id="wax" cx="38%" cy="32%" r="75%">
           <stop offset="0" stopColor="#e7c97a" />
@@ -61,20 +61,52 @@ export function Crest({ className = "kbach-crest", style = {} }) {
 export function Corner({ position = "tl", className = "" }) {
   const transformMap = {
     tl: "",
-    tr: "translate(100 0) scale(-1 1)",
-    bl: "translate(0 100) scale(1 -1)",
-    br: "translate(100 100) scale(-1 -1)"
+    tr: "translate(160 0) scale(-1 1)",
+    bl: "translate(0 160) scale(1 -1)",
+    br: "translate(160 160) scale(-1 -1)"
   };
 
   return (
-    <svg className={`kbach-corner kb-${position} ${className}`} viewBox="0 0 100 100" aria-hidden="true">
+    <svg className={`kbach-corner kb-${position} ${className}`} viewBox="0 0 160 160" aria-hidden="true">
+      <defs>
+        <linearGradient id={`corner-foil-${position}`} x1="0" y1="0" x2="1" y2="0.35">
+          <stop offset="0%" stopColor="#9c7124" />
+          <stop offset="25%" stopColor="#d9b15a" />
+          <stop offset="45%" stopColor="#fbefc0" />
+          <stop offset="62%" stopColor="#d9b15a" />
+          <stop offset="85%" stopColor="#9c7124" />
+          <stop offset="100%" stopColor="#d9b15a" />
+        </linearGradient>
+      </defs>
       <g transform={transformMap[position]}>
-        <path className="kb-line draw" d="M10 90 C10 40 40 10 90 10" stroke="url(#g-foil)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-        <path className="kb-line" d="M14 85 C14 44 44 14 85 14" stroke="url(#g-foil)" strokeWidth="0.9" fill="none" opacity="0.6" strokeLinecap="round" />
-        <path className="kb-fill kb-sway" d="M16 28 C18 16 28 14 36 20 C42 26 38 34 28 32 C22 30 18 36 16 28 Z" fill="url(#g-foil)" />
-        <path className="kb-fill kb-sway" d="M28 16 C38 18 42 26 36 34 C30 40 24 36 26 28 C28 22 20 18 28 16 Z" fill="url(#g-foil)" />
-        <circle cx="10" cy="90" r="2.5" fill="url(#g-foil)" />
-        <circle cx="90" cy="10" r="2.5" fill="url(#g-foil)" />
+        <g className="kb-sway">
+          <path className="kb-line" d="M6 6 H150 M6 6 V150" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          <path className="kb-line" d="M14 14 H110 M14 14 V110" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          <g transform="translate(22 22) rotate(135) scale(.9)">
+            <path className="kb-fill" fill="currentColor" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+          </g>
+          <g transform="translate(40 16) rotate(100) scale(.55)">
+            <path className="kb-fill" fill="currentColor" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+          </g>
+          <g transform="translate(16 40) rotate(170) scale(.55) scale(-1 1)">
+            <path className="kb-fill" fill="currentColor" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+          </g>
+          <path className="kb-line kb-curl" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18" transform="translate(62 24) scale(1.1)" />
+          <path className="kb-line kb-curl" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18" transform="translate(24 62) rotate(90) scale(1.1 -1.1)" />
+          <g transform="translate(92 22) rotate(90) scale(.42)">
+            <path className="kb-fill" fill="currentColor" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+          </g>
+          <g transform="translate(22 92) rotate(180) scale(.42) scale(-1 1)">
+            <path className="kb-fill" fill="currentColor" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+          </g>
+          <circle className="kb-fill" fill="currentColor" cx="122" cy="14" r="2.4" />
+          <circle className="kb-fill" fill="currentColor" cx="14" cy="122" r="2.4" />
+        </g>
       </g>
     </svg>
   );
@@ -94,10 +126,20 @@ export function CornerGroup({ className = "cover__corners" }) {
 export function Divider({ className = "divider" }) {
   return (
     <svg className={className} viewBox="-160 -15 320 30" aria-hidden="true">
-      <path className="draw" d="M-150 0 C-90 -12 -30 12 0 0 C30 -12 90 12 150 0" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="0" cy="0" r="3.2" fill="url(#g-foil)" />
-      <circle cx="-150" cy="0" r="2" fill="url(#g-foil)" />
-      <circle cx="150" cy="0" r="2" fill="url(#g-foil)" />
+      <defs>
+        <linearGradient id="div-foil" x1="0" y1="0" x2="1" y2=".35">
+          <stop offset="0%" stopColor="#9c7124" />
+          <stop offset="25%" stopColor="#d9b15a" />
+          <stop offset="45%" stopColor="#fbefc0" />
+          <stop offset="62%" stopColor="#d9b15a" />
+          <stop offset="85%" stopColor="#9c7124" />
+          <stop offset="100%" stopColor="#d9b15a" />
+        </linearGradient>
+      </defs>
+      <path className="draw" d="M-150 0 C-90 -12 -30 12 0 0 C30 -12 90 12 150 0" fill="none" stroke="url(#div-foil)" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="0" cy="0" r="3.2" fill="url(#div-foil)" />
+      <circle cx="-150" cy="0" r="2" fill="url(#div-foil)" />
+      <circle cx="150" cy="0" r="2" fill="url(#div-foil)" />
     </svg>
   );
 }
@@ -105,10 +147,40 @@ export function Divider({ className = "divider" }) {
 export function Butterfly({ className = "butterfly" }) {
   return (
     <svg className={className} viewBox="0 0 100 80" aria-hidden="true">
-      <g fill="url(#g-foil)">
-        <path className="wing-l" d="M50 40 C35 15 10 10 12 32 C14 50 38 52 50 44 Z" />
-        <path className="wing-r" d="M50 40 C65 15 90 10 88 32 C86 50 62 52 50 44 Z" />
-        <path d="M49 28 C49 24 51 24 51 28 L51 54 C51 56 49 56 49 54 Z" />
+      <defs>
+        <linearGradient id="bf-foil" x1="0" y1="0" x2="1" y2="0.35">
+          <stop offset="0%" stopColor="#9c7124" />
+          <stop offset="25%" stopColor="#d9b15a" />
+          <stop offset="45%" stopColor="#fbefc0" />
+          <stop offset="62%" stopColor="#d9b15a" />
+          <stop offset="85%" stopColor="#9c7124" />
+          <stop offset="100%" stopColor="#d9b15a" />
+        </linearGradient>
+        <filter id="bf-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#000000" floodOpacity="0.4" />
+        </filter>
+      </defs>
+      <g filter="url(#bf-glow)">
+        <g className="wing-l">
+          <g transform="translate(100 0) scale(-1 1)">
+            <path d="M51 38 C58 14 82 1 94 10 C103 18 92 33 75 39 C66 42 57 41 51 40 Z" fill="url(#bf-foil)" fillOpacity=".9" />
+            <path d="M51 42 C62 44 80 50 81 62 C82 74 66 76 59 66 C54 59 51 51 51 42 Z" fill="url(#bf-foil)" fillOpacity=".75" />
+            <path d="M53 39 C64 30 76 20 90 13 M56 39 C68 36 80 33 92 24 M54 44 C62 52 70 58 78 64 M53 46 C57 56 61 64 66 70" fill="none" stroke="#5a4113" strokeWidth=".8" strokeOpacity=".55" />
+            <circle cx="86" cy="15" r="1.6" fill="#fff6d8" opacity=".8" />
+            <circle cx="90" cy="22" r="1.1" fill="#fff6d8" opacity=".7" />
+          </g>
+        </g>
+        <g className="wing-r">
+          <path d="M51 38 C58 14 82 1 94 10 C103 18 92 33 75 39 C66 42 57 41 51 40 Z" fill="url(#bf-foil)" fillOpacity=".9" />
+          <path d="M51 42 C62 44 80 50 81 62 C82 74 66 76 59 66 C54 59 51 51 51 42 Z" fill="url(#bf-foil)" fillOpacity=".75" />
+          <path d="M53 39 C64 30 76 20 90 13 M56 39 C68 36 80 33 92 24 M54 44 C62 52 70 58 78 64 M53 46 C57 56 61 64 66 70" fill="none" stroke="#5a4113" strokeWidth=".8" strokeOpacity=".55" />
+          <circle cx="86" cy="15" r="1.6" fill="#fff6d8" opacity=".8" />
+          <circle cx="90" cy="22" r="1.1" fill="#fff6d8" opacity=".7" />
+        </g>
+        <ellipse cx="50" cy="44" rx="2.4" ry="13" fill="url(#bf-foil)" />
+        <path d="M49 32 C46 22 42 16 37 12 M51 32 C54 22 58 16 63 12" fill="none" stroke="url(#bf-foil)" strokeWidth="1" />
+        <circle cx="37" cy="12" r="1.4" fill="url(#bf-foil)" />
+        <circle cx="63" cy="12" r="1.4" fill="url(#bf-foil)" />
       </g>
     </svg>
   );
@@ -118,12 +190,20 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
   return (
     <svg viewBox="0 0 140 140" className={className} aria-hidden="true">
       <defs>
-        <radialGradient id="wax" cx="38%" cy="32%" r="75%">
-          <stop offset="0" stopColor="#e7c97a" />
-          <stop offset=".45" stopColor="#b98c35" />
-          <stop offset="1" stopColor="#6e4c14" />
+        <radialGradient id="wax-r" cx="38%" cy="32%" r="75%">
+          <stop offset="0%" stopColor="#e7c97a" />
+          <stop offset="45%" stopColor="#b98c35" />
+          <stop offset="100%" stopColor="#6e4c14" />
         </radialGradient>
-        <filter id="wax-lit" x="-20%" y="-20%" width="140%" height="140%">
+        <linearGradient id="seal-foil" x1="0" y1="0" x2="1" y2="0.35">
+          <stop offset="0%" stopColor="#9c7124" />
+          <stop offset="25%" stopColor="#d9b15a" />
+          <stop offset="45%" stopColor="#fbefc0" />
+          <stop offset="62%" stopColor="#d9b15a" />
+          <stop offset="85%" stopColor="#9c7124" />
+          <stop offset="100%" stopColor="#d9b15a" />
+        </linearGradient>
+        <filter id="wax-lit-seal" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="2.6" result="b" />
           <feSpecularLighting in="b" surfaceScale="5" specularConstant=".9" specularExponent="22" lightingColor="#fff6dc" result="s">
             <fePointLight x="20" y="-10" z="90" />
@@ -131,16 +211,70 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
           <feComposite in="s" in2="SourceAlpha" operator="in" result="s2" />
           <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0" />
         </filter>
+        <filter id="wax-press" x="-30%" y="-30%" width="160%" height="160%">
+          <feOffset dx="-1.2" dy="-1.2" in="SourceAlpha" result="hi" />
+          <feFlood floodColor="#3b2706" floodOpacity=".75" />
+          <feComposite in2="hi" operator="in" result="dark" />
+          <feOffset dx="1.2" dy="1.4" in="SourceAlpha" result="lo" />
+          <feFlood floodColor="#fff3cf" floodOpacity=".7" />
+          <feComposite in2="lo" operator="in" result="light" />
+          <feMerge>
+            <feMergeNode in="light" />
+            <feMergeNode in="dark" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </defs>
-      <g filter="url(#wax-lit)">
+      <path
+        d="M127.5106 72 L127.8549 77.6982 L130.0486 83.9444 L131.3372 90.6065 L129.2111 96.526 L124.46 101.1095 L119.7242 105.2247 L115.9648 109.7223 L111.9183 113.9183 L106.7365 116.7635 L101.421 119.0249 L97.0863 122.6748 L93.1304 127.8416 L88.176 131.9184 L82.072 132.69 L75.8364 131.2582 L70 130.4861 L64.1746 131.1462 L58.2043 131.3012 L52.5384 129.5633 L47.1558 127.1509 L41.2849 125.7221 L34.9251 124.4933 L29.674 121.1373 L26.884 115.116 L25.5235 108.5009 L23.2246 103.2543 L19.3818 99.056 L15.7758 94.4604 L13.7215 89.0719 L12.1078 83.5155 L9.4518 77.9635 L6.8298 72 L6.9303 65.7882 L10.2861 60.1222 L14.2204 55.0795 L16.2193 49.7233 L16.984 43.6624 L18.9951 37.9196 L23.0089 33.4354 L27.5469 29.5469 L31.567 25.1693 L35.9241 21.0019 L41.6438 18.9492 L48.0891 19.1023 L53.8835 18.8709 L58.8847 16.1197 L64.099 12.0865 L70 9.8053 L76.0846 10.2216 L82.0265 11.5387 L88.0654 12.4464 L93.9585 14.1591 L98.732 18.2462 L102.2302 23.7641 L105.9609 28.1815 L111.2554 30.7446 L117.1178 33.3315 L121.2476 37.7575 L123.1074 43.6135 L124.5151 49.4191 L126.769 54.7793 L128.6781 60.3282 L128.6235 66.2261 L127.5106 72 Z"
+        fill="#000"
+        opacity=".35"
+        transform="translate(2 5)"
+        style={{ filter: "blur(3px)" }}
+      />
+      <g filter="url(#wax-lit-seal)">
         <path
-          d="M70 12 C98 11 126 36 128 68 C129 98 106 127 72 128 C38 129 11 104 12 70 C13 38 40 13 70 12 Z"
-          fill="url(#wax)"
+          d="M127.5106 70 L127.8549 75.6982 L130.0486 81.9444 L131.3372 88.6065 L129.2111 94.526 L124.46 99.1095 L119.7242 103.2247 L115.9648 107.7223 L111.9183 111.9183 L106.7365 114.7635 L101.421 117.0249 L97.0863 120.6748 L93.1304 125.8416 L88.176 129.9184 L82.072 130.69 L75.8364 129.2582 L70 128.4861 L64.1746 129.1462 L58.2043 129.3012 L52.5384 127.5633 L47.1558 125.1509 L41.2849 123.7221 L34.9251 122.4933 L29.674 119.1373 L26.884 113.116 L25.5235 106.5009 L23.2246 101.2543 L19.3818 97.056 L15.7758 92.4604 L13.7215 87.0719 L12.1078 81.5155 L9.4518 75.9635 L6.8298 70 L6.9303 63.7882 L10.2861 58.1222 L14.2204 53.0795 L16.2193 47.7233 L16.984 41.6624 L18.9951 35.9196 L23.0089 31.4354 L27.5469 27.5469 L31.567 23.1693 L35.9241 19.0019 L41.6438 16.9492 L48.0891 17.1023 L53.8835 16.8709 L58.8847 14.1197 L64.099 10.0865 L70 7.8053 L76.0846 8.2216 L82.0265 9.5387 L88.0654 10.4464 L93.9585 12.1591 L98.732 16.2462 L102.2302 21.7641 L105.9609 26.1815 L111.2554 28.7446 L117.1178 31.3315 L121.2476 35.7575 L123.1074 41.6135 L124.5151 47.4191 L126.769 52.7793 L128.6781 58.3282 L128.6235 64.2261 L127.5106 70 Z"
+          fill="url(#wax-r)"
         />
-        <circle cx="70" cy="70" r="46" fill="none" stroke="#7a5518" strokeWidth="2.2" opacity="0.6" />
-        <g transform="translate(70 78) scale(0.38)">
-          <Crest />
+        <circle cx="70" cy="70" r="44" fill="#a97d2c" />
+      </g>
+      <circle cx="70" cy="70" r="44" fill="none" stroke="#5e400f" strokeOpacity=".55" strokeWidth="1.4" />
+      <circle cx="70" cy="70" r="39" fill="none" stroke="#f3dc9c" strokeOpacity=".35" strokeWidth=".8" strokeDasharray="1.6 3" />
+      <g filter="url(#wax-press)" transform="translate(70 92) scale(.36)" className="wax-crest">
+        <g transform="translate(0 -14) scale(1.25)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
         </g>
+        <g transform="translate(-10 -12) rotate(-24) scale(1.0)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+        </g>
+        <g transform="translate(10 -12) rotate(24) scale(1.0)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" transform="scale(-1 1)" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" transform="scale(-1 1)" />
+        </g>
+        <g transform="translate(-22 -8) rotate(-52) scale(.82)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+        </g>
+        <g transform="translate(22 -8) rotate(52) scale(.82)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" transform="scale(-1 1)" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" transform="scale(-1 1)" />
+        </g>
+        <g transform="translate(-34 -2) rotate(-78) scale(.62)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" />
+        </g>
+        <g transform="translate(34 -2) rotate(78) scale(.62)">
+          <path fill="url(#seal-foil)" d="M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z" transform="scale(-1 1)" />
+          <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 -6 C-3 -20 -2 -36 4 -50" transform="scale(-1 1)" />
+        </g>
+        <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18" transform="translate(-58 4) scale(1.3)" />
+        <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18" transform="translate(58 4) scale(-1.3 1.3)" />
+        <path fill="none" stroke="url(#seal-foil)" strokeWidth="1.6" strokeLinecap="round" d="M-92 6 C-60 10 -30 -2 0 -2 C30 -2 60 10 92 6" />
+        <path fill="url(#seal-foil)" d="M-14 -2 C-10 -12 10 -12 14 -2 C8 0 -8 0 -14 -2 Z" />
+        <circle fill="url(#seal-foil)" cx="0" cy="-118" r="3" />
       </g>
     </svg>
   );
@@ -149,10 +283,56 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
 export function Lockup({ groom, bride, className = "" }) {
   return (
     <div className={`lockup ${className}`} role="img" aria-label={`${groom} & ${bride}`}>
-      <svg className="lk-orn" viewBox="0 0 600 470" aria-hidden="true">
-        <path className="lk-swash" d="M40 292 C110 318 170 314 206 296 C236 280 238 254 220 250 C202 246 196 272 214 284 C240 302 262 294 272 284" />
-        <path className="lk-swash lk-swash2" d="M318 446 C392 460 476 456 566 438" />
-        <path className="lk-heart" d="M266 316 C259 304 244 308 246 321 C248 332 266 341 266 348 C266 341 284 332 286 321 C288 308 273 304 266 316 Z" />
+      <svg className="lk-orn" viewBox="0 0 600 440" aria-hidden="true">
+        <defs>
+          <linearGradient id="lk-foil" x1="0" y1="0" x2="1" y2="0.35">
+            <stop offset="0%" stopColor="#9c7124" />
+            <stop offset="25%" stopColor="#d9b15a" />
+            <stop offset="45%" stopColor="#fbefc0" />
+            <stop offset="62%" stopColor="#d9b15a" />
+            <stop offset="85%" stopColor="#9c7124" />
+            <stop offset="100%" stopColor="#d9b15a" />
+          </linearGradient>
+          <filter id="lk-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="1" stdDeviation="1" floodColor="#000000" floodOpacity="0.4" />
+          </filter>
+        </defs>
+        {/* Lotus on top of groom's name */}
+        <g transform="translate(160, 8) scale(0.36)" stroke="url(#lk-foil)" strokeWidth="1.6" strokeLinejoin="round" fill="none" filter="url(#lk-glow)">
+          <path d="M60 18 C73 38 73 70 60 90 C47 70 47 38 60 18 Z" />
+          <path d="M60 90 C40 82 26 62 28 38 C42 46 54 62 60 90 Z" />
+          <path d="M60 90 C80 82 94 62 92 38 C78 46 66 62 60 90 Z" />
+          <path d="M60 92 C34 94 14 80 8 62 C26 61 46 71 60 92 Z" />
+          <path d="M60 92 C86 94 106 80 112 62 C94 61 74 71 60 92 Z" />
+          <path d="M18 104 Q60 94 102 104" />
+          <path d="M34 112 Q60 106 86 112" />
+        </g>
+        {/* Swash with heart loop under groom */}
+        <path
+          className="lk-swash"
+          d="M 50 205 C 110 232 165 228 195 210 C 218 194 218 174 200 170 C 184 166 178 186 194 198 C 218 216 240 208 250 200"
+          fill="none"
+          stroke="url(#lk-foil)"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+          filter="url(#lk-glow)"
+        />
+        <path
+          className="lk-heart"
+          d="M 248 222 C 242 212 228 216 230 227 C 232 236 248 244 248 250 C 248 244 264 236 266 227 C 268 216 254 212 248 222 Z"
+          fill="url(#lk-foil)"
+          filter="url(#lk-glow)"
+        />
+        {/* Swash under bride */}
+        <path
+          className="lk-swash lk-swash2"
+          d="M 270 340 C 335 356 415 352 490 335"
+          fill="none"
+          stroke="url(#lk-foil)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          filter="url(#lk-glow)"
+        />
       </svg>
       <span className="lk-name lk-groom" aria-hidden="true">{groom}</span>
       <span className="lk-name lk-bride" aria-hidden="true">{bride}</span>

@@ -192,7 +192,6 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                   <Corner position="bl" />
                   <Corner position="br" />
                 </div>
-                <div className="e2__date">15 · 11 · 2026</div>
               </div>
 
               {/* Flap shadow */}
@@ -201,10 +200,26 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
               {/* Foldable Flap */}
               <div className="e2__part e2__flap" id="env-flap">
                 <div className="e2__flap-front">
-                  <svg className="e2__flap-foil" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  <svg className="e2__flap-foil" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="flap-foil-grad" x1="0" y1="0" x2="1" y2="0.35">
+                        <stop offset="0%" stopColor="#9c7124" />
+                        <stop offset="25%" stopColor="#d9b15a" />
+                        <stop offset="45%" stopColor="#fbefc0" />
+                        <stop offset="62%" stopColor="#d9b15a" />
+                        <stop offset="85%" stopColor="#9c7124" />
+                        <stop offset="100%" stopColor="#d9b15a" />
+                      </linearGradient>
+                      <filter id="flap-foil-glow" x="-10%" y="-10%" width="120%" height="120%">
+                        <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#000000" floodOpacity="0.45" />
+                      </filter>
+                    </defs>
                     <path
-                      d="M0 0 L100 0 Q96 28 88 44 Q76 64 62 82 Q54 92 50 100 Q46 92 38 82 Q24 64 12 44 Q4 28 0 0 Z"
-                      transform="translate(50 2.5) scale(.93) translate(-50 0)"
+                      d="M 38 18 C 71.7 58.4, 99.7 120.0, 108 172 C 147.9 216.3, 184.7 284.3, 200 342 C 242.2 388.5, 282.2 459.7, 300 520 C 343.9 566.9, 386.3 638.9, 406 700 C 426 738, 448 770, 468 782 C 480 788, 490 792, 500 792 C 510 792, 520 788, 532 782 C 552 770, 574 738, 594 700 C 637.9 653.1, 680.3 581.1, 700 520 C 742.2 473.5, 782.2 402.3, 800 342 C 839.9 297.7, 876.7 229.7, 892 172 C 925.7 131.6, 953.7 70.0, 962 18 L 38 18 Z"
+                      fill="none"
+                      stroke="url(#flap-foil-grad)"
+                      strokeWidth="2.4"
+                      filter="url(#flap-foil-glow)"
                     />
                   </svg>
                   <div className="e2__flap-logo">
