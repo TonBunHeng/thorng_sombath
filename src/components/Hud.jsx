@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Crest } from "../utils/svgs";
-import { toggleMusic } from "../utils/audio";
+import { toggleMusic, subscribeMusic, getIsMusicPlaying } from "../utils/audio";
 
 export function Hud({ lang, onToggleLang, musicUrl }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(() => getIsMusicPlaying());
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -11,13 +11,21 @@ export function Hud({ lang, onToggleLang, musicUrl }) {
       setIsScrolled(window.scrollY > 80);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    // Auto-sync playing state when music starts from EnvelopeGate
+    const unsubscribe = subscribeMusic((playing) => {
+      setIsPlaying(playing);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      unsubscribe();
+    };
   }, []);
 
-  const handleMusicClick = async () => {
+  const handleMusicClick = () => {
     const nextState = !isPlaying;
-    await toggleMusic(nextState, musicUrl);
-    setIsPlaying(nextState);
+    toggleMusic(nextState, musicUrl);
   };
 
   return (

@@ -1,6 +1,6 @@
 /**
  * Audio manager for sound effects & background music
- * Uses Web Audio API for synthetic sound effects & fallbacks
+ * Auto-plays wedding song (ភ្ជាប់និស្ស័យ.m4a) on open with smooth fade-in
  */
 
 let audioCtx = null;
@@ -8,6 +8,21 @@ let masterGain = null;
 let musicAudio = null;
 let synthNodes = null;
 let isMusicPlaying = false;
+const listeners = new Set();
+
+export function subscribeMusic(callback) {
+  listeners.add(callback);
+  return () => listeners.delete(callback);
+}
+
+function notifyListeners(playing) {
+  isMusicPlaying = playing;
+  listeners.forEach((fn) => {
+    try {
+      fn(playing);
+    } catch { }
+  });
+}
 
 function getAudioContext() {
   if (!audioCtx && typeof window !== "undefined") {
@@ -47,7 +62,6 @@ export function playSfx(type) {
   const now = ctx.currentTime;
 
   if (type === "paper") {
-    // White noise with bandpass for paper rustling
     const bufferSize = ctx.sampleRate * 0.45;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -96,7 +110,7 @@ function startAmbientSynth() {
   filter.connect(gain);
 
   const baseFreqs = [130.81, 196, 261.63];
-  const oscs = baseFreqs.map(f => {
+  const oscs = baseFreqs.map((f) => {
     const o = ctx.createOscillator();
     o.type = "sine";
     o.frequency.value = f;
@@ -132,45 +146,73 @@ function startAmbientSynth() {
       clearTimeout(timerId);
       gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
       setTimeout(() => {
-        oscs.forEach(o => {
-          try { o.stop(); } catch {}
+        oscs.forEach((o) => {
+          try {
+            o.stop();
+          } catch { }
         });
       }, 1000);
     }
   };
 }
 
-async function checkAudioFile(url) {
+function resolveAudioUrl(url) {
+  const raw = url || "/audio/ភ្ជាប់និស្ស័យ.m4a";
   try {
-    const res = await fetch(url, { method: "HEAD" });
-    return res.ok;
+    return encodeURI(decodeURI(raw));
   } catch {
-    return false;
+    return raw;
   }
 }
 
-export async function toggleMusic(playDesired, musicUrl = "/audio/music.mp3") {
+/**
+ * Toggle or auto-play background music.
+ * Executed synchronously inside click handler to satisfy browser autoplay policies.
+ */
+export function toggleMusic(playDesired, musicUrl = "/audio/ភ្ជាប់និស្ស័យ.m4a") {
   getAudioContext();
-  isMusicPlaying = playDesired;
 
   if (playDesired) {
-    const hasAudio = await checkAudioFile(musicUrl);
-    if (hasAudio) {
-      if (!musicAudio) {
-        musicAudio = new Audio(musicUrl);
-        musicAudio.loop = true;
-        musicAudio.volume = 0;
-      }
-      musicAudio.play().catch(() => {});
-      fadeAudio(musicAudio, 0.55);
+    const safeUrl = resolveAudioUrl(musicUrl);
+
+    if (!musicAudio) {
+      musicAudio = new Audio(safeUrl);
+      musicAudio.loop = true;
+      musicAudio.preload = "auto";
+      musicAudio.volume = 0;
     } else {
-      if (!synthNodes) {
-        synthNodes = startAmbientSynth();
+      const currentSrc = musicAudio.src;
+      if (!currentSrc.includes(encodeURI("ភ្ជាប់និស្ស័យ.m4a")) && currentSrc !== safeUrl) {
+        musicAudio.src = safeUrl;
       }
     }
+
+    notifyListeners(true);
+
+    const playPromise = musicAudio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          fadeAudio(musicAudio, 0.65);
+        })
+        .catch((err) => {
+          console.warn("Direct HTML5 audio playback failed, falling back to ambient synth:", err);
+          if (!synthNodes) {
+            synthNodes = startAmbientSynth();
+          }
+        });
+    } else {
+      fadeAudio(musicAudio, 0.65);
+    }
   } else {
+    notifyListeners(false);
+
     if (musicAudio) {
-      fadeAudio(musicAudio, 0, () => musicAudio.pause());
+      fadeAudio(musicAudio, 0, () => {
+        try {
+          musicAudio.pause();
+        } catch { }
+      });
     }
     if (synthNodes) {
       synthNodes.stop();
@@ -182,11 +224,12 @@ export async function toggleMusic(playDesired, musicUrl = "/audio/music.mp3") {
 }
 
 function fadeAudio(audio, targetVolume, onDone) {
+  if (!audio) return;
   const startVolume = audio.volume;
   const startTime = performance.now();
   const step = (now) => {
-    const progress = Math.min(1, (now - startTime) / 1200);
-    audio.volume = startVolume + (targetVolume - startVolume) * progress;
+    const progress = Math.min(1, (now - startTime) / 1000);
+    audio.volume = Math.max(0, Math.min(1, startVolume + (targetVolume - startVolume) * progress));
     if (progress < 1) {
       requestAnimationFrame(step);
     } else if (onDone) {

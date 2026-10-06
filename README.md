@@ -1,6 +1,6 @@
-# ធៀបការឌីជីថល · Khmer Wedding E-Invitation (React + Vite)
+# ធៀបការឌីជីថល · ហ៊ាន សម្បត្តិ & តុន ចាន់ថង (Hean SamBath & Ton ChanThorng)
 
-គម្រោងវេបសាយធៀបការឌីជីថល ស្ទីលខ្មែរ (Khmer Digital Wedding Invitation) ដែលបានរៀបចំជារចនាសម្ព័ន្ធ **React 19 + Vite** ស្អាត ងាយស្រួលកែប្រែ និងបានក្លូនចេញពី **[raksmey-pheakdey.vercel.app](https://raksmey-pheakdey.vercel.app/)** ១០០% ពេញលេញ រួមទាំង Template Starter Kit ពី **[khmer-invite-prompt.vercel.app](https://khmer-invite-prompt.vercel.app/)**។
+គម្រោងវេបសាយធៀបការឌីជីថល ស្ទីលខ្មែរ (Khmer Digital Wedding Invitation) សម្រាប់គូស្វាមីភរិយា **ហ៊ាន សម្បត្តិ & តុន ចាន់ថង** ដែលបានរៀបចំជារចនាសម្ព័ន្ធ **React 19 + Vite** ស្អាត ងាយស្រួលកែប្រែ រួមទាំង Template Starter Kit ពី **[khmer-invite-prompt.vercel.app](https://khmer-invite-prompt.vercel.app/)**។
 
 ---
 

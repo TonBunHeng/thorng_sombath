@@ -6,21 +6,21 @@
 export const weddingData = {
   couple: {
     groom: {
-      km: "ផៃ រស្មី",
-      en: "Phay Raksmey",
-      initialKm: "រ",
-      initialEn: "R"
+      km: "ហ៊ាន សម្បត្តិ",
+      en: "Hean SamBath",
+      initialKm: "ស",
+      initialEn: "S"
     },
     bride: {
-      km: "មាស ភក្ដី",
-      en: "Meas Pheakdey",
-      initialKm: "ភ",
-      initialEn: "P"
+      km: "តុន ចាន់ថង",
+      en: "Ton ChanThorng",
+      initialKm: "ច",
+      initialEn: "C"
     }
   },
   families: {
     groom: {
-      father: { km: "លោក ផៃ សុខន", en: "Mr. Phay Sokhon" },
+      father: { km: "លោក ហ៊ាន សុខន", en: "Mr. Hean Sokhon" },
       mother: { km: "លោកស្រី យ៉ាន់ ចាន់ណារ៉ា", en: "Mrs. Yann Chanara" }
     },
     bride: {
@@ -135,19 +135,19 @@ export const weddingData = {
     enabled: true,
     accounts: [
       {
-        side: { km: "មាស ភក្ដី", en: "Meas Pheakdey" },
+        side: { km: "តុន ចាន់ថង", en: "Ton ChanThorng" },
         bank: "KHQR",
-        name: "មាស ភក្ដី",
+        name: "តុន ចាន់ថង",
         qr: "/img/gift/khqr.webp"
       },
       {
-        side: { km: "មាស ភក្ដី", en: "Meas Pheakdey" },
+        side: { km: "តុន ចាន់ថង", en: "Ton ChanThorng" },
         bank: "ABA PAY",
-        name: "PHEKEDEY MEAS",
+        name: "CHANTHORNG TON",
         qr: "/img/gift/aba.webp"
       }
     ]
   },
-  music: "/audio/music.mp3",
-  siteUrl: "https://raksmey-pheakdey.vercel.app"
+  music: "/audio/ភ្ជាប់និស្ស័យ.m4a",
+  siteUrl: "https://thorng-sombath.vercel.app"
 };
