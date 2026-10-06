@@ -134,20 +134,62 @@
   overflow: visible;
 }
 
-.e2__flap-logo {
+.e2__flap-butterfly {
   position: absolute;
-  top: 7%;
-  left: 27%;
-  right: 27%;
+  top: 14%;
+  left: 50%;
+  translate: -50% 0;
+  width: 22%;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
 }
 
-.e2__flap-logo .lockup {
-  aspect-ratio: 600 / 470;
+.e2__flap-butterfly svg {
   width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
 }
 
-.e2__flap-logo .lk-name {
-  filter: drop-shadow(0 1px 1px #00000059);
+.gate__butterflies {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.gate__flying-bf {
+  will-change: transform;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.gate__flying-bf svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.gate__flying-bf:nth-child(2n) .wing-l,
+.gate__flying-bf:nth-child(2n) .wing-r {
+  animation-duration: .18s !important;
+  animation-delay: -0.06s;
+}
+
+.gate__flying-bf:nth-child(3n) .wing-l,
+.gate__flying-bf:nth-child(3n) .wing-r {
+  animation-duration: .26s !important;
+  animation-delay: -0.12s;
+}
+
+.gate__flying-bf:nth-child(5n) .wing-l,
+.gate__flying-bf:nth-child(5n) .wing-r {
+  animation-duration: .21s !important;
+  animation-delay: -0.09s;
 }
 
 .e2__emboss .kbach-corner {

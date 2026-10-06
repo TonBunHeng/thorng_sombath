@@ -8,7 +8,7 @@ export const weddingData = {
     groom: {
       km: "ហ៊ាន សម្បត្តិ",
       en: "Hean SamBath",
-      shortKm: "រស្មី",
+      shortKm: "សម្បត្តិ",
       shortEn: "SamBath",
       initialKm: "ស",
       initialEn: "S"
@@ -16,7 +16,7 @@ export const weddingData = {
     bride: {
       km: "តុន ចាន់ថង",
       en: "Ton ChanThorng",
-      shortKm: "ភក្តី",
+      shortKm: "ថង",
       shortEn: "Thorng",
       initialKm: "ថ",
       initialEn: "T"

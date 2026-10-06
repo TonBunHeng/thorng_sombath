@@ -289,9 +289,9 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
   );
 }
 
-export function Lockup({ groom = "រស្មី", bride = "ភក្តី", crest = true, className = "" }) {
-  const groomName = groom || "រស្មី";
-  const brideName = bride || "ភក្តី";
+export function Lockup({ groom = "សម្បត្តិ", bride = "ថង", crest = true, className = "" }) {
+  const groomName = groom || "សម្បត្តិ";
+  const brideName = bride || "ថង";
 
   return (
     <div className={`lockup ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>

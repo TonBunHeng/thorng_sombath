@@ -1,8 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Corner, Crest, Lockup, WaxSeal } from "../utils/svgs";
+import { Butterfly, Corner, Crest, Lockup, WaxSeal } from "../utils/svgs";
 import { playSfx, toggleMusic } from "../utils/audio";
 import { pictures } from "../data/pictures";
 import gsap from "gsap";
+
+const GATE_BUTTERFLIES = [
+  { id: 1, x: 10, y: 16, size: 54, rotate: -18, speed: 3.4, delay: 0 },
+  { id: 2, x: 84, y: 14, size: 46, rotate: 22, speed: 2.8, delay: 0.4 },
+  { id: 3, x: 18, y: 38, size: 38, rotate: 12, speed: 3.8, delay: 0.8 },
+  { id: 4, x: 80, y: 40, size: 48, rotate: -24, speed: 3.1, delay: 0.2 },
+  { id: 5, x: 14, y: 68, size: 42, rotate: -8, speed: 4.0, delay: 0.6 },
+  { id: 6, x: 86, y: 70, size: 44, rotate: 18, speed: 3.5, delay: 1.0 },
+  { id: 7, x: 48, y: 18, size: 36, rotate: -14, speed: 3.0, delay: 0.5 },
+  { id: 8, x: 26, y: 84, size: 40, rotate: 28, speed: 3.6, delay: 0.3 },
+  { id: 9, x: 72, y: 82, size: 42, rotate: -20, speed: 3.3, delay: 0.7 },
+  { id: 10, x: 90, y: 52, size: 34, rotate: 16, speed: 4.2, delay: 0.9 },
+  { id: 11, x: 8, y: 48, size: 38, rotate: -32, speed: 3.7, delay: 0.1 }
+];
 
 export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
   const [isOpening, setIsOpening] = useState(false);
@@ -48,6 +62,30 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
     };
   }, [isOpening]);
 
+  // Continuous organic hovering motion for flying butterflies
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const bEls = gateRef.current?.querySelectorAll(".gate__flying-bf");
+      if (bEls) {
+        bEls.forEach((el, i) => {
+          const b = GATE_BUTTERFLIES[i] || { speed: 3.2, delay: 0 };
+          gsap.to(el, {
+            x: (i % 2 === 0 ? 1 : -1) * (18 + (i * 6) % 20),
+            y: (i % 3 === 0 ? -1 : 1) * (14 + (i * 5) % 16),
+            rotate: `+=${(i % 2 === 0 ? 14 : -14)}`,
+            duration: b.speed,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+            delay: b.delay
+          });
+        });
+      }
+    }, gateRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const handleOpen = () => {
     if (isOpening) return;
     setIsOpening(true);
@@ -73,6 +111,17 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
         onOpen();
       }
     });
+
+    // Flying butterflies scatter outwards and soar into the sky as envelope opens
+    tl.to(".gate__flying-bf", {
+      x: (i) => ((i % 2 === 0 ? -1 : 1) * (180 + Math.random() * 240)),
+      y: () => -160 - Math.random() * 260,
+      scale: 0.3,
+      opacity: 0,
+      duration: 1.2,
+      stagger: 0.04,
+      ease: "power2.out"
+    }, 0.05);
 
     // Fade out hint text and gate title
     tl.to([".gate__hint", ".gate__invite"], {
@@ -150,6 +199,28 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
       </picture>
       <svg className="gate__florals emboss" id="gate-florals" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
 
+      {/* Flying golden butterflies flock */}
+      <div className="gate__butterflies" aria-hidden="true">
+        {GATE_BUTTERFLIES.map((b) => (
+          <div
+            key={b.id}
+            className="gate__flying-bf"
+            style={{
+              position: "absolute",
+              left: `${b.x}%`,
+              top: `${b.y}%`,
+              width: `${b.size}px`,
+              transform: `rotate(${b.rotate}deg)`,
+              pointerEvents: "none",
+              zIndex: 10,
+              filter: "drop-shadow(0 3px 10px rgba(0, 0, 0, 0.45))"
+            }}
+          >
+            <Butterfly />
+          </div>
+        ))}
+      </div>
+
       <div className="gate__stage">
         <div className="gate__invite">
           <div className="gate__kicker foil">{t.kicker}</div>
@@ -222,13 +293,8 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                       filter="url(#flap-foil-glow)"
                     />
                   </svg>
-                  <div className="e2__flap-logo">
-                    <Lockup
-                      groom={groomShort}
-                      bride={brideShort}
-                      crest={false}
-                      className="lk-env"
-                    />
+                  <div className="e2__flap-butterfly">
+                    <Butterfly className="is-resting" />
                   </div>
                 </div>
                 <div className="e2__flap-back">
