@@ -1,9 +1,3 @@
-# ធៀបការឌីជីថល · ហ៊ាន សម្បត្តិ & តុន ចាន់ថង (Hean SamBath & Ton ChanThorng)
-
-គម្រោងវេបសាយធៀបការឌីជីថល ស្ទីលខ្មែរ (Khmer Digital Wedding Invitation) សម្រាប់គូស្វាមីភរិយា **ហ៊ាន សម្បត្តិ & តុន ចាន់ថង** ដែលបានរៀបចំជារចនាសម្ព័ន្ធ **React 19 + Vite** ស្អាត ងាយស្រួលកែប្រែ រួមទាំង Template Starter Kit ពី **[khmer-invite-prompt.vercel.app](https://khmer-invite-prompt.vercel.app/)**។
-
----
-
 ## 📁 រចនាសម្ព័ន្ធ Folders & Files ក្នុង `src/` (Project Structure)
 
 ```
@@ -42,36 +36,6 @@ src/
 └── index.css                   # Stylesheet រួមបញ្ចូល Fonts, Foil, Shadows, Animations
 ```
 
----
-
-## 🛠️ របៀបកែប្រែទិន្នន័យ (How to Customize Details)
-
-### ១. កែប្រែឈ្មោះ កាលបរិច្ឆេទ ទីតាំង និងកម្មវិធី
-ចូលទៅកាន់ឯកសារ:  
-👉 [`src/data/wedding.js`](file:///Users/bunheng/Desktop/thorng_sombatt/src/data/wedding.js)
-
-អ្នកអាចផ្លាស់ប្តូរ:
-- **`couple`**: ឈ្មោះកូនកំលោះ និងកូនក្រមុំ (`km` និង `en`)
-- **`families`**: ឈ្មោះមាតាបិតាទាំងសងខាង
-- **`date`**: កាលបរិច្ឆេទមង្គលការ (ទម្រង់ ISO: `"2026-11-15T07:00:00+07:00"`)
-- **`lunar`**: កាលបរិច្ឆេទតាមចន្ទគតិខ្មែរ
-- **`venue`**: ឈ្មោះទីតាំង, អាសយដ្ឋាន, កូអរដោនេ Google Maps
-- **`programme`**: កាលវិភាគម៉ោង និងឈ្មោះពិធីនីមួយៗ
-- **`gift`**: គណនី KHQR និង ABA PAY
-
-### ២. ផ្លាស់ប្តូររូបភាព (Replacing Images)
-- រូបថតធំៗ: ដាក់ក្នុង [`public/img/`](file:///Users/bunheng/Desktop/thorng_sombatt/public/img/)
-- រូបថត Gallery: ដាក់ក្នុង [`public/img/gallery/`](file:///Users/bunheng/Desktop/thorng_sombatt/public/img/gallery/) និងកែសម្រួលបញ្ជីក្នុង `public/img/gallery/gallery.json`
-- រូប QR កូដចំណងដៃ: ដាក់ក្នុង [`public/gift/`](file:///Users/bunheng/Desktop/thorng_sombatt/public/gift/) (`khqr.webp`, `aba.webp`)
-
-### ៣. ដាក់ភ្លេងផ្ទាល់ខ្លួន (Background Music)
-- ដាក់ឯកសារ mp3 របស់អ្នកឈ្មោះ `music.mp3` ចូលទៅក្នុង [`public/audio/music.mp3`](file:///Users/bunheng/Desktop/thorng_sombatt/public/audio/)
-
-### ៤. Starter Kit (SVGs & Textures)
-- ឯកសារ Starter Kit ដើមទាំងអស់ស្ថិតនៅក្នុង [`public/starter-kit/`](file:///Users/bunheng/Desktop/thorng_sombatt/public/starter-kit/) និង [`public/kit/`](file:///Users/bunheng/Desktop/thorng_sombatt/public/kit/) រួមទាំងឯកសារទាញយក `khmer-invite-starter-kit.zip`។
-
----
-
 ## 🚀 របៀប Run លើកុំព្យូទ័រ (Commands)
 
 ```bash
@@ -81,8 +45,3 @@ npm run dev
 # Build សម្រាប់ Production
 npm run build
 ```
-
----
-
-© Design inspired by Someth Phay ([somethphay.me](https://somethphay.me/))
-# thorng_sombath
