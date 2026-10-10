@@ -43,34 +43,38 @@ export function Gallery({ t, onOpenLightbox }) {
     return () => ctx.revert();
   }, [photos]);
 
+  const cols = React.useMemo(() => {
+    if (!photos.length) return [];
+    const colCount = typeof window !== "undefined" && window.innerWidth < 700 ? 2 : 3;
+    const columns = Array.from({ length: colCount }, () => []);
+    const heights = Array(colCount).fill(0);
+
+    photos.forEach((photo, idx) => {
+      const minColIdx = heights.indexOf(Math.min(...heights));
+      heights[minColIdx] += photo.h / photo.w;
+      columns[minColIdx].push({ ...photo, index: idx });
+    });
+    return columns;
+  }, [photos]);
+
   if (!photos.length) return null;
 
-  const colCount = typeof window !== "undefined" && window.innerWidth < 700 ? 2 : 3;
-  const cols = Array.from({ length: colCount }, () => []);
-  const heights = Array(colCount).fill(0);
-
-  photos.forEach((photo, idx) => {
-    const minColIdx = heights.indexOf(Math.min(...heights));
-    heights[minColIdx] += photo.h / photo.w;
-    cols[minColIdx].push({ ...photo, index: idx });
-  });
-
   return (
-    <section ref={galleryRef} className="chapter gallery" id="gallery">
-      <div className="chapter__head">
-        <span className="kicker">{t.galleryKicker}</span>
-        <h2 className="display">{t.galleryTitle}</h2>
+    <section ref={galleryRef} className="chapter gallery bg-night" id="gallery">
+      <div className="chapter__head text-center max-w-[900px] mx-auto mb-10">
+        <span className="kicker text-foil block">{t.galleryKicker}</span>
+        <h2 className="display font-moul text-3xl sm:text-4xl md:text-5xl">{t.galleryTitle}</h2>
         <Divider />
       </div>
 
-      <div className="gallery__grid" id="gallery-grid">
+      <div className="gallery__grid flex items-start gap-2.5 sm:gap-4 max-w-[1400px] mx-auto" id="gallery-grid">
         {cols.map((col, cIdx) => (
-          <div key={cIdx} className="gallery__col">
+          <div key={cIdx} className="gallery__col flex-1 grid gap-2.5 sm:gap-4">
             {col.map((item) => (
               <button
                 key={item.id}
                 type="button"
-                className="gallery__item"
+                className="gallery__item w-full block relative overflow-hidden rounded bg-olive-900 cursor-zoom-in border-0 p-0"
                 style={{ aspectRatio: `${item.w} / ${item.h}` }}
                 onClick={() => onOpenLightbox(item.index, photos)}
                 aria-label={`Photo ${item.index + 1}`}
@@ -80,6 +84,7 @@ export function Gallery({ t, onOpenLightbox }) {
                   alt=""
                   loading="lazy"
                   decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
               </button>
             ))}

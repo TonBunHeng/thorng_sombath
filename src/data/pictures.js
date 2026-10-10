@@ -85,7 +85,7 @@ export const pictures = {
 
   // 8. Gift / QR Payment Section
   gift: {
-    khqr: "/img/gift/khqr.webp",
+    khqr: "/img/gift/khqr.jpg",
     aba: "/img/gift/aba.webp"
   }
 };

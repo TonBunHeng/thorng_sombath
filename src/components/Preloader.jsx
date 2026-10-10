@@ -40,16 +40,16 @@ export function Preloader({ onComplete }) {
   }, [onComplete]);
 
   return (
-    <div className="preloader" id="preloader" aria-hidden="true">
-      <div className="preloader__inner">
-        <div id="pre-lotus">
+    <div className="preloader fixed inset-0 z-[200] grid place-items-center bg-olive-900" id="preloader" aria-hidden="true">
+      <div className="preloader__inner grid justify-items-center gap-5">
+        <div id="pre-lotus" className="w-[120px] h-[120px]">
           <LotusSvg />
         </div>
-        <div className="preloader__count" id="pre-count">
+        <div className="preloader__count font-moul text-foil text-center min-w-[4ch] text-lg" id="pre-count">
           {toKhmerNumber(count)}
         </div>
       </div>
-      <div className="preloader__curtain"></div>
+      <div className="preloader__curtain absolute inset-0 bg-olive-950 translate-y-full"></div>
     </div>
   );
 }

@@ -82,22 +82,31 @@ export function Countdown({ wedding, t, lang }) {
           repeat: -1
         });
 
+        let isBoosting = false;
         ScrollTrigger.create({
-          trigger: "#countdown",
+          trigger: countRef.current,
           start: "top bottom",
           end: "bottom top",
           onUpdate: (self) => {
-            const vel = Math.abs(self.getVelocity()) / 250;
-            gsap.to(tween, {
-              timeScale: 1 + Math.min(6, vel),
-              duration: 0.2,
-              overwrite: true
-            });
-            gsap.to(tween, {
-              timeScale: 1,
-              duration: 1.2,
-              delay: 0.2
-            });
+            const vel = Math.abs(self.getVelocity()) / 300;
+            if (vel > 0.2 && !isBoosting) {
+              isBoosting = true;
+              gsap.to(tween, {
+                timeScale: 1 + Math.min(4, vel),
+                duration: 0.2,
+                overwrite: true,
+                onComplete: () => {
+                  gsap.to(tween, {
+                    timeScale: 1,
+                    duration: 1.0,
+                    ease: "power2.out",
+                    onComplete: () => {
+                      isBoosting = false;
+                    }
+                  });
+                }
+              });
+            }
           }
         });
       }
@@ -107,9 +116,9 @@ export function Countdown({ wedding, t, lang }) {
   }, []);
 
   return (
-    <section ref={countRef} className="chapter countdown" id="countdown">
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee__track" id="marquee">
+    <section ref={countRef} className="chapter countdown bg-olive-800 text-center overflow-hidden relative" id="countdown">
+      <div className="marquee absolute top-1/2 left-0 -translate-y-1/2 w-full whitespace-nowrap pointer-events-none opacity-[0.12]" aria-hidden="true">
+        <div className="marquee__track inline-flex gap-16 font-moul" id="marquee">
           <span>{t.blessing} ✦</span>
           <span>{t.blessing} ✦</span>
           <span>{t.blessing} ✦</span>
@@ -117,26 +126,26 @@ export function Countdown({ wedding, t, lang }) {
         </div>
       </div>
 
-      <div className="chapter__head" style={{ marginBottom: "1.5rem" }}>
-        <span className="kicker">{t.countdownKicker}</span>
+      <div className="chapter__head text-center max-w-[900px] mx-auto mb-6">
+        <span className="kicker text-foil">{t.countdownKicker}</span>
       </div>
 
-      <div className="count" id="count" aria-live="polite">
-        <div className="count__unit">
-          <span className="count__num foil" data-u="d">{timeLeft.d}</span>
-          <span className="count__label caps">{t.days}</span>
+      <div className="count grid grid-cols-2 sm:grid-cols-4 justify-center gap-4 sm:gap-8 md:gap-16 relative" id="count" aria-live="polite">
+        <div className="count__unit grid justify-items-center">
+          <span className="count__num foil font-moul text-4xl sm:text-6xl md:text-7xl min-w-[1.4ch] leading-snug block" data-u="d">{timeLeft.d}</span>
+          <span className="count__label caps text-cream-dim">{t.days}</span>
         </div>
-        <div className="count__unit">
-          <span className="count__num foil" data-u="h">{timeLeft.h}</span>
-          <span className="count__label caps">{t.hours}</span>
+        <div className="count__unit grid justify-items-center">
+          <span className="count__num foil font-moul text-4xl sm:text-6xl md:text-7xl min-w-[1.4ch] leading-snug block" data-u="h">{timeLeft.h}</span>
+          <span className="count__label caps text-cream-dim">{t.hours}</span>
         </div>
-        <div className="count__unit">
-          <span className="count__num foil" data-u="m">{timeLeft.m}</span>
-          <span className="count__label caps">{t.minutes}</span>
+        <div className="count__unit grid justify-items-center">
+          <span className="count__num foil font-moul text-4xl sm:text-6xl md:text-7xl min-w-[1.4ch] leading-snug block" data-u="m">{timeLeft.m}</span>
+          <span className="count__label caps text-cream-dim">{t.minutes}</span>
         </div>
-        <div className="count__unit">
-          <span className="count__num foil" data-u="s">{timeLeft.s}</span>
-          <span className="count__label caps">{t.seconds}</span>
+        <div className="count__unit grid justify-items-center">
+          <span className="count__num foil font-moul text-4xl sm:text-6xl md:text-7xl min-w-[1.4ch] leading-snug block" data-u="s">{timeLeft.s}</span>
+          <span className="count__label caps text-cream-dim">{t.seconds}</span>
         </div>
       </div>
 

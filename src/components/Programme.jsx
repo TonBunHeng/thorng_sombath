@@ -67,7 +67,7 @@ export function Programme({ wedding, t, lang }) {
             trigger: ".programme__list",
             start: "top 65%",
             end: "bottom 65%",
-            scrub: 0.8
+            scrub: 0.4
           }
         }
       );
@@ -100,29 +100,29 @@ export function Programme({ wedding, t, lang }) {
   }, []);
 
   return (
-    <section ref={progRef} className="chapter programme" id="programme">
-      <div className="programme__grid">
-        <div className="programme__aside">
-          <h2 className="display">{t.programmeKicker}</h2>
-          {wedding.dateIsPlaceholder && <div className="tbc">{t.dateTbc}</div>}
+    <section ref={progRef} className="chapter programme bg-olive-900" id="programme">
+      <div className="programme__grid grid grid-cols-1 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-8 md:gap-16 max-w-[1180px] mx-auto">
+        <div className="programme__aside md:sticky md:top-[18vh] self-start text-center md:text-left">
+          <h2 className="display font-moul text-3xl md:text-5xl">{t.programmeKicker}</h2>
+          {wedding.dateIsPlaceholder && <div className="tbc text-cream-dim opacity-80 text-xs mt-2">{t.dateTbc}</div>}
         </div>
 
-        <div className="programme__list">
-          <div className="programme__thread" aria-hidden="true">
-            <span></span>
+        <div className="programme__list pl-16 relative">
+          <div className="programme__thread absolute top-2.5 bottom-2.5 left-[21px] w-[1px] bg-foil/15" aria-hidden="true">
+            <span className="bg-foil origin-top absolute inset-0"></span>
           </div>
 
           <ol id="programme-list" style={{ listStyle: "none", margin: 0, padding: 0 }}>
             {wedding.programme.map((rite, idx) => (
-              <li key={idx} className="rite">
-                <div className="rite__icon">
+              <li key={idx} className="rite pb-10 relative">
+                <div className="rite__icon absolute top-0 -left-16 w-11 h-11 rounded-full grid place-items-center bg-olive-900 shadow-[0_0_0_1px_rgba(217,177,90,0.35)]">
                   {RITE_ICONS[rite.icon] || RITE_ICONS.procession}
                 </div>
-                <div className="rite__time caps">
+                <div className="rite__time caps text-foil">
                   {lang === "km" ? toKhmerNumber(rite.time) : rite.time}
                 </div>
-                <h3>{rite[lang]}</h3>
-                <p>{lang === "km" ? rite.dkm : rite.den}</p>
+                <h3 className="font-moul my-1 text-lg sm:text-xl font-normal leading-relaxed">{rite[lang]}</h3>
+                <p className="text-cream-dim m-0 text-sm">{lang === "km" ? rite.dkm : rite.den}</p>
               </li>
             ))}
           </ol>

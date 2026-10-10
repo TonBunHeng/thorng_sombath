@@ -146,14 +146,8 @@ export const weddingData = {
         side: { km: "ហ៊ាន សម្បត្តិ", en: "Hean Sombath" },
         bank: "KHQR",
         name: "ហ៊ាន សម្បត្តិ",
-        qr: "/img/gift/khqr.webp"
+        qr: "/img/gift/khqr.jpeg"
       },
-      {
-        side: { km: "តុន ចាន់ថង", en: "Ton ChanThorng" },
-        bank: "ABA PAY",
-        name: "TON CHANTHORNG",
-        qr: "/img/gift/aba.webp"
-      }
     ]
   },
   music: "/audio/ភ្ជាប់និស្ស័យ.m4a",

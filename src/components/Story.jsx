@@ -34,7 +34,7 @@ export function Story({ wedding, t, lang }) {
           start: "top top",
           end: () => `+=${getScrollDistance()}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
@@ -95,14 +95,14 @@ export function Story({ wedding, t, lang }) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="story" id="story">
-      <div className="story__pin">
-        <canvas ref={embersRef} className="story__embers" id="story-embers"></canvas>
-        <div ref={trackRef} className="story__track" id="story-track">
-          <div className="story__intro">
-            <span className="kicker">{t.storyKicker}</span>
-            <h2 className="display">{t.storyTitle}</h2>
-            <div className="caps">{t.storyHint}</div>
+    <section ref={sectionRef} className="story bg-olive-800 p-0 overflow-hidden" id="story">
+      <div className="story__pin h-[100svh] flex items-center overflow-hidden relative">
+        <canvas ref={embersRef} className="story__embers pointer-events-none opacity-0 mix-blend-screen w-full h-full absolute inset-0" id="story-embers"></canvas>
+        <div ref={trackRef} className="story__track flex items-center gap-8 md:gap-16 px-4 md:px-12 will-change-transform" id="story-track">
+          <div className="story__intro flex-none w-[min(80vw,560px)]">
+            <span className="kicker text-foil block">{t.storyKicker}</span>
+            <h2 className="display font-moul text-3xl sm:text-4xl md:text-5xl mt-1.5">{t.storyTitle}</h2>
+            <div className="caps text-cream-dim flex items-center gap-3 mt-4">{t.storyHint}</div>
           </div>
 
           {wedding.story.map((shot, idx) => {
@@ -110,10 +110,10 @@ export function Story({ wedding, t, lang }) {
             return (
               <figure
                 key={shot.k}
-                className={`shot ${shot.v ? `shot--${shot.v}` : ""}`}
+                className={`shot flex-none m-0 relative ${shot.v ? `shot--${shot.v}` : ""}`}
                 style={{ "--ar": shot.ar, "--h": isTall ? "66svh" : "54svh" }}
               >
-                <div className="shot__img">
+                <div className="shot__img rounded overflow-hidden max-w-[82vw]">
                   <img
                     src={`/img/story/${shot.k}-640.webp`}
                     srcSet={`/img/story/${shot.k}-640.webp 640w, /img/story/${shot.k}-1280.webp 1280w`}
@@ -121,10 +121,11 @@ export function Story({ wedding, t, lang }) {
                     alt={shot.en}
                     loading="lazy"
                     decoding="async"
+                    className="w-[118%] h-full object-cover origin-center will-change-transform"
                   />
                 </div>
-                <figcaption>
-                  <span className="caps">
+                <figcaption className="text-cream-dim flex items-baseline gap-4 mt-3">
+                  <span className="caps text-foil">
                     {lang === "km" ? toKhmerNumber(String(idx + 1).padStart(2, "0")) : String(idx + 1).padStart(2, "0")}
                   </span>
                   <span>{shot[lang]}</span>

@@ -43,7 +43,7 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
 
   return (
     <dialog
-      className="lightbox"
+      className="lightbox fixed inset-0 z-[120] w-screen h-[100dvh] max-w-none max-h-none m-0 p-0 border-0 bg-[#0c0a07]/95 text-cream grid place-items-center"
       open
       onClick={(e) => {
         if (e.target.tagName === "DIALOG") onClose();
@@ -57,9 +57,10 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
         src={`/img/gallery/${current.id}-1600.webp`}
         alt=""
         loading="eager"
+        className="object-contain rounded max-w-[92vw] max-h-[82dvh] shadow-[0_30px_80px_rgba(0,0,0,0.7)] select-none"
       />
       <button
-        className="lb-btn lb-close"
+        className="lb-btn lb-close absolute top-4 right-4 z-10 w-11 h-11 rounded-full grid place-items-center cursor-pointer bg-[#1d2010]/75 border border-foil text-foil-hi backdrop-blur-md transition-all hover:scale-110"
         type="button"
         onClick={onClose}
         aria-label={lang === "km" ? "បិទ" : "Close"}
@@ -81,7 +82,7 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
         </svg>
       </button>
       <button
-        className="lb-btn lb-prev"
+        className="lb-btn lb-prev absolute top-1/2 left-4 -translate-y-1/2 z-10 w-11 h-11 rounded-full grid place-items-center cursor-pointer bg-[#1d2010]/75 border border-foil text-foil-hi backdrop-blur-md transition-all hover:scale-110"
         type="button"
         onClick={onPrev}
         aria-label={lang === "km" ? "មុន" : "Previous"}
@@ -102,7 +103,7 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
         </svg>
       </button>
       <button
-        className="lb-btn lb-next"
+        className="lb-btn lb-next absolute top-1/2 right-4 -translate-y-1/2 z-10 w-11 h-11 rounded-full grid place-items-center cursor-pointer bg-[#1d2010]/75 border border-foil text-foil-hi backdrop-blur-md transition-all hover:scale-110"
         type="button"
         onClick={onNext}
         aria-label={lang === "km" ? "បន្ទាប់" : "Next"}
@@ -122,7 +123,7 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
           <polyline points="9 18 15 12 9 6" />
         </svg>
       </button>
-      <div className="lb-count caps">
+      <div className="lb-count caps absolute bottom-4 left-0 right-0 text-center text-foil pointer-events-none text-sm tracking-widest">
         {lang === "km"
           ? `${toKhmerNumber(activeIndex + 1)} / ${toKhmerNumber(photos.length)}`
           : `${activeIndex + 1} / ${photos.length}`}

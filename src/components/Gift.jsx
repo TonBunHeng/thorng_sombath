@@ -24,20 +24,6 @@ export function Gift({ wedding, t, lang }) {
           once: true
         }
       });
-
-      gsap.from(".gift__card", {
-        y: 50,
-        scale: 0.95,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.18,
-        ease: "back.out(1.2)",
-        scrollTrigger: {
-          trigger: ".gift__cards",
-          start: "top 85%",
-          once: true
-        }
-      });
     }, giftRef);
 
     return () => ctx.revert();
@@ -45,32 +31,34 @@ export function Gift({ wedding, t, lang }) {
 
   if (!wedding.gift.enabled) return null;
 
+  const khqrAccounts = wedding.gift.accounts.filter((acc) =>
+    /khqr/i.test(acc.bank) || /khqr/i.test(acc.qr || "")
+  );
+
   return (
-    <section ref={giftRef} className="chapter gift" id="gift">
-      <span className="kicker" style={{ color: "var(--foil)", display: "block" }}>
+    <section ref={giftRef} className="chapter gift bg-olive-900 text-center pt-8" id="gift">
+      <span className="kicker text-foil block">
         {t.giftKicker}
       </span>
       <Divider />
-      <p className="gift__note">{t.giftNote}</p>
+      <p className="gift__note max-w-[34em] text-cream-dim mx-auto mb-[1.6rem]">{t.giftNote}</p>
 
-      <div className="gift__cards" id="gift-cards">
-        {wedding.gift.accounts.map((acc, idx) => (
-          <figure key={idx} className="gift__card">
-            <div className="caps" style={{ color: "var(--foil)" }}>
+      <div className="gift__cards grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[1.2rem] max-w-[760px] mx-auto mt-8" id="gift-cards">
+        {khqrAccounts.map((acc, idx) => (
+          <figure key={idx} className="gift__card bg-gradient-to-br from-olive-700 to-olive-800 rounded-md grid justify-items-center gap-2.5 m-0 p-[1.4rem] shadow-[inset_0_0_0_1px_rgba(217,177,90,0.35)]">
+            <div className="caps text-foil">
               {acc.bank}
             </div>
             <img
-              className="gift__img"
+              className="gift__img bg-white rounded-[10px] w-full max-w-[300px]"
               src={acc.qr}
-              alt={`${acc.bank} QR · ${acc.name}`}
+              alt={`${acc.bank} QR`}
               loading="lazy"
             />
-            <figcaption>{acc.side[lang]}</figcaption>
             <a
-              className="btn"
+              className="btn mt-3.5"
               href={acc.qr}
-              download={`${acc.bank}-QR.webp`}
-              style={{ marginTop: ".8rem" }}
+              download={`${acc.bank}-QR.jpg`}
             >
               {lang === "km" ? "រក្សាទុករូប QR" : "Save QR"}
             </a>

@@ -17,6 +17,46 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preload" as="image" imagesrcset="/img/hero/hero-m-640.webp 640w, /img/hero/hero-m-1280.webp 1280w, /img/hero/hero-m-2000.webp 2000w" imagesizes="100vw" media="(max-aspect-ratio: 1/1)" />
   <link rel="preload" as="image" imagesrcset="/img/hero/hero-1280.webp 1280w, /img/hero/hero-2000.webp 2000w" imagesizes="100vw" media="(min-aspect-ratio: 1/1)" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            olive: {
+              950: '#1d2010',
+              900: '#2a2f16',
+              800: '#3a4120',
+              700: '#4f5a26',
+              500: '#6b7536',
+              300: '#a3aa72',
+            },
+            foil: {
+              DEFAULT: '#d9b15a',
+              hi: '#fbefc0',
+              lo: '#9c7124',
+            },
+            cream: {
+              DEFAULT: '#f5efdd',
+              dim: '#d9d2bb',
+            },
+            lotus: '#c72c6a',
+            teak: '#5c2318',
+            night: '#120f0b',
+            candle: '#ffb65c',
+          },
+          fontFamily: {
+            moul: ['Moul', 'Cormorant Garamond', 'serif'],
+            kh: ['"Kantumruy Pro"', 'system-ui', 'sans-serif'],
+            'kh-serif': ['"Noto Serif Khmer"', '"Kantumruy Pro"', 'serif'],
+            serif: ['"Cormorant Garamond"', '"Noto Serif Khmer"', 'serif'],
+            script: ['"Pinyon Script"', 'cursive'],
+            moulpali: ['Moulpali', 'Moul', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
 </head>
 <body class="is-locked" data-lang="km">
   <div id="root"></div>

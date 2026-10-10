@@ -189,10 +189,15 @@ export function parseDate(dateStr) {
 export function formatDate(dateStr, lang = "km") {
   const p = parseDate(dateStr);
   if (lang === "km") {
+    const weekday = `ថ្ងៃ${khmerWeekdays[p.wd]}`;
+    const date = `ទី${toKhmerNumber(p.day)} ខែ${khmerMonths[p.m]} ឆ្នាំ${toKhmerNumber(p.y)}`;
+    const time = `ម៉ោង ${toKhmerNumber(String(p.h).padStart(2, "0"))}:${toKhmerNumber(String(p.min).padStart(2, "0"))}`;
+
     return {
-      weekday: `ថ្ងៃ${khmerWeekdays[p.wd]}`,
-      date: `ទី${toKhmerNumber(p.day)} ខែ${khmerMonths[p.m]} ឆ្នាំ${toKhmerNumber(p.y)}`,
-      time: `ម៉ោង ${toKhmerNumber(String(p.h).padStart(2, "0"))}:${toKhmerNumber(String(p.min).padStart(2, "0"))}`,
+      weekday,
+      date,
+      time,
+      full: `${weekday} ${date} ${time}`,
       short: `${toKhmerNumber(String(p.day).padStart(2, "0"))} · ${toKhmerNumber(String(p.m + 1).padStart(2, "0"))} · ${toKhmerNumber(p.y)}`,
       weekdayShort: khmerWeekdays[p.wd],
       day: toKhmerNumber(String(p.day).padStart(2, "0")),
@@ -202,10 +207,15 @@ export function formatDate(dateStr, lang = "km") {
   }
 
   const utc = new Date(Date.UTC(p.y, p.m, p.day));
+  const weekday = utc.toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" });
+  const date = utc.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  const time = `${((p.h + 11) % 12) + 1}:${String(p.min).padStart(2, "0")} ${p.h < 12 ? "AM" : "PM"}`;
+
   return {
-    weekday: utc.toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" }),
-    date: utc.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }),
-    time: `${((p.h + 11) % 12) + 1}:${String(p.min).padStart(2, "0")} ${p.h < 12 ? "AM" : "PM"}`,
+    weekday,
+    date,
+    time,
+    full: `${weekday} ${date} ${time}`,
     short: `${String(p.day).padStart(2, "0")} · ${String(p.m + 1).padStart(2, "0")} · ${p.y}`,
     weekdayShort: utc.toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" }),
     day: String(p.day).padStart(2, "0"),

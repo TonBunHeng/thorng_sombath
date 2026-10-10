@@ -24,7 +24,7 @@ import { Gift } from "./components/Gift";
 import { Finale } from "./components/Finale";
 import { Lightbox } from "./components/Lightbox";
 import { CustomCursor } from "./components/CustomCursor";
-import { Toast, VineProgress, RsvpPill, ScrollTopBtn } from "./components/FloatingControls";
+import { Toast, VineProgress, FloatingActions } from "./components/FloatingControls";
 import { smoothScrollTo } from "./utils/scroll";
 
 export function App() {
@@ -38,8 +38,6 @@ export function App() {
 
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const [isGateOpen, setIsGateOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [showRsvpPill, setShowRsvpPill] = useState(false);
 
   const [lightbox, setLightbox] = useState({
     isOpen: false,
@@ -156,16 +154,20 @@ export function App() {
     }
   }, [lang, isGateOpen]);
 
-  // Lenis smooth scrolling & scroll tracking
+  // Lenis smooth scrolling & GSAP ScrollTrigger synchronization
   useEffect(() => {
     let lenis = null;
     let tickerCallback = null;
-    const isDesktop = window.innerWidth >= 1024 && matchMedia("(pointer: fine)").matches;
 
-    if (isDesktop && isGateOpen) {
+    if (isGateOpen) {
       lenis = new Lenis({
-        lerp: 0.085,
-        wheelMultiplier: 0.9
+        duration: 1.0,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.5
       });
       window.__lenis = lenis;
 
@@ -176,26 +178,25 @@ export function App() {
       };
       gsap.ticker.add(tickerCallback);
       gsap.ticker.lagSmoothing(0);
+
+      // Refresh ScrollTrigger and resize Lenis once gate DOM unmount settles
+      const t1 = setTimeout(() => {
+        lenis?.resize();
+        ScrollTrigger.refresh();
+      }, 150);
+      const t2 = setTimeout(() => {
+        lenis?.resize();
+        ScrollTrigger.refresh();
+      }, 500);
+
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+        if (tickerCallback) gsap.ticker.remove(tickerCallback);
+        window.__lenis = null;
+        if (lenis) lenis.destroy();
+      };
     }
-
-    const handleScroll = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = total > 0 ? window.scrollY / total : 0;
-      setScrollProgress(Math.min(1, Math.max(0, progress)));
-      setShowRsvpPill(window.scrollY > 400);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    if (lenis) {
-      lenis.on("scroll", handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (tickerCallback) gsap.ticker.remove(tickerCallback);
-      window.__lenis = null;
-      if (lenis) lenis.destroy();
-    };
   }, [isGateOpen]);
 
   const handleLocationClick = (e) => {
@@ -266,24 +267,18 @@ export function App() {
       />
 
       {/* Side scroll vine indicator */}
-      <VineProgress progress={scrollProgress} />
+      <VineProgress />
 
       {/* Floating action buttons: Back to Top & Location */}
-      <div className="floating-actions">
-        <ScrollTopBtn
-          label={t.toTop}
-          isVisible={showRsvpPill && !lightbox.isOpen}
-          onClick={handleScrollToTop}
-        />
-        <RsvpPill
-          label={t.location}
-          isVisible={showRsvpPill && !lightbox.isOpen}
-          onClick={handleLocationClick}
-        />
-      </div>
+      <FloatingActions
+        t={t}
+        isLightboxOpen={lightbox.isOpen}
+        onScrollToTop={handleScrollToTop}
+        onLocationClick={handleLocationClick}
+      />
 
       {/* Main Content Sections */}
-      <main id="main">
+      <main id="main" className="relative">
         <HeroCover wedding={weddingData} t={t} lang={lang} isGateOpen={isGateOpen} />
         <InvitationWords wedding={weddingData} t={t} lang={lang} />
         <Couple wedding={weddingData} t={t} lang={lang} />

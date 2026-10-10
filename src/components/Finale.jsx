@@ -88,9 +88,9 @@ export function Finale({ wedding, t, lang, onShowToast }) {
 
   return (
     <div ref={finaleRef}>
-      <section className="chapter finale" id="finale">
+      <section className="chapter finale bg-night text-center grid place-items-center min-h-[100svh] overflow-hidden" id="finale">
         <div>
-          <div className="finale__candles" id="candles" aria-hidden="true">
+          <div className="finale__candles flex justify-center gap-4 sm:gap-8 md:gap-12 mb-8" id="candles" aria-hidden="true">
             <i className="candle"></i>
             <i className="candle"></i>
             <i className="candle"></i>
@@ -100,10 +100,10 @@ export function Finale({ wedding, t, lang, onShowToast }) {
             <i className="candle"></i>
           </div>
 
-          <h2 className="display foil">{t.thanks}</h2>
-          <p className="finale__line">{t.thanksLine}</p>
+          <h2 className="display foil font-moul text-4xl sm:text-6xl md:text-7xl">{t.thanks}</h2>
+          <p className="finale__line text-cream-dim max-w-[30em] mx-auto my-4 mb-9 text-base sm:text-lg">{t.thanksLine}</p>
 
-          <div className="finale__actions">
+          <div className="finale__actions flex flex-wrap justify-center gap-3">
             <a className="share share--tg btn" href={tgUrl} target="_blank" rel="noopener noreferrer">
               <Icon name="telegram" />
               <span>
@@ -119,13 +119,13 @@ export function Finale({ wedding, t, lang, onShowToast }) {
             </button>
           </div>
 
-          <div className="finale__mono" id="finale-mono" style={{ width: 80, margin: "3rem auto 0" }}>
+          <div className="finale__mono w-20 mx-auto mt-12" id="finale-mono">
             <Crest />
           </div>
         </div>
       </section>
 
-      <footer className="footer">
+      <footer className="footer py-8 px-4 text-center text-cream-dim bg-night text-xs">
         <span>{wedding.couple.groom[lang]}</span> &amp; <span>{wedding.couple.bride[lang]}</span> ·{" "}
         <span>{lang === "km" ? toKhmerNumber(year) : year}</span>
       </footer>

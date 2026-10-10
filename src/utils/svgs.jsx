@@ -155,7 +155,7 @@ export function Corner({ position = "tl", className = "" }) {
 
 export function CornerGroup({ className = "cover__corners" }) {
   return (
-    <div data-orn="corner4" className={className}>
+    <div data-orn="corner4" className={`cover__corners absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
       <Corner position="tl" />
       <Corner position="tr" />
       <Corner position="bl" />
@@ -294,8 +294,8 @@ export function Lockup({ groom = "សម្បត្តិ", bride = "ថង", c
   const brideName = bride || "ថង";
 
   return (
-    <div className={`lockup ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>
-      <svg className="lk-orn" viewBox="0 0 600 470" aria-hidden="true">
+    <div className={`lockup relative w-full aspect-[600/470] [container-type:inline-size] ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>
+      <svg className="lk-orn absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 600 470" aria-hidden="true">
         <defs>
           <linearGradient id="lk-foil" x1="0" y1="0" x2="1" y2="0.35">
             <stop offset="0%" stopColor="#9c7124" />
@@ -315,31 +315,22 @@ export function Lockup({ groom = "សម្បត្តិ", bride = "ថង", c
           </g>
         )}
         <path
-          className="lk-swash"
+          className="lk-swash fill-none stroke-[url(#g-foil)] [stroke-width:3px] [stroke-linecap:round]"
           d="M40 292 C110 318 170 314 206 296 C236 280 238 254 220 250 C202 246 196 272 214 284 C240 302 262 294 272 284"
-          fill="none"
-          stroke="url(#g-foil)"
-          strokeWidth="3"
-          strokeLinecap="round"
         />
         <path
-          className="lk-swash lk-swash2"
+          className="lk-swash lk-swash2 fill-none stroke-[url(#g-foil)] [stroke-width:2.2px] [stroke-linecap:round]"
           d="M318 446 C392 460 476 456 566 438"
-          fill="none"
-          stroke="url(#g-foil)"
-          strokeWidth="2.2"
-          strokeLinecap="round"
         />
         <path
-          className="lk-heart"
+          className="lk-heart fill-[url(#g-foil)]"
           d="M266 316 C259 304 244 308 246 321 C248 332 266 341 266 348 C266 341 284 332 286 321 C288 308 273 304 266 316 Z"
-          fill="url(#g-foil)"
         />
       </svg>
-      <span className="lk-name lk-groom" aria-hidden="true">{groomName}</span>
-      <span className="lk-name lk-bride" aria-hidden="true">{brideName}</span>
-      <div className="lk-butterfly" aria-hidden="true">
-        <Butterfly className="is-resting" />
+      <span className="lk-name lk-groom font-moulpali whitespace-nowrap tracking-normal text-transparent bg-[position:30%] bg-[size:220%_100%] bg-clip-text text-center absolute top-[9%] left-[-2%] [font-size:23cqw] font-normal leading-none pt-[0.3em] pb-[0.45em] px-[0.1em]" aria-hidden="true">{groomName}</span>
+      <span className="lk-name lk-bride font-moulpali whitespace-nowrap tracking-normal text-transparent bg-[position:30%] bg-[size:220%_100%] bg-clip-text text-center absolute top-[45.5%] right-[1%] [font-size:23cqw] font-normal leading-none pt-[0.3em] pb-[0.45em] px-[0.1em]" aria-hidden="true">{brideName}</span>
+      <div className="lk-butterfly absolute top-[18%] right-[6%] w-[14%] rotate-[16deg]" aria-hidden="true">
+        <Butterfly className="is-resting w-full h-auto block overflow-visible" />
       </div>
     </div>
   );

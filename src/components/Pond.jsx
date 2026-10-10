@@ -58,12 +58,12 @@ export function Pond({ wedding, t, lang }) {
   }, []);
 
   return (
-    <section className="pond" id="pond">
-      <div ref={stickyRef} className="pond__sticky" id="pond-sticky">
+    <section className="pond bg-night h-[130svh] p-0 relative overflow-clip" id="pond">
+      <div ref={stickyRef} className="pond__sticky h-[100svh] sticky top-0">
         <picture>
           <source media="(min-aspect-ratio: 1/1)" srcSet={pictures.pond.srcSetWater} sizes="100vw" />
           <img
-            className="pond__fallback"
+            className="pond__fallback w-full h-full absolute inset-0 object-cover object-[50%_30%]"
             src={pictures.pond.fallback1280}
             srcSet={`${pictures.pond.fallback640} 640w, ${pictures.pond.fallback1280} 1280w, ${pictures.pond.fallback2000} 2000w`}
             sizes="100vw"
@@ -72,17 +72,17 @@ export function Pond({ wedding, t, lang }) {
             id="pond-img"
           />
         </picture>
-        <canvas ref={canvasRef} className="pond__canvas" id="pond-canvas"></canvas>
-        <div className="pond__shade"></div>
-        <div className="pond__text">
-          <div className="kicker">{t.pondKicker}</div>
-          <div className="display foil" style={{ fontSize: "var(--t-l)" }}>
+        <canvas ref={canvasRef} className="pond__canvas w-full h-full absolute inset-0" id="pond-canvas"></canvas>
+        <div className="pond__shade absolute inset-0 pointer-events-none"></div>
+        <div className="pond__text text-center px-4 md:px-8 pointer-events-none absolute top-[max(70px,7svh)] inset-x-0">
+          <div className="kicker text-foil-hi">{t.pondKicker}</div>
+          <div className="display foil font-moul text-3xl sm:text-4xl md:text-5xl drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
             <span>{groomShort}</span>{" "}
             <span style={{ fontFamily: "var(--f-script)" }}>&amp;</span>{" "}
             <span>{brideShort}</span>
           </div>
         </div>
-        <div className="pond__hint">{t.pondLine}</div>
+        <div className="pond__hint text-center text-cream pointer-events-none text-sm absolute bottom-[8svh] inset-x-0">{t.pondLine}</div>
       </div>
     </section>
   );

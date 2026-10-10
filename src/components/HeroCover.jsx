@@ -116,10 +116,10 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
       // 2. ScrollTrigger Scrub Pinning
       gsap.timeline({
         scrollTrigger: {
-          trigger: "#hero",
+          trigger: heroRef.current,
           start: "top top",
           end: "+=90%",
-          scrub: 1,
+          scrub: 0.5,
           pin: true,
           anticipatePin: 1
         }

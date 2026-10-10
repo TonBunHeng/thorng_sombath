@@ -54,8 +54,6 @@ export function initEmbers(canvas, { count = 36, intensity = 1 } = {}) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(255, 182, 92, ${Math.max(0, p.life * intensity)})`;
-      ctx.shadowColor = "#ffb65c";
-      ctx.shadowBlur = 6;
       ctx.fill();
     }
     animId = requestAnimationFrame(render);
@@ -107,20 +105,25 @@ export function initPondWater(canvas, imgElement, { onTap } = {}) {
 
   let animId = null;
   const render = () => {
-    ctx.clearRect(0, 0, width, height);
-    for (let i = ripples.length - 1; i >= 0; i--) {
-      const rip = ripples[i];
-      rip.r += 1.8;
-      rip.opacity *= 0.965;
+    if (ripples.length > 0) {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const rip = ripples[i];
+        rip.r += 1.8;
+        rip.opacity *= 0.965;
 
-      ctx.beginPath();
-      ctx.arc(rip.x, rip.y, rip.r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(251, 239, 192, ${rip.opacity})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(rip.x, rip.y, rip.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(251, 239, 192, ${rip.opacity})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
 
-      if (rip.opacity <= 0.01 || rip.r >= rip.maxR) {
-        ripples.splice(i, 1);
+        if (rip.opacity <= 0.01 || rip.r >= rip.maxR) {
+          ripples.splice(i, 1);
+        }
+      }
+      if (ripples.length === 0) {
+        ctx.clearRect(0, 0, width, height);
       }
     }
     animId = requestAnimationFrame(render);

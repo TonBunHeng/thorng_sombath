@@ -188,19 +188,19 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
   return (
     <div
       ref={gateRef}
-      className={`gate ${isOpening ? "is-opening" : ""}`}
+      className={`gate fixed inset-0 z-[150] grid place-items-center overflow-hidden ${isOpening ? "is-opening" : ""}`}
       id="gate"
       role="dialog"
       aria-modal="true"
     >
-      <picture className="gate__bg" aria-hidden="true">
+      <picture className="gate__bg absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
         <source media="(max-aspect-ratio: 1/1)" srcSet={pictures.gate.srcSetMobile} sizes="100vw" />
-        <img src={pictures.gate.bgDesktop} srcSet={pictures.gate.srcSetDesktop} sizes="100vw" alt="" />
+        <img src={pictures.gate.bgDesktop} srcSet={pictures.gate.srcSetDesktop} sizes="100vw" alt="" className="w-full h-full object-cover" />
       </picture>
-      <svg className="gate__florals emboss" id="gate-florals" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+      <svg className="gate__florals emboss absolute inset-0 w-full h-full pointer-events-none" id="gate-florals" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
 
       {/* Flying golden butterflies flock */}
-      <div className="gate__butterflies" aria-hidden="true">
+      <div className="gate__butterflies absolute inset-0 pointer-events-none z-10 overflow-hidden" aria-hidden="true">
         {GATE_BUTTERFLIES.map((b) => (
           <div
             key={b.id}
@@ -221,7 +221,7 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
         ))}
       </div>
 
-      <div className="gate__stage">
+      <div className="gate__stage relative z-[2] grid place-items-center">
         <div className="gate__invite">
           <div className="gate__kicker foil">{t.kicker}</div>
           <div className="gate__sub">{t.weddingInvitation}</div>
@@ -326,7 +326,7 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
           {t.tapSeal}
         </div>
       </div>
-      <div className="gate__dim" aria-hidden="true"></div>
+      <div className="gate__dim absolute inset-0 pointer-events-none" aria-hidden="true"></div>
     </div>
   );
 }
