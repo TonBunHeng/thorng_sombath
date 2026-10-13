@@ -36,27 +36,28 @@ export function Gift({ wedding, t, lang }) {
   );
 
   return (
-    <section ref={giftRef} className="chapter gift bg-olive-900 text-center pt-8" id="gift">
-      <span className="kicker text-foil block">
+    <section ref={giftRef} className="chapter gift" id="gift">
+      <span className="kicker" style={{ color: "var(--foil)", display: "block" }}>
         {t.giftKicker}
       </span>
       <Divider />
-      <p className="gift__note max-w-[34em] text-cream-dim mx-auto mb-[1.6rem]">{t.giftNote}</p>
+      <p className="gift__note">{t.giftNote}</p>
 
-      <div className="gift__cards grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[1.2rem] max-w-[760px] mx-auto mt-8" id="gift-cards">
+      <div className="gift__cards" id="gift-cards">
         {khqrAccounts.map((acc, idx) => (
-          <figure key={idx} className="gift__card bg-gradient-to-br from-olive-700 to-olive-800 rounded-md grid justify-items-center gap-2.5 m-0 p-[1.4rem] shadow-[inset_0_0_0_1px_rgba(217,177,90,0.35)]">
-            <div className="caps text-foil">
+          <figure key={idx} className="gift__card">
+            <div className="caps">
               {acc.bank}
             </div>
             <img
-              className="gift__img bg-white rounded-[10px] w-full max-w-[300px]"
+              className="gift__img"
               src={acc.qr}
               alt={`${acc.bank} QR`}
               loading="lazy"
             />
             <a
-              className="btn mt-3.5"
+              className="btn"
+              style={{ marginTop: ".9rem" }}
               href={acc.qr}
               download={`${acc.bank}-QR.jpg`}
             >

@@ -119,7 +119,7 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
           trigger: heroRef.current,
           start: "top top",
           end: "+=90%",
-          scrub: 0.5,
+          scrub: 1,
           pin: true,
           anticipatePin: 1
         }

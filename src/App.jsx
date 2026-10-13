@@ -154,47 +154,70 @@ export function App() {
     }
   }, [lang, isGateOpen]);
 
-  // Lenis smooth scrolling & GSAP ScrollTrigger synchronization
+  // Lenis smooth scrolling & GSAP ScrollTrigger synchronization (matching raksmey-pheakdey)
   useEffect(() => {
-    let lenis = null;
-    let tickerCallback = null;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (isGateOpen) {
-      lenis = new Lenis({
-        duration: 1.0,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: "vertical",
-        gestureOrientation: "vertical",
-        smoothWheel: true,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 1.5
-      });
-      window.__lenis = lenis;
+    // Run smooth-scroller without reduced motion, matching raksmey-pheakdey settings
+    if (prefersReducedMotion) return;
 
-      lenis.on("scroll", ScrollTrigger.update);
+    const lenis = new Lenis({
+      lerp: 0.085,
+      wheelMultiplier: 0.9
+    });
+    window.__lenis = lenis;
 
-      tickerCallback = (time) => {
-        lenis.raf(time * 1000);
-      };
-      gsap.ticker.add(tickerCallback);
-      gsap.ticker.lagSmoothing(0);
+    lenis.on("scroll", ScrollTrigger.update);
 
-      // Refresh ScrollTrigger and resize Lenis once gate DOM unmount settles
+    const tickerCallback = (time) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tickerCallback);
+    gsap.ticker.lagSmoothing(0);
+
+    lenis.stop();
+
+    // Intercept all in-page anchor links for silky smooth scrolling
+    const handleAnchorClick = (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      const targetEl = document.querySelector(href);
+      if (targetEl) {
+        e.preventDefault();
+        smoothScrollTo(targetEl, { duration: 1.8 });
+      }
+    };
+    document.addEventListener("click", handleAnchorClick);
+
+    return () => {
+      document.removeEventListener("click", handleAnchorClick);
+      gsap.ticker.remove(tickerCallback);
+      window.__lenis = null;
+      lenis.destroy();
+    };
+  }, []);
+
+  // When gate opens, activate Lenis and recalculate triggers
+  useEffect(() => {
+    if (isGateOpen && window.__lenis) {
+      window.__lenis.start();
+      window.__lenis.resize();
+      ScrollTrigger.refresh();
+
       const t1 = setTimeout(() => {
-        lenis?.resize();
+        window.__lenis?.resize();
         ScrollTrigger.refresh();
       }, 150);
       const t2 = setTimeout(() => {
-        lenis?.resize();
+        window.__lenis?.resize();
         ScrollTrigger.refresh();
       }, 500);
 
       return () => {
         clearTimeout(t1);
         clearTimeout(t2);
-        if (tickerCallback) gsap.ticker.remove(tickerCallback);
-        window.__lenis = null;
-        if (lenis) lenis.destroy();
       };
     }
   }, [isGateOpen]);
@@ -203,16 +226,17 @@ export function App() {
     if (e) e.preventDefault();
     const venueEl = document.getElementById("venue");
     if (venueEl) {
-      smoothScrollTo(venueEl, { duration: 1.5 });
+      smoothScrollTo(venueEl, { duration: 1.8 });
     }
   };
 
   const handleScrollToTop = (e) => {
     if (e) e.preventDefault();
-    smoothScrollTo(0, { duration: 1.5 });
+    smoothScrollTo(0, { duration: 1.8 });
   };
 
   const handleOpenLightbox = (index, photos) => {
+    window.__lenis?.stop();
     setLightbox({
       isOpen: true,
       activeIndex: index,
@@ -221,6 +245,7 @@ export function App() {
   };
 
   const handleCloseLightbox = () => {
+    window.__lenis?.start();
     setLightbox((prev) => ({ ...prev, isOpen: false }));
   };
 
@@ -278,7 +303,7 @@ export function App() {
       />
 
       {/* Main Content Sections */}
-      <main id="main" className="relative">
+      <main id="main">
         <HeroCover wedding={weddingData} t={t} lang={lang} isGateOpen={isGateOpen} />
         <InvitationWords wedding={weddingData} t={t} lang={lang} />
         <Couple wedding={weddingData} t={t} lang={lang} />

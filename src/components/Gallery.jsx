@@ -60,21 +60,21 @@ export function Gallery({ t, onOpenLightbox }) {
   if (!photos.length) return null;
 
   return (
-    <section ref={galleryRef} className="chapter gallery bg-night" id="gallery">
-      <div className="chapter__head text-center max-w-[900px] mx-auto mb-10">
-        <span className="kicker text-foil block">{t.galleryKicker}</span>
-        <h2 className="display font-moul text-3xl sm:text-4xl md:text-5xl">{t.galleryTitle}</h2>
+    <section ref={galleryRef} className="chapter gallery" id="gallery">
+      <div className="chapter__head">
+        <span className="kicker">{t.galleryKicker}</span>
+        <h2 className="display">{t.galleryTitle}</h2>
         <Divider />
       </div>
 
-      <div className="gallery__grid flex items-start gap-2.5 sm:gap-4 max-w-[1400px] mx-auto" id="gallery-grid">
+      <div className="gallery__grid" id="gallery-grid">
         {cols.map((col, cIdx) => (
-          <div key={cIdx} className="gallery__col flex-1 grid gap-2.5 sm:gap-4">
+          <div key={cIdx} className="gallery__col">
             {col.map((item) => (
               <button
                 key={item.id}
                 type="button"
-                className="gallery__item w-full block relative overflow-hidden rounded bg-olive-900 cursor-zoom-in border-0 p-0"
+                className="gallery__item"
                 style={{ aspectRatio: `${item.w} / ${item.h}` }}
                 onClick={() => onOpenLightbox(item.index, photos)}
                 aria-label={`Photo ${item.index + 1}`}
@@ -84,7 +84,6 @@ export function Gallery({ t, onOpenLightbox }) {
                   alt=""
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
               </button>
             ))}

@@ -43,7 +43,8 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
 
   return (
     <dialog
-      className="lightbox fixed inset-0 z-[120] w-screen h-[100dvh] max-w-none max-h-none m-0 p-0 border-0 bg-[#0c0a07]/95 text-cream grid place-items-center"
+      className="lightbox"
+      id="lightbox"
       open
       onClick={(e) => {
         if (e.target.tagName === "DIALOG") onClose();
@@ -57,73 +58,35 @@ export function Lightbox({ isOpen, activeIndex, photos, onClose, onPrev, onNext,
         src={`/img/gallery/${current.id}-1600.webp`}
         alt=""
         loading="eager"
-        className="object-contain rounded max-w-[92vw] max-h-[82dvh] shadow-[0_30px_80px_rgba(0,0,0,0.7)] select-none"
       />
       <button
-        className="lb-btn lb-close absolute top-4 right-4 z-10 w-11 h-11 rounded-full grid place-items-center cursor-pointer bg-[#1d2010]/75 border border-foil text-foil-hi backdrop-blur-md transition-all hover:scale-110"
+        className="lb-btn lb-close"
+        id="lb-close"
         type="button"
         onClick={onClose}
         aria-label={lang === "km" ? "បិទ" : "Close"}
-        title={lang === "km" ? "បិទ" : "Close"}
       >
-        <svg
-          viewBox="0 0 24 24"
-          width="18"
-          height="18"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
+        ✕
       </button>
       <button
-        className="lb-btn lb-prev absolute top-1/2 left-4 -translate-y-1/2 z-10 w-11 h-11 rounded-full grid place-items-center cursor-pointer bg-[#1d2010]/75 border border-foil text-foil-hi backdrop-blur-md transition-all hover:scale-110"
+        className="lb-btn lb-prev"
+        id="lb-prev"
         type="button"
         onClick={onPrev}
         aria-label={lang === "km" ? "មុន" : "Previous"}
-        title={lang === "km" ? "មុន" : "Previous"}
       >
-        <svg
-          viewBox="0 0 24 24"
-          width="20"
-          height="20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
+        ‹
       </button>
       <button
-        className="lb-btn lb-next absolute top-1/2 right-4 -translate-y-1/2 z-10 w-11 h-11 rounded-full grid place-items-center cursor-pointer bg-[#1d2010]/75 border border-foil text-foil-hi backdrop-blur-md transition-all hover:scale-110"
+        className="lb-btn lb-next"
+        id="lb-next"
         type="button"
         onClick={onNext}
         aria-label={lang === "km" ? "បន្ទាប់" : "Next"}
-        title={lang === "km" ? "បន្ទាប់" : "Next"}
       >
-        <svg
-          viewBox="0 0 24 24"
-          width="20"
-          height="20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
+        ›
       </button>
-      <div className="lb-count caps absolute bottom-4 left-0 right-0 text-center text-foil pointer-events-none text-sm tracking-widest">
+      <div className="lb-count caps" id="lb-count">
         {lang === "km"
           ? `${toKhmerNumber(activeIndex + 1)} / ${toKhmerNumber(photos.length)}`
           : `${activeIndex + 1} / ${photos.length}`}

@@ -294,43 +294,30 @@ export function Lockup({ groom = "សម្បត្តិ", bride = "ថង", c
   const brideName = bride || "ថង";
 
   return (
-    <div className={`lockup relative w-full aspect-[600/470] [container-type:inline-size] ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>
-      <svg className="lk-orn absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 600 470" aria-hidden="true">
-        <defs>
-          <linearGradient id="lk-foil" x1="0" y1="0" x2="1" y2="0.35">
-            <stop offset="0%" stopColor="#9c7124" />
-            <stop offset="25%" stopColor="#d9b15a" />
-            <stop offset="45%" stopColor="#fbefc0" />
-            <stop offset="62%" stopColor="#d9b15a" />
-            <stop offset="85%" stopColor="#9c7124" />
-            <stop offset="100%" stopColor="#d9b15a" />
-          </linearGradient>
-          <filter id="lk-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#000000" floodOpacity="0.4" />
-          </filter>
-        </defs>
+    <div className={`lockup ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>
+      <svg className="lk-orn" viewBox="0 0 600 470" aria-hidden="true">
         {crest && (
           <g className="lk-crest" transform="translate(300 60) scale(.5)">
             <KbachCrestSvg foilId="g-foil" />
           </g>
         )}
         <path
-          className="lk-swash fill-none stroke-[url(#g-foil)] [stroke-width:3px] [stroke-linecap:round]"
+          className="lk-swash"
           d="M40 292 C110 318 170 314 206 296 C236 280 238 254 220 250 C202 246 196 272 214 284 C240 302 262 294 272 284"
         />
         <path
-          className="lk-swash lk-swash2 fill-none stroke-[url(#g-foil)] [stroke-width:2.2px] [stroke-linecap:round]"
+          className="lk-swash lk-swash2"
           d="M318 446 C392 460 476 456 566 438"
         />
         <path
-          className="lk-heart fill-[url(#g-foil)]"
+          className="lk-heart"
           d="M266 316 C259 304 244 308 246 321 C248 332 266 341 266 348 C266 341 284 332 286 321 C288 308 273 304 266 316 Z"
         />
       </svg>
-      <span className="lk-name lk-groom font-moulpali whitespace-nowrap tracking-normal text-transparent bg-[position:30%] bg-[size:220%_100%] bg-clip-text text-center absolute top-[9%] left-[-2%] [font-size:23cqw] font-normal leading-none pt-[0.3em] pb-[0.45em] px-[0.1em]" aria-hidden="true">{groomName}</span>
-      <span className="lk-name lk-bride font-moulpali whitespace-nowrap tracking-normal text-transparent bg-[position:30%] bg-[size:220%_100%] bg-clip-text text-center absolute top-[45.5%] right-[1%] [font-size:23cqw] font-normal leading-none pt-[0.3em] pb-[0.45em] px-[0.1em]" aria-hidden="true">{brideName}</span>
-      <div className="lk-butterfly absolute top-[18%] right-[6%] w-[14%] rotate-[16deg]" aria-hidden="true">
-        <Butterfly className="is-resting w-full h-auto block overflow-visible" />
+      <span className="lk-name lk-groom" aria-hidden="true">{groomName}</span>
+      <span className="lk-name lk-bride" aria-hidden="true">{brideName}</span>
+      <div className="lk-butterfly" aria-hidden="true">
+        <Butterfly className="is-resting" />
       </div>
     </div>
   );

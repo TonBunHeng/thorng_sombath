@@ -10,15 +10,15 @@ export function smoothScrollTo(target, options = {}) {
     if (el) {
       window.__lenis.scrollTo(el, {
         offset: options.offset ?? 0,
-        duration: options.duration ?? 1.5,
-        easing: options.easing ?? ((t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)))
+        duration: options.duration ?? 1.8,
+        easing: options.easing ?? ((t) => 1 - Math.pow(1 - t, 4))
       });
       return;
     }
     if (typeof target === "number") {
       window.__lenis.scrollTo(target, {
-        duration: options.duration ?? 1.5,
-        easing: options.easing ?? ((t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)))
+        duration: options.duration ?? 1.8,
+        easing: options.easing ?? ((t) => 1 - Math.pow(1 - t, 4))
       });
       return;
     }

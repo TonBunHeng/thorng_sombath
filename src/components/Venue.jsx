@@ -86,23 +86,30 @@ export function Venue({ wedding, t, lang }) {
   };
 
   return (
-    <section ref={venueRef} className="chapter venue bg-night text-center overflow-hidden" id="venue">
-      <span className="kicker text-foil block">
+    <section ref={venueRef} className="chapter venue" id="venue">
+      <span className="kicker" style={{ color: "var(--foil)", display: "block" }}>
         {t.venueKicker}
       </span>
 
-      <div className="venue__crest w-20 mx-auto mt-4">
-        <Crest />
+      <div id="angkor">
+        <Crest className="venue__crest" />
+        <svg className="venue__pin" viewBox="0 0 40 52" fill="none" aria-hidden="true">
+          <path d="M20 50 C20 50 4 31 4 19 A16 16 0 0 1 36 19 C36 31 20 50 20 50 Z" stroke="url(#g-foil)" strokeWidth="1.4" />
+          <path d="M20 9 C24 14 24 22 20 27 C16 22 16 14 20 9 Z" fill="url(#g-foil)" />
+        </svg>
       </div>
 
-      <div className="venue__name foil font-moul my-4 text-2xl sm:text-3xl md:text-4xl leading-relaxed">{wedding.venue.name[lang]}</div>
-      <div className="venue__meta text-cream-dim text-sm sm:text-base">{wedding.venue.address[lang]}</div>
+      <div className="venue__name foil">{wedding.venue.name[lang]}</div>
+      <div className="venue__meta">{wedding.venue.address[lang]}</div>
 
-      <div className="venue__when flex justify-center flex-wrap gap-1 my-6 text-cream-dim">
-        <div>{dateObj.full}</div>
+      <div className="venue__when">
+        <div className="caps" style={{ color: "var(--foil-hi)" }}>{dateObj.weekday}</div>
+        <div>{dateObj.date}</div>
+        <div>{dateObj.time}</div>
+        {wedding.dateIsPlaceholder && <div className="tbc">{t.dateTbc}</div>}
       </div>
 
-      <div className="venue__map max-w-[820px] w-full mx-auto mb-7 rounded-md overflow-hidden aspect-[16/10] shadow-[0_0_0_1px_rgba(217,177,90,0.5),0_0_0_8px_#120f0b,0_0_0_9px_rgba(217,177,90,0.25),0_30px_60px_rgba(0,0,0,0.5)]">
+      <div className="venue__map">
         <iframe
           id="venue-map"
           title="Google Map"
@@ -110,11 +117,10 @@ export function Venue({ wedding, t, lang }) {
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           allowFullScreen
-          className="w-full h-full border-0 block"
         ></iframe>
       </div>
 
-      <div className="venue__actions flex flex-wrap justify-center gap-3">
+      <div className="venue__actions">
         <a
           className="btn"
           id="map-link"
@@ -130,7 +136,7 @@ export function Venue({ wedding, t, lang }) {
       </div>
 
       {wedding.venue.note[lang] && (
-        <p className="venue__meta text-cream-dim mt-5 text-sm">
+        <p className="venue__meta" style={{ marginTop: "1.4rem", fontSize: ".9rem" }}>
           {wedding.venue.note[lang]}
         </p>
       )}

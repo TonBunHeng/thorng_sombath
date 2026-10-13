@@ -1,28 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 export function CustomCursor({ lang }) {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [isHover, setIsHover] = useState(false);
-  const [label, setLabel] = useState("");
+  const cursorRef = useRef(null);
+  const glowRef = useRef(null);
+  const labelRef = useRef(null);
 
   useEffect(() => {
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!isFinePointer || prefersReducedMotion) return;
+
+    const cursor = cursorRef.current;
+    const glow = glowRef.current;
+    const labelEl = labelRef.current;
+    if (!cursor || !glow) return;
+
+    const setX = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3" });
+    const setY = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3" });
+    const setGlowX = gsap.quickTo(glow, "x", { duration: 0.9, ease: "power3" });
+    const setGlowY = gsap.quickTo(glow, "y", { duration: 0.9, ease: "power3" });
+
+    let prevX = 0;
+    let prevY = 0;
+
     const handlePointerMove = (e) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      setX(e.clientX);
+      setY(e.clientY);
+      setGlowX(prevX - e.clientX);
+      setGlowY(prevY - e.clientY);
+      prevX = e.clientX;
+      prevY = e.clientY;
+      setGlowX(0);
+      setGlowY(0);
     };
 
     const handlePointerOver = (e) => {
       const target = e.target;
-      const isInteractive = !!target.closest("a, button, label, .pond__canvas, #env");
-      setIsHover(isInteractive);
+      const isInteractive = !!target.closest("a, button, label, .pond__canvas, #env, [role='button']");
+      cursor.classList.toggle("is-hover", isInteractive);
 
+      let text = "";
       if (target.closest("#env")) {
-        setLabel(lang === "km" ? "ចុចបើក" : "Open");
+        text = lang === "km" ? "ចុចបើក" : "Open";
       } else if (target.closest(".pond__canvas")) {
-        setLabel(lang === "km" ? "ប៉ះទឹក" : "Touch");
-      } else {
-        setLabel("");
+        text = lang === "km" ? "ប៉ះទឹក" : "Touch";
       }
+      cursor.classList.toggle("has-label", !!text);
+      if (labelEl) labelEl.textContent = text;
     };
 
     window.addEventListener("pointermove", handlePointerMove);
@@ -61,15 +86,13 @@ export function CustomCursor({ lang }) {
 
   return (
     <div
-      className={`cursor ${isHover ? "is-hover" : ""} ${label ? "has-label" : ""}`}
-      style={{
-        transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`
-      }}
+      ref={cursorRef}
+      className="cursor"
       aria-hidden="true"
     >
-      <div className="cursor__glow"></div>
+      <div ref={glowRef} className="cursor__glow"></div>
       <div className="cursor__dot"></div>
-      <div className="cursor__label">{label}</div>
+      <div ref={labelRef} className="cursor__label"></div>
     </div>
   );
 }
