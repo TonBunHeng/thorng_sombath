@@ -1,239 +1,166 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Butterfly, Corner, Crest, Lockup, WaxSeal } from "../utils/svgs";
+import { Corner, Crest, Lockup, WaxSeal, VineInner, getFlapFoilPath } from "../utils/svgs";
 import { playSfx, toggleMusic } from "../utils/audio";
-import { pictures } from "../data/pictures";
+import { formatDate } from "../data/i18n";
 import gsap from "gsap";
 
-const GATE_BUTTERFLIES = [
-  { id: 1, x: 10, y: 16, size: 54, rotate: -18, speed: 3.4, delay: 0 },
-  { id: 2, x: 84, y: 14, size: 46, rotate: 22, speed: 2.8, delay: 0.4 },
-  { id: 3, x: 18, y: 38, size: 38, rotate: 12, speed: 3.8, delay: 0.8 },
-  { id: 4, x: 80, y: 40, size: 48, rotate: -24, speed: 3.1, delay: 0.2 },
-  { id: 5, x: 14, y: 68, size: 42, rotate: -8, speed: 4.0, delay: 0.6 },
-  { id: 6, x: 86, y: 70, size: 44, rotate: 18, speed: 3.5, delay: 1.0 },
-  { id: 7, x: 48, y: 18, size: 36, rotate: -14, speed: 3.0, delay: 0.5 },
-  { id: 8, x: 26, y: 84, size: 40, rotate: 28, speed: 3.6, delay: 0.3 },
-  { id: 9, x: 72, y: 82, size: 42, rotate: -20, speed: 3.3, delay: 0.7 },
-  { id: 10, x: 90, y: 52, size: 34, rotate: 16, speed: 4.2, delay: 0.9 },
-  { id: 11, x: 8, y: 48, size: 38, rotate: -32, speed: 3.7, delay: 0.1 }
-];
-
-export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
-  const [isOpening, setIsOpening] = useState(false);
+export function EnvelopeGate({ wedding, t, lang, onOpen, startIntro = true }) {
+  const [mounted, setMounted] = useState(true);
   const gateRef = useRef(null);
+  const isOpeningRef = useRef(false);
 
   const groomShort = wedding.couple.groom.shortKm || wedding.couple.groom.km.split(" ").pop();
   const brideShort = wedding.couple.bride.shortKm || wedding.couple.bride.km.split(" ").pop();
 
+  const formattedDate = formatDate(wedding.date, lang);
+  const dateShort = formattedDate.short;
+
   useEffect(() => {
-    const handlePointerMove = (e) => {
-      if (isOpening) return;
-      const el = document.getElementById("env-tilt");
-      if (!el) return;
-      const { innerWidth, innerHeight } = window;
-      const x = ((e.clientX / innerWidth) - 0.5) * 16;
-      const y = ((e.clientY / innerHeight) - 0.5) * -16;
-      gsap.to(el, {
-        rotateY: x,
-        rotateX: y,
-        duration: 0.6,
-        ease: "power2.out"
-      });
-    };
+    if (!startIntro) return;
 
-    const handlePointerLeave = () => {
-      if (isOpening) return;
-      const el = document.getElementById("env-tilt");
-      if (!el) return;
-      gsap.to(el, {
-        rotateY: 0,
-        rotateX: 0,
-        duration: 0.8,
-        ease: "power2.out"
-      });
-    };
+    const gate = gateRef.current;
+    if (!gate) return;
 
-    window.addEventListener("pointermove", handlePointerMove);
-    document.addEventListener("pointerleave", handlePointerLeave);
+    const env = gate.querySelector("#env");
+    const tilt = gate.querySelector("#env-tilt");
+    const seal = gate.querySelector("#seal");
 
-    return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      document.removeEventListener("pointerleave", handlePointerLeave);
-    };
-  }, [isOpening]);
-
-  // Continuous organic hovering motion for flying butterflies
-  useEffect(() => {
     const ctx = gsap.context(() => {
-      const bEls = gateRef.current?.querySelectorAll(".gate__flying-bf");
-      if (bEls) {
-        bEls.forEach((el, i) => {
-          const b = GATE_BUTTERFLIES[i] || { speed: 3.2, delay: 0 };
-          gsap.to(el, {
-            x: (i % 2 === 0 ? 1 : -1) * (18 + (i * 6) % 20),
-            y: (i % 3 === 0 ? -1 : 1) * (14 + (i * 5) % 16),
-            rotate: `+=${(i % 2 === 0 ? 14 : -14)}`,
-            duration: b.speed,
-            yoyo: true,
-            repeat: -1,
-            ease: "sine.inOut",
-            delay: b.delay
-          });
-        });
-      }
+      // Intro entrance using explicit fromTo
+      gsap.fromTo(
+        ".gate__invite > *",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power2.out", stagger: 0.12, delay: 0.1 }
+      );
+      gsap.fromTo(
+        env,
+        { y: 80, rotateX: 22, opacity: 0 },
+        { y: 0, rotateX: 0, opacity: 1, duration: 1.6, ease: "power3.out", delay: 0.15 }
+      );
+      gsap.fromTo(
+        seal,
+        { scale: 1.25, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(2)", delay: 0.9 }
+      );
+      gsap.fromTo(
+        ".gate__hint",
+        { opacity: 0 },
+        { opacity: 1, duration: 1, delay: 1.3 }
+      );
+
+      // Idle float
+      gsap.to(tilt, { y: -6, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
     }, gateRef);
 
-    return () => ctx.revert();
-  }, []);
+    // 3D tilt tracking
+    gsap.set(tilt, { rotateX: 6 });
+    const updateTilt = (nx, ny) => {
+      gsap.to(tilt, { rotateY: nx * 9, rotateX: 6 - ny * 7, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+    };
 
-  const handleOpen = () => {
-    if (isOpening) return;
-    setIsOpening(true);
+    const handlePointerMove = (e) => {
+      if (isOpeningRef.current) return;
+      updateTilt(e.clientX / window.innerWidth - 0.5, e.clientY / window.innerHeight - 0.5);
+    };
 
-    playSfx("paper");
-    setTimeout(() => playSfx("chime"), 500);
-    toggleMusic(true, wedding.music);
+    const handleDeviceOrientation = (e) => {
+      if (isOpeningRef.current || e.gamma == null) return;
+      updateTilt(gsap.utils.clamp(-0.5, 0.5, e.gamma / 40), gsap.utils.clamp(-0.5, 0.5, (e.beta - 45) / 40));
+    };
 
-    // 0. Reset 3D tilt immediately so envelope unfolds flat towards camera
-    const tiltEl = document.getElementById("env-tilt");
-    if (tiltEl) {
-      gsap.to(tiltEl, {
-        rotateX: 0,
-        rotateY: 0,
-        duration: 0.35,
-        ease: "power2.out"
-      });
+    const isFine = matchMedia("(pointer: fine)").matches;
+    if (isFine) {
+      gate.addEventListener("pointermove", handlePointerMove);
+    } else {
+      window.addEventListener("deviceorientation", handleDeviceOrientation);
     }
 
-    const tl = gsap.timeline({
-      defaults: { ease: "power2.inOut" },
-      onComplete: () => {
-        onOpen();
-      }
-    });
+    return () => {
+      gate.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
+      ctx.revert();
+    };
+  }, [startIntro]);
 
-    // Flying butterflies scatter outwards and soar into the sky as envelope opens
-    tl.to(".gate__flying-bf", {
-      x: (i) => ((i % 2 === 0 ? -1 : 1) * (180 + Math.random() * 240)),
-      y: () => -160 - Math.random() * 260,
-      scale: 0.3,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.04,
-      ease: "power2.out"
-    }, 0.05);
+  const handleTriggerOpen = () => {
+    if (isOpeningRef.current) return;
+    isOpeningRef.current = true;
 
-    // Fade out hint text and gate title
-    tl.to([".gate__hint", ".gate__invite"], {
-      opacity: 0,
-      y: -12,
-      duration: 0.35,
-      ease: "power2.out"
-    }, 0);
+    const gate = gateRef.current;
+    if (!gate) return;
 
-    // 1. Wax seal lifts & fades away
-    tl.to("#seal", {
-      scale: 1.25,
-      y: -35,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.out"
-    }, 0.05);
+    const tilt = gate.querySelector("#env-tilt");
+    const seal = gate.querySelector("#seal");
+    const parts = gate.querySelectorAll(".e2__part");
 
-    // 2. Flap unfolds 180 deg around top hinge
-    tl.to("#env-flap", {
-      rotateX: -180,
-      transformOrigin: "50% 0%",
-      duration: 0.95,
-      ease: "power2.inOut"
-    }, 0.25);
+    gate.classList.add("is-opening");
 
-    tl.to("#flap-shadow", {
-      opacity: 0,
-      duration: 0.6,
-      ease: "power1.out"
-    }, 0.35);
+    // Audio sfx and background music
+    playSfx("paper");
+    setTimeout(() => playSfx("chime"), 550);
+    toggleMusic(true, wedding.music);
 
-    // 3. Card slides up smoothly from inside the pocket
-    tl.to("#env-card", {
-      yPercent: -68,
-      duration: 1.1,
-      ease: "power2.out"
-    }, 0.6);
+    let opened = false;
+    const triggerPageOpen = () => {
+      if (opened) return;
+      opened = true;
+      onOpen();
+      gsap.to(gate, {
+        opacity: 0,
+        duration: 1.1,
+        ease: "power1.inOut",
+        onComplete: () => setMounted(false)
+      });
+    };
 
-    // 4. Envelope body & pocket descend into the depth
-    tl.to([".e2__back", ".e2__pocket", "#env-flap"], {
-      yPercent: 35,
-      opacity: 0,
-      duration: 0.85,
-      ease: "power2.in"
-    }, 0.9);
+    const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
 
-    // 5. Card glides forward toward the camera
-    tl.to("#env-card", {
-      scale: 1.25,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power2.in"
-    }, 1.4);
+    tl.to(tilt, { rotateX: 4, rotateY: 0, y: 0, duration: 0.6 }, 0)
+      .to(".gate__invite, .gate__hint", { opacity: 0, y: -14, duration: 0.7 }, 0)
+      .to(seal, { scale: 0.93, duration: 0.18, ease: "power2.in" }, 0)
+      .to(seal, { scale: 1.1, y: -18, rotate: -10, duration: 0.55, ease: "power2.out" }, 0.18)
+      .to(seal, { "--seal-shadow": 1, duration: 0.55 }, 0.18)
+      .to(seal, { x: "38vw", y: "60vh", rotate: 70, scale: 0.9, duration: 0.9, ease: "power2.in" }, 0.8)
+      .to("#env-flap", { rotateX: 180, duration: 1.6, ease: "power2.inOut" }, 0.75)
+      .to("#flap-shadow", { opacity: 0, duration: 0.7 }, 0.75)
+      .set("#env-flap", { zIndex: 1 }, 1.55)
+      .to("#env-card", { yPercent: -66, rotate: -1.4, duration: 1.5, ease: "power2.inOut" }, 2.15)
+      .to(parts, { yPercent: 7, duration: 1.5, ease: "power2.inOut" }, 2.15)
+      .set("#env-card", { zIndex: 6 }, 3.6)
+      .to(parts, { yPercent: 135, rotate: 3, duration: 1, ease: "power2.in" }, 3.6)
+      .to(".e2__ground", { opacity: 0, duration: 0.6 }, 3.6)
+      .to("#env-card", { yPercent: -20, rotate: 0, scale: 1.35, duration: 1.2, ease: "power3.inOut" }, 3.7)
+      .to(".gate__dim", { opacity: 1, duration: 0.9, ease: "power1.in" }, 4.6)
+      .to("#env-card", { scale: 2.4, opacity: 0, duration: 1, ease: "power2.in" }, 4.6)
+      .add(triggerPageOpen, 5.45);
 
-    // 6. Gate fades away cleanly into the hero cover
-    tl.to(gateRef.current, {
-      opacity: 0,
-      duration: 0.65,
-      ease: "power2.out"
-    }, 1.6);
+    setTimeout(triggerPageOpen, 7500);
   };
 
+  if (!mounted) return null;
+
   return (
-    <div
-      ref={gateRef}
-      className={`gate ${isOpening ? "is-opening" : ""}`}
-      id="gate"
-      role="dialog"
-      aria-modal="true"
-    >
+    <div className="gate" id="gate" ref={gateRef} role="dialog" aria-modal="true" aria-labelledby="gate-guest">
       <picture className="gate__bg" aria-hidden="true">
-        <source media="(max-aspect-ratio: 1/1)" srcSet={pictures.gate.srcSetMobile} sizes="100vw" />
-        <img src={pictures.gate.bgDesktop} srcSet={pictures.gate.srcSetDesktop} sizes="100vw" alt="" />
+        <source media="(max-aspect-ratio: 1/1)" srcSet="/img/words-640.webp 640w, /img/words-1280.webp 1280w" sizes="100vw" />
+        <img src="/img/cozy-1280.webp" srcSet="/img/cozy-1280.webp 1280w, /img/cozy-2000.webp 2000w" sizes="100vw" alt="" />
       </picture>
-      <svg className="gate__florals emboss" id="gate-florals" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
-
-      {/* Flying golden butterflies flock */}
-      <div className="gate__butterflies" aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 10, overflow: "hidden" }}>
-        {GATE_BUTTERFLIES.map((b) => (
-          <div
-            key={b.id}
-            className="gate__flying-bf"
-            style={{
-              position: "absolute",
-              left: `${b.x}%`,
-              top: `${b.y}%`,
-              width: `${b.size}px`,
-              transform: `rotate(${b.rotate}deg)`,
-              pointerEvents: "none",
-              zIndex: 10,
-              filter: "drop-shadow(0 3px 10px rgba(0, 0, 0, 0.45))"
-            }}
-          >
-            <Butterfly />
-          </div>
-        ))}
-      </div>
-
+      <svg className="gate__florals emboss" id="gate-florals" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g transform="translate(0 0)"><VineInner /></g>
+        <g transform="translate(400 800) scale(-1 -1)"><VineInner /></g>
+        <g transform="translate(400 120) scale(-.7 .7)"><VineInner /></g>
+        <g transform="translate(0 690) scale(.6 -.6)"><VineInner /></g>
+      </svg>
       <div className="gate__stage">
         <div className="gate__invite">
-          <div className="gate__kicker foil">{t.kicker}</div>
-          <div className="gate__sub">{t.weddingInvitation}</div>
+          <div className="gate__kicker foil" data-t="kicker">{t.kicker}</div>
+          <div className="gate__sub" data-t="weddingInvitation">{t.weddingInvitation}</div>
         </div>
-
         <div id="env-mount">
-          <div className="e2" id="env" onClick={handleOpen} style={{ cursor: "pointer" }}>
+          <div className="e2" id="env" onClick={handleTriggerOpen}>
             <div className="e2__ground" aria-hidden="true"></div>
             <div className="e2__stage" id="env-tilt">
               <div className="e2__part e2__back"></div>
-
-              {/* Inner Card */}
               <div className="e2__card" id="env-card">
                 <div className="e2__card-frame"></div>
                 <div className="e2__card-corners">
@@ -243,18 +170,12 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                   <Corner position="br" />
                 </div>
                 <div className="e2__card-inner">
-                  <div className="e2__card-kicker">{t.kicker}</div>
-                  <Lockup
-                    groom={groomShort}
-                    bride={brideShort}
-                    className="lk-card"
-                  />
-                  <div className="e2__card-invite">{t.inviteTo}</div>
-                  <div className="e2__card-date">15 · 11 · 2026</div>
+                  <div className="e2__card-kicker" data-t="kicker">{t.kicker}</div>
+                  <Lockup groom={groomShort} bride={brideShort} crest={true} className="lk-card" />
+                  <div className="e2__card-invite" data-t="inviteTo">{t.inviteTo}</div>
+                  <div className="e2__card-date">{dateShort}</div>
                 </div>
               </div>
-
-              {/* Pocket front */}
               <div className="e2__part e2__pocket">
                 <div className="e2__pocket-l"></div>
                 <div className="e2__pocket-r"></div>
@@ -263,68 +184,38 @@ export function EnvelopeGate({ wedding, t, _lang, onOpen }) {
                   <Corner position="bl" />
                   <Corner position="br" />
                 </div>
+                <div className="e2__date">{dateShort}</div>
               </div>
-
-              {/* Flap shadow */}
               <div className="e2__part e2__flapshadow" id="flap-shadow"></div>
-
-              {/* Foldable Flap */}
               <div className="e2__part e2__flap" id="env-flap">
                 <div className="e2__flap-front">
-                  <svg className="e2__flap-foil" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="flap-foil-grad" x1="0" y1="0" x2="1" y2="0.35">
-                        <stop offset="0%" stopColor="#9c7124" />
-                        <stop offset="25%" stopColor="#d9b15a" />
-                        <stop offset="45%" stopColor="#fbefc0" />
-                        <stop offset="62%" stopColor="#d9b15a" />
-                        <stop offset="85%" stopColor="#9c7124" />
-                        <stop offset="100%" stopColor="#d9b15a" />
-                      </linearGradient>
-                      <filter id="flap-foil-glow" x="-10%" y="-10%" width="120%" height="120%">
-                        <feDropShadow dx="0" dy="1" stdDeviation="1.2" floodColor="#000000" floodOpacity="0.45" />
-                      </filter>
-                    </defs>
-                    <path
-                      d="M 38 18 C 71.7 58.4, 99.7 120.0, 108 172 C 147.9 216.3, 184.7 284.3, 200 342 C 242.2 388.5, 282.2 459.7, 300 520 C 343.9 566.9, 386.3 638.9, 406 700 C 426 738, 448 770, 468 782 C 480 788, 490 792, 500 792 C 510 792, 520 788, 532 782 C 552 770, 574 738, 594 700 C 637.9 653.1, 680.3 581.1, 700 520 C 742.2 473.5, 782.2 402.3, 800 342 C 839.9 297.7, 876.7 229.7, 892 172 C 925.7 131.6, 953.7 70.0, 962 18 L 38 18 Z"
-                      fill="none"
-                      stroke="url(#flap-foil-grad)"
-                      strokeWidth="2.4"
-                      filter="url(#flap-foil-glow)"
-                    />
+                  <svg className="e2__flap-foil" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path d={getFlapFoilPath()} transform="translate(50 2.5) scale(.93) translate(-50 0)" />
                   </svg>
-                  <div className="e2__flap-butterfly">
-                    <Butterfly className="is-resting" />
+                  <div className="e2__flap-logo">
+                    <Lockup groom={groomShort} bride={brideShort} crest={true} className="lk-env" />
                   </div>
                 </div>
                 <div className="e2__flap-back">
-                  <div className="e2__flap-crest">
-                    <Crest />
-                  </div>
+                  <div className="e2__flap-crest"><Crest /></div>
                 </div>
               </div>
-
-              {/* Wax Seal Button */}
               <button
                 className="e2__seal"
                 id="seal"
                 type="button"
-                onClick={handleOpen}
                 aria-label="Open the invitation / បើកធៀប"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleTriggerOpen();
+                }}
               >
                 <WaxSeal />
               </button>
             </div>
           </div>
         </div>
-
-        <div
-          className="gate__hint"
-          onClick={handleOpen}
-          style={{ cursor: "pointer" }}
-        >
-          {t.tapSeal}
-        </div>
+        <div className="gate__hint" data-t="tapSeal">{t.tapSeal}</div>
       </div>
       <div className="gate__dim" aria-hidden="true"></div>
     </div>

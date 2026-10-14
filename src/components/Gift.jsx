@@ -12,7 +12,7 @@ export function Gift({ wedding, t, lang }) {
     if (!wedding.gift.enabled) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".gift .kicker, .gift .divider, .gift__note", {
+      gsap.from(".gift .kicker, .gift .divider, .gift__note, .gift__card", {
         y: 28,
         opacity: 0,
         duration: 1.1,
@@ -31,10 +31,6 @@ export function Gift({ wedding, t, lang }) {
 
   if (!wedding.gift.enabled) return null;
 
-  const khqrAccounts = wedding.gift.accounts.filter((acc) =>
-    /khqr/i.test(acc.bank) || /khqr/i.test(acc.qr || "")
-  );
-
   return (
     <section ref={giftRef} className="chapter gift" id="gift">
       <span className="kicker" style={{ color: "var(--foil)", display: "block" }}>
@@ -44,22 +40,23 @@ export function Gift({ wedding, t, lang }) {
       <p className="gift__note">{t.giftNote}</p>
 
       <div className="gift__cards" id="gift-cards">
-        {khqrAccounts.map((acc, idx) => (
+        {wedding.gift.accounts.map((acc, idx) => (
           <figure key={idx} className="gift__card">
-            <div className="caps">
+            <div className="caps" style={{ color: "var(--foil)" }}>
               {acc.bank}
             </div>
             <img
               className="gift__img"
               src={acc.qr}
-              alt={`${acc.bank} QR`}
+              alt={`${acc.bank} QR · ${acc.name}`}
               loading="lazy"
             />
+            <figcaption>{acc.side[lang]}</figcaption>
             <a
               className="btn"
-              style={{ marginTop: ".9rem" }}
               href={acc.qr}
-              download={`${acc.bank}-QR.jpg`}
+              download
+              style={{ marginTop: ".8rem" }}
             >
               {lang === "km" ? "រក្សាទុករូប QR" : "Save QR"}
             </a>

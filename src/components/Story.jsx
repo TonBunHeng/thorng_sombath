@@ -31,7 +31,7 @@ export function Story({ wedding, t, lang }) {
       });
       let skewTimer = null;
 
-      // Horizontal track scrub
+      // Horizontal track scrub with responsive, silky smooth tracking
       const trackTween = gsap.to(track, {
         x: () => -getScrollDistance(),
         ease: "none",
@@ -40,14 +40,13 @@ export function Story({ wedding, t, lang }) {
           start: "top top",
           end: () => `+=${getScrollDistance()}`,
           pin: true,
-          scrub: 1,
-          anticipatePin: 1,
+          scrub: 0.35,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const skewVal = gsap.utils.clamp(-6, 6, self.getVelocity() / -320);
+            const skewVal = gsap.utils.clamp(-4, 4, self.getVelocity() / -400);
             skewSetter(skewVal);
             clearTimeout(skewTimer);
-            skewTimer = setTimeout(() => skewSetter(0), 140);
+            skewTimer = setTimeout(() => skewSetter(0), 120);
 
             if (embersInstance) {
               embersInstance.setIntensity(Math.min(1, Math.max(0, (self.progress - 0.4) * 2.5)));
@@ -70,8 +69,8 @@ export function Story({ wedding, t, lang }) {
       .to(section, { backgroundColor: "#4a2a1a", ease: "none", duration: 1 })
       .to(section, { backgroundColor: "#120f0b", ease: "none", duration: 1 });
 
-      // Photo entrance & parallax animations matching reference
-      document.querySelectorAll(".shot").forEach((shotEl) => {
+      // Photo parallax animations matching reference
+      track.querySelectorAll(".shot").forEach((shotEl) => {
         const img = shotEl.querySelector("img");
         if (img) {
           gsap.fromTo(
@@ -90,31 +89,6 @@ export function Story({ wedding, t, lang }) {
             }
           );
         }
-
-        gsap.from(shotEl.querySelector(".shot__img"), {
-          clipPath: "inset(0% 0% 0% 100%)",
-          duration: 1.4,
-          ease: "power3.inOut",
-          scrollTrigger: {
-            trigger: shotEl,
-            containerAnimation: trackTween,
-            start: "left 88%",
-            once: true
-          }
-        });
-
-        gsap.from(shotEl.querySelector("figcaption"), {
-          y: 20,
-          opacity: 0,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: shotEl,
-            containerAnimation: trackTween,
-            start: "left 75%",
-            once: true
-          }
-        });
       });
     }, sectionRef);
 
@@ -145,12 +119,13 @@ export function Story({ wedding, t, lang }) {
               >
                 <div className="shot__img">
                   <img
-                    src={`/img/story/${shot.k}-640.webp`}
-                    srcSet={`/img/story/${shot.k}-640.webp 640w, /img/story/${shot.k}-1280.webp 1280w`}
+                    src={`/img/${shot.k}-640.webp`}
+                    srcSet={`/img/${shot.k}-640.webp 640w, /img/${shot.k}-1280.webp 1280w`}
                     sizes={isTall ? "45vh" : "80vh"}
                     alt={shot.en}
-                    loading="lazy"
+                    loading={idx < 4 ? "eager" : "lazy"}
                     decoding="async"
+                    onLoad={() => ScrollTrigger.refresh()}
                   />
                 </div>
                 <figcaption>
@@ -162,6 +137,15 @@ export function Story({ wedding, t, lang }) {
               </figure>
             );
           })}
+
+          <div className="story__end">
+            <div className="kicker" style={{ color: "var(--foil)" }}>
+              {lang === "km" ? "ហើយដំណើរនៃស្នេហ៍" : "and our story"}
+            </div>
+            <div className="display foil">
+              {lang === "km" ? "នឹងបន្តជារៀងរហូត" : "continues forever"}
+            </div>
+          </div>
         </div>
       </div>
     </section>

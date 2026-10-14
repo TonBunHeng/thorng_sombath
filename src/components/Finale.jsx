@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Crest } from "../utils/svgs";
-import { Icon } from "../utils/icons";
+import { Lockup, SOCIAL_ICONS } from "../utils/svgs";
 import { toKhmerNumber } from "../data/i18n";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,6 +10,9 @@ export function Finale({ wedding, t, lang, onShowToast }) {
   const currentUrl = typeof window !== "undefined" ? window.location.href : wedding.siteUrl;
   const shareTitle = `${t.kicker} · ${wedding.couple.groom.en} & ${wedding.couple.bride.en}`;
   const finaleRef = useRef(null);
+
+  const groomShort = wedding.couple.groom.shortKm || wedding.couple.groom.km.split(" ").pop();
+  const brideShort = wedding.couple.bride.shortKm || wedding.couple.bride.km.split(" ").pop();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -65,8 +67,20 @@ export function Finale({ wedding, t, lang, onShowToast }) {
   }, []);
 
   const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(shareTitle)}`;
+  const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+  const isMobile = typeof navigator !== "undefined" && /android|iphone|ipad/i.test(navigator.userAgent);
+  const msUrl = isMobile
+    ? `fb-messenger://share/?link=${encodeURIComponent(currentUrl)}`
+    : `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
 
   const handleCopy = async () => {
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title: shareTitle, url: currentUrl });
+        return;
+      } catch { }
+    }
+
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(currentUrl);
@@ -104,30 +118,42 @@ export function Finale({ wedding, t, lang, onShowToast }) {
           <p className="finale__line">{t.thanksLine}</p>
 
           <div className="finale__actions">
-            <a className="btn" href={tgUrl} target="_blank" rel="noopener noreferrer">
-              <Icon name="telegram" />
+            <a className="share share--tg" id="share-tg" href={tgUrl} target="_blank" rel="noopener noreferrer">
+              <i dangerouslySetInnerHTML={{ __html: SOCIAL_ICONS.telegram }} />
               <span>
-                <small>{t.shareVia} </small>Telegram
+                <small>{t.shareVia}</small>Telegram
               </span>
             </a>
-            <button className="btn" type="button" onClick={handleCopy}>
-              <Icon name="link" />
+            <a className="share share--ms" id="share-ms" href={msUrl} target="_blank" rel="noopener noreferrer">
+              <i dangerouslySetInnerHTML={{ __html: SOCIAL_ICONS.messenger }} />
               <span>
-                <small>{t.copyLinkSmall} </small>
+                <small>{t.shareVia}</small>Messenger
+              </span>
+            </a>
+            <a className="share share--fb" id="share-fb" href={fbUrl} target="_blank" rel="noopener noreferrer">
+              <i dangerouslySetInnerHTML={{ __html: SOCIAL_ICONS.facebook }} />
+              <span>
+                <small>{t.shareVia}</small>Facebook
+              </span>
+            </a>
+            <button className="share share--copy" id="share-copy" type="button" onClick={handleCopy}>
+              <i dangerouslySetInnerHTML={{ __html: SOCIAL_ICONS.link }} />
+              <span>
+                <small>{t.copyLinkSmall}</small>
                 <b>{t.copyLink}</b>
               </span>
             </button>
           </div>
 
           <div className="finale__mono" id="finale-mono">
-            <Crest />
+            <Lockup groom={groomShort} bride={brideShort} crest={true} className="lk-finale" />
           </div>
         </div>
       </section>
 
       <footer className="footer">
-        <span>{wedding.couple.groom[lang]}</span> &amp; <span>{wedding.couple.bride[lang]}</span> ·{" "}
-        <span>{lang === "km" ? toKhmerNumber(year) : year}</span>
+        <span>{wedding.couple.groom.km}</span> &amp; <span>{wedding.couple.bride.km}</span> ·{" "}
+        <span id="year">{lang === "km" ? toKhmerNumber(year) : year}</span>
       </footer>
     </div>
   );

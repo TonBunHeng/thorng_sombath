@@ -24,7 +24,7 @@ import { Gift } from "./components/Gift";
 import { Finale } from "./components/Finale";
 import { Lightbox } from "./components/Lightbox";
 import { CustomCursor } from "./components/CustomCursor";
-import { Toast, VineProgress, FloatingActions } from "./components/FloatingControls";
+import { Toast, VineProgress, RsvpPill } from "./components/FloatingControls";
 import { smoothScrollTo } from "./utils/scroll";
 
 export function App() {
@@ -280,6 +280,7 @@ export function App() {
           t={t}
           lang={lang}
           onOpen={() => setIsGateOpen(true)}
+          startIntro={isPreloaderDone}
         />
       )}
 
@@ -289,18 +290,14 @@ export function App() {
         onToggleLang={handleToggleLang}
         musicUrl={weddingData.music}
         isLightboxOpen={lightbox.isOpen}
+        wedding={weddingData}
       />
 
       {/* Side scroll vine indicator */}
       <VineProgress />
 
-      {/* Floating action buttons: Back to Top & Location */}
-      <FloatingActions
-        t={t}
-        isLightboxOpen={lightbox.isOpen}
-        onScrollToTop={handleScrollToTop}
-        onLocationClick={handleLocationClick}
-      />
+      {/* Floating location RSVP pill */}
+      <RsvpPill label={t.location} onClick={handleLocationClick} />
 
       {/* Main Content Sections */}
       <main id="main">

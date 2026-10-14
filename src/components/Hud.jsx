@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Crest } from "../utils/svgs";
+import { Lockup } from "../utils/svgs";
 import { toggleMusic, subscribeMusic, getIsMusicPlaying } from "../utils/audio";
 import { smoothScrollTo } from "../utils/scroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Hud({ _lang, onToggleLang, musicUrl, isLightboxOpen = false }) {
+export function Hud({ lang, onToggleLang, musicUrl, isLightboxOpen = false, wedding }) {
   const [isPlaying, setIsPlaying] = useState(() => getIsMusicPlaying());
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const groomShort = wedding?.couple?.groom?.shortKm || "រស្មី";
+  const brideShort = wedding?.couple?.bride?.shortKm || "ភក្ដី";
 
   useEffect(() => {
     const st = ScrollTrigger.create({
@@ -19,8 +22,7 @@ export function Hud({ _lang, onToggleLang, musicUrl, isLightboxOpen = false }) {
         setIsScrolled(self.isActive);
       }
     });
-    
-    // Auto-sync playing state when music starts from EnvelopeGate
+
     const unsubscribe = subscribeMusic((playing) => {
       setIsPlaying(playing);
     });
@@ -40,7 +42,7 @@ export function Hud({ _lang, onToggleLang, musicUrl, isLightboxOpen = false }) {
     <header className={`hud ${isScrolled ? "is-scrolled" : ""} ${isLightboxOpen ? "is-hidden" : ""}`}>
       <a
         className="hud__mono"
-        href="#hero"
+        href="#top"
         id="hud-mono"
         aria-label="Top"
         onClick={(e) => {
@@ -48,7 +50,7 @@ export function Hud({ _lang, onToggleLang, musicUrl, isLightboxOpen = false }) {
           smoothScrollTo(0, { duration: 1.4 });
         }}
       >
-        <Crest />
+        <Lockup groom={groomShort} bride={brideShort} crest={false} className="lk-hud" />
       </a>
       <div className="hud__right">
         <button

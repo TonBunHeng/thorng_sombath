@@ -63,9 +63,9 @@ export function Venue({ wedding, t, lang }) {
     const icsData = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
-      "PRODID:-//Hean SamBath Ton ChanThorng Wedding//EN",
+      "PRODID:-//Raksmey Pheakdey Wedding//EN",
       "BEGIN:VEVENT",
-      `UID:${formatCalDate(start)}-wedding`,
+      `UID:${formatCalDate(start)}-rp-wedding`,
       `DTSTAMP:${formatCalDate(new Date())}`,
       `DTSTART:${formatCalDate(start)}`,
       `DTEND:${formatCalDate(end)}`,

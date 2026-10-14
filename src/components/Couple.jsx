@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Butterfly, Divider } from "../utils/svgs";
+import { Butterfly, Divider, getScallopPath } from "../utils/svgs";
 import { pictures } from "../data/pictures";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -72,7 +72,7 @@ export function Couple({ wedding, t, lang }) {
         {/* Groom */}
         <div className="person" data-from="left">
           <div className="caps">{t.groomLabel}</div>
-          <div className="person__name foil">{g[lang]}</div>
+          <div className="person__name foil">{g.km}</div>
           <div className="person__en">{g.en}</div>
           <div className="person__parents">
             <span>{t.sonOf}</span>
@@ -94,6 +94,9 @@ export function Couple({ wedding, t, lang }) {
               loading="lazy"
               style={{ objectPosition: "40% 50%" }}
             />
+            <svg className="frame-line" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true">
+              <path className="draw" d={getScallopPath(8, 10, 0.02)} fill="none" stroke="currentColor" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+            </svg>
           </div>
           <div className="couple__amp" id="couple-amp">
             <span className="foil">&amp;</span>
@@ -106,7 +109,7 @@ export function Couple({ wedding, t, lang }) {
         {/* Bride */}
         <div className="person" data-from="right">
           <div className="caps">{t.brideLabel}</div>
-          <div className="person__name foil">{b[lang]}</div>
+          <div className="person__name foil">{b.km}</div>
           <div className="person__en">{b.en}</div>
           <div className="person__parents">
             <span>{t.daughterOf}</span>

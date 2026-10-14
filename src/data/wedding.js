@@ -1,42 +1,38 @@
 /**
  * Wedding configuration data
- * All wedding details (couple, families, date, venue, programme, gifts)
+ * Reference: https://raksmey-pheakdey.vercel.app/
  */
 
 export const weddingData = {
   couple: {
     groom: {
-      km: "ហ៊ាន សម្បត្តិ",
-      en: "Hean SamBath",
-      shortKm: "សម្បត្តិ",
-      shortEn: "SamBath",
-      initialKm: "ស",
-      initialEn: "S"
+      km: "ផៃ រស្មី",
+      en: "Phay Raksmey",
+      shortKm: "រស្មី",
+      shortEn: "Raksmey",
+      initialKm: "រ",
+      initialEn: "R"
     },
     bride: {
-      km: "តុន ចាន់ថង",
-      en: "Ton ChanThorng",
-      shortKm: "ថង",
-      shortEn: "Thorng",
-      initialKm: "ថ",
-      initialEn: "T"
+      km: "មាស ភក្ដី",
+      en: "Meas Pheakdey",
+      shortKm: "ភក្ដី",
+      shortEn: "Pheakdey",
+      initialKm: "ភ",
+      initialEn: "P"
     }
   },
   families: {
     groom: {
-      father: { km: "លោក ស ហ៊ុន", en: "Mr. Sa Hun" },
-      mother: { km: "លោកស្រី សយ ចំរើន", en: "Mrs. Say Chamroeun" }
+      father: { km: "លោក ផៃ សុខន", en: "Mr. Phay Sokhon" },
+      mother: { km: "លោកស្រី យ៉ាន់ ចាន់ណារ៉ា", en: "Mrs. Yann Chanara" }
     },
-
     bride: {
-      father: { km: "លោក ប៊ុន ភ្លន់", en: "Mr. Bun Phloun" },
-      mother: { km: "លោកស្រី ទឹម សុីថា", en: "Mrs. Tim Sitha" }
+      father: { km: "លោក ហែម សាវឿន", en: "Mr. Hem Savoeun" },
+      mother: { km: "លោកស្រី សៅ ណឺង", en: "Mrs. Sao Neung" }
     }
   },
-
-
   date: "2026-11-15T07:00:00+07:00",
-
   timeIsPlaceholder: true,
   dateIsPlaceholder: false,
   lunar: {
@@ -45,16 +41,16 @@ export const weddingData = {
   },
   venue: {
     name: {
-      km: "ផ្ទះខាងស្រី",
-      en: "Bride's House"
+      km: "ភូមិព្រែកហូរ (ខាងលិច)",
+      en: "Prek Ho Village (West)"
     },
     address: {
-      km: "ភូមិកំពង់ថ្គូវ២ ឃុំកំពងថ្គូវ ស្រុកក្រឡាញ់ ខេត្តសៀមរាប",
-      en: "Kampong Thkov 2, Kampong Thkov, Krong Kralanh, Siem Reap Province"
+      km: "សង្កាត់ព្រែកហូរ ក្រុងតាខ្មៅ ខេត្តកណ្តាល",
+      en: "Prek Ho, Ta Khmau, Kandal Province"
     },
-    lat: 13.5908269,
-    lng: 103.4134261,
-    mapsUrl: "https://maps.app.goo.gl/ckeD83ayD5FMJhg6A",
+    lat: 11.45128,
+    lng: 104.93335,
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=11.45128,104.93335",
     note: {
       km: "",
       en: ""
@@ -143,13 +139,19 @@ export const weddingData = {
     enabled: true,
     accounts: [
       {
-        side: { km: "ហ៊ាន សម្បត្តិ", en: "Hean Sombath" },
+        side: { km: "មាស ភក្ដី", en: "Meas Pheakdey" },
         bank: "KHQR",
-        name: "ហ៊ាន សម្បត្តិ",
-        qr: "/img/gift/khqr.jpeg"
+        name: "មាស ភក្ដី",
+        qr: "/gift/khqr.webp"
       },
+      {
+        side: { km: "មាស ភក្ដី", en: "Meas Pheakdey" },
+        bank: "ABA PAY",
+        name: "PHEKEDEY MEAS",
+        qr: "/gift/aba.webp"
+      }
     ]
   },
-  music: "/audio/ភ្ជាប់និស្ស័យ.m4a",
-  siteUrl: "https://thorng-sombath.vercel.app"
+  music: "/audio/music.mp3",
+  siteUrl: "https://raksmey-pheakdey.vercel.app"
 };

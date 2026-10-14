@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { pictures } from "../data/pictures";
+import { VineInner } from "../utils/svgs";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -73,7 +74,11 @@ export function InvitationWords({ wedding, t, lang }) {
 
   return (
     <section ref={wordsRef} className="chapter words" id="words">
-      <svg className="words__florals emboss" id="words-florals" viewBox="0 0 260 260" aria-hidden="true"></svg>
+      <svg className="words__florals emboss" id="words-florals" viewBox="0 0 260 260" aria-hidden="true">
+        <g transform="translate(260 0) scale(-1 1)">
+          <VineInner />
+        </g>
+      </svg>
       <div className="words__grid">
         <div className="arch">
           <img
@@ -95,7 +100,7 @@ export function InvitationWords({ wedding, t, lang }) {
               <p>
                 {gp.father[lang]}
                 <br />
-                {lang === "km" ? "" : "& "}
+                {lang === "km" ? "និង" : "& "}
                 {gp.mother[lang]}
               </p>
             </div>
@@ -104,7 +109,7 @@ export function InvitationWords({ wedding, t, lang }) {
               <p>
                 {bp.father[lang]}
                 <br />
-                {lang === "km" ? "" : "& "}
+                {lang === "km" ? "និង" : "& "}
                 {bp.mother[lang]}
               </p>
             </div>
