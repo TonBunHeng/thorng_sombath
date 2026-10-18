@@ -1,10 +1,21 @@
 /**
  * Translations and Khmer numeral / date formatting helpers
+ * Reference: https://raksmey-pheakdey.vercel.app/
  */
 
 export const translations = {
   km: {
     kicker: "សិរីសួស្តីអាពាហ៍ពិពាហ៍",
+    cardHonor: "មានកិត្តិយសសូមគោរពអញ្ជើញ",
+    cardBody: "ឯកឧត្តម អ្នកឧកញ៉ា លោកជំទាវ លោក លោកស្រី អ្នកនាង កញ្ញា និង ប្រិយមិត្តអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយស ដើម្បីប្រសិទ្ធពរជ័យសិរីសួស្តី ជ័យមង្គលក្នុង ពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស-ស្រី របស់យើងខ្ញុំ",
+    cardSon: "កូនប្រុសនាម",
+    cardDaughter: "កូនស្រីនាម",
+    cardWhen: "ពិសាភោជនាហារប្រព្រឹត្តនៅ ថ្ងៃអាទិត្យ ៦កើត ខែកត្តិក ឆ្នាំមមី អដ្ឋស័ក ព.ស. ២៥៧០ ត្រូវនឹងថ្ងៃ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦ វេលាម៉ោង ៤:០០ ល្ងាច ស្ថិតនៅគេហដ្ឋានខាងស្រី ភូមិព្រែកហូរលិច១ សង្កាត់ព្រែកហូរ ក្រុងតាខ្មៅ ខេត្តកណ្តាល ដោយមេត្រីភាព។ សូមអរគុណ!",
+    programmeCardTitle: "កម្មវិធីសិរីមង្គលអាពាហ៍ពិពាហ៍",
+    timeWord: "ម៉ោង",
+    contactTitle: "លេខម្ចាស់កម្មវិធីការ",
+    mapKicker: "ផែនទីទៅកាន់ទីកន្លែង",
+    houseLabel: "ផ្ទះកម្មវិធី",
     inviteTo: "សូមគោរពអញ្ជើញ",
     guestFallback: "ភ្ញៀវកិត្តិយស",
     tapSeal: "សូមចុចលើត្រា ដើម្បីបើកធៀបការ",
@@ -82,6 +93,16 @@ export const translations = {
   },
   en: {
     kicker: "We’re getting married",
+    cardHonor: "Request the Honor of Your Presence",
+    cardBody: "on the Auspicious Occasion of the Wedding Reception of our Children",
+    cardSon: "Our son",
+    cardDaughter: "Our daughter",
+    cardWhen: "Which will be held on Sunday 15th November 2026, 4:00 pm, at The Bride’s House, Preakho Lich 1 Village, Preakho Commune, Takhmao District, Kandal Province. (Please see the map) Thank you!",
+    programmeCardTitle: "The Wedding Ceremonies",
+    timeWord: "",
+    contactTitle: "Host contact numbers",
+    mapKicker: "Map to the venue",
+    houseLabel: "Wedding house",
     inviteTo: "With honour, we invite",
     guestFallback: "our honoured guest",
     tapSeal: "Tap the seal to open the invitation",
@@ -189,9 +210,12 @@ export function parseDate(dateStr) {
 export function formatDate(dateStr, lang = "km") {
   const p = parseDate(dateStr);
   if (lang === "km") {
+    const period = p.h < 12 ? "ព្រឹក" : p.h === 12 ? "ថ្ងៃត្រង់" : p.h < 16 ? "រសៀល" : p.h < 19 ? "ល្ងាច" : "យប់";
+    const formattedHour = toKhmerNumber(((p.h + 11) % 12) + 1);
+    const formattedMin = toKhmerNumber(String(p.min).padStart(2, "0"));
     const weekday = `ថ្ងៃ${khmerWeekdays[p.wd]}`;
     const date = `ទី${toKhmerNumber(p.day)} ខែ${khmerMonths[p.m]} ឆ្នាំ${toKhmerNumber(p.y)}`;
-    const time = `ម៉ោង ${toKhmerNumber(String(p.h).padStart(2, "0"))}:${toKhmerNumber(String(p.min).padStart(2, "0"))}`;
+    const time = `ម៉ោង ${formattedHour}:${formattedMin} ${period}`;
 
     return {
       weekday,

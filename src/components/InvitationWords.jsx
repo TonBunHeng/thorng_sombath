@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { pictures } from "../data/pictures";
-import { VineInner } from "../utils/svgs";
+import { VineInner, Medallion } from "../utils/svgs";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -41,29 +41,15 @@ export function InvitationWords({ wedding, t, lang }) {
         }
       });
 
-      // Words text & parents cards reveal
-      gsap.from(".words__text > *", {
+      // Words card reveal
+      gsap.from(".words__card", {
         y: 32,
         opacity: 0,
         duration: 1.2,
-        stagger: 0.15,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: ".words__text",
+          trigger: ".words__card",
           start: "top 80%",
-          once: true
-        }
-      });
-
-      gsap.from(".parents > div", {
-        y: 28,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".parents",
-          start: "top 85%",
           once: true
         }
       });
@@ -80,7 +66,7 @@ export function InvitationWords({ wedding, t, lang }) {
         </g>
       </svg>
       <div className="words__grid">
-        <div className="arch">
+        <div className="arch" data-parallax-wrap>
           <img
             src={pictures.words.main}
             srcSet={pictures.words.srcSet}
@@ -89,34 +75,56 @@ export function InvitationWords({ wedding, t, lang }) {
             loading="lazy"
           />
         </div>
-        <div className="words__text">
-          <span className="kicker">{t.wordsKicker}</span>
-          <h2 className="title">{t.wordsTitle}</h2>
-          <p className="words__body serif-kh">{t.wordsBody}</p>
-
-          <div className="parents">
-            <div>
-              <h4>{t.groomParents}</h4>
-              <p>
-                {gp.father[lang]}
-                <br />
-                {lang === "km" ? "និង" : "& "}
-                {gp.mother[lang]}
-              </p>
+        <article className="paper words__card" id="words-card">
+          <div className="paper__parents">
+            <p>
+              {lang === "km" ? (
+                <>
+                  {gp.father.km}
+                  <br />
+                  {gp.mother.km}
+                </>
+              ) : (
+                <>
+                  {gp.father.en.toUpperCase().replace("MR.", "Mr.").replace("MRS.", "Mrs.")}
+                  <br />
+                  {gp.mother.en.toUpperCase().replace("MRS.", "Mrs.")}
+                </>
+              )}
+            </p>
+            <p>
+              {lang === "km" ? (
+                <>
+                  {bp.father.km}
+                  <br />
+                  {bp.mother.km}
+                </>
+              ) : (
+                <>
+                  {bp.father.en.toUpperCase().replace("MR.", "Mr.").replace("MRS.", "Mrs.")}
+                  <br />
+                  {bp.mother.en.toUpperCase().replace("MRS.", "Mrs.")}
+                </>
+              )}
+            </p>
+          </div>
+          <h2 className="paper__honor">{t.cardHonor}</h2>
+          <p className="paper__body">{t.cardBody}</p>
+          <div className="paper__couple">
+            <div className="paper__person">
+              <small>{t.cardSon}</small>
+              <b className="foil">{wedding.couple.groom[lang]}</b>
             </div>
-            <div>
-              <h4>{t.brideParents}</h4>
-              <p>
-                {bp.father[lang]}
-                <br />
-                {lang === "km" ? "និង" : "& "}
-                {bp.mother[lang]}
-              </p>
+            <div className="paper__mono" id="paper-mono" aria-hidden="true">
+              <Medallion />
+            </div>
+            <div className="paper__person">
+              <small>{t.cardDaughter}</small>
+              <b className="foil">{wedding.couple.bride[lang]}</b>
             </div>
           </div>
-
-          <p className="words__thanks">{t.wordsThanks}</p>
-        </div>
+          <p className="paper__when">{t.cardWhen}</p>
+        </article>
       </div>
     </section>
   );

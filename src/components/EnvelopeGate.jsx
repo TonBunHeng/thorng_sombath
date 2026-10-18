@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Corner, Crest, Lockup, WaxSeal, VineInner, getFlapFoilPath } from "../utils/svgs";
+import { Corner, Crest, Lockup, WaxSeal, VineInner, FlapBorder, getFlapFoilPath } from "../utils/svgs";
 import { playSfx, toggleMusic } from "../utils/audio";
 import { formatDate } from "../data/i18n";
 import gsap from "gsap";
@@ -192,8 +192,9 @@ export function EnvelopeGate({ wedding, t, lang, onOpen, startIntro = true }) {
                   <svg className="e2__flap-foil" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                     <path d={getFlapFoilPath()} transform="translate(50 2.5) scale(.93) translate(-50 0)" />
                   </svg>
+                  <FlapBorder />
                   <div className="e2__flap-logo">
-                    <Lockup groom={groomShort} bride={brideShort} crest={true} className="lk-env" />
+                    <Lockup groom={groomShort} bride={brideShort} crest={false} className="lk-env" />
                   </div>
                 </div>
                 <div className="e2__flap-back">

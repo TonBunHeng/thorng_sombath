@@ -41,7 +41,7 @@ export function Gift({ wedding, t, lang }) {
 
       <div className="gift__cards" id="gift-cards">
         {wedding.gift.accounts.map((acc, idx) => (
-          <figure key={idx} className="gift__card">
+          <figure key={idx} className="gift__card paper">
             <div className="caps" style={{ color: "var(--foil)" }}>
               {acc.bank}
             </div>

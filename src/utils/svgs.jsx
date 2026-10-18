@@ -1,4 +1,5 @@
 import React from "react";
+import kbachData from "./kbachData.json";
 
 export function SvgDefs() {
   return (
@@ -49,108 +50,32 @@ export function SvgDefs() {
   );
 }
 
-const Ju = "M0 0 C-10 -16 -14 -36 -6 -54 C0 -68 12 -77 21 -85 C27 -90 35 -87 34 -79 C33 -73 26 -73 26 -78 C21 -71 14 -64 15 -54 C16 -42 24 -38 23 -27 C22 -14 12 -6 0 0 Z";
-const Yu = "M0 -6 C-3 -20 -2 -36 4 -50";
-const Xu = "M0 0 C8 -2 14 -9 13 -17 C12 -24 4 -27 -1 -23 C-5 -19 -3 -13 2 -13 C5 -13 6 -17 4 -18";
-
-export function KbachCrestSvg({ foilId = "g-foil" }) {
-  const fill = `url(#${foilId})`;
+export function Crest({ className = "", style = {} }) {
+  const [w, h] = kbachData.crest.wh;
   return (
-    <>
-      <g transform="translate(0 -14) scale(1.25)">
-        <path className="kb-fill" fill={fill} d={Ju} />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-      </g>
-      <g transform="translate(-10 -12) rotate(-24) scale(1.0)">
-        <path className="kb-fill" fill={fill} d={Ju} />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-      </g>
-      <g transform="translate(10 -12) rotate(24) scale(1.0)">
-        <path className="kb-fill" fill={fill} d={Ju} transform="scale(-1 1)" />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
-      </g>
-      <g transform="translate(-22 -8) rotate(-52) scale(.82)">
-        <path className="kb-fill" fill={fill} d={Ju} />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-      </g>
-      <g transform="translate(22 -8) rotate(52) scale(.82)">
-        <path className="kb-fill" fill={fill} d={Ju} transform="scale(-1 1)" />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
-      </g>
-      <g transform="translate(-34 -2) rotate(-78) scale(.62)">
-        <path className="kb-fill" fill={fill} d={Ju} />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-      </g>
-      <g transform="translate(34 -2) rotate(78) scale(.62)">
-        <path className="kb-fill" fill={fill} d={Ju} transform="scale(-1 1)" />
-        <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
-      </g>
-      <path className="kb-line kb-curl" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(-58 4) scale(1.3)" />
-      <path className="kb-line kb-curl" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(58 4) scale(-1.3 1.3)" />
-      <path className="kb-line" fill="none" stroke={fill} strokeWidth="1.6" strokeLinecap="round" d="M-92 6 C-60 10 -30 -2 0 -2 C30 -2 60 10 92 6" />
-      <path className="kb-fill" fill={fill} d="M-14 -2 C-10 -12 10 -12 14 -2 C8 0 -8 0 -14 -2 Z" />
-      <circle className="kb-fill" fill={fill} cx="0" cy="-118" r="3" />
-    </>
-  );
-}
-
-export function Crest({ className = "kbach-crest", style = {} }) {
-  return (
-    <svg className={className} viewBox="-110 -135 220 150" style={style} aria-hidden="true">
-      <defs>
-        <linearGradient id="crest-g" x1="0" y1="0" x2="1" y2=".35">
-          <stop offset="0%" stopColor="#9c7124" />
-          <stop offset="25%" stopColor="#d9b15a" />
-          <stop offset="45%" stopColor="#fbefc0" />
-          <stop offset="62%" stopColor="#d9b15a" />
-          <stop offset="85%" stopColor="#9c7124" />
-          <stop offset="100%" stopColor="#d9b15a" />
-        </linearGradient>
-      </defs>
-      <KbachCrestSvg foilId="crest-g" />
-    </svg>
+    <svg
+      className={`kbach-crest ${className}`}
+      viewBox={`0 0 ${w} ${h}`}
+      style={style}
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: kbachData.crest.g }}
+    />
   );
 }
 
 export function Corner({ position = "tl", className = "" }) {
+  const [w, h] = kbachData.corner.wh;
   const transformMap = {
     tl: "",
-    tr: "translate(160 0) scale(-1 1)",
-    bl: "translate(0 160) scale(1 -1)",
-    br: "translate(160 160) scale(-1 -1)"
+    tr: `translate(${w} 0) scale(-1 1)`,
+    bl: `translate(0 ${h}) scale(1 -1)`,
+    br: `translate(${w} ${h}) scale(-1 -1)`
   };
 
   return (
-    <svg className={`kbach-corner kb-${position} ${className}`} viewBox="0 0 160 160" aria-hidden="true">
-      <g transform={transformMap[position]}>
-        <g className="kb-sway">
-          <path className="kb-line" d="M6 6 H150 M6 6 V150" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-          <path className="kb-line" d="M14 14 H110 M14 14 V110" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-          <g transform="translate(22 22) rotate(135) scale(.9)">
-            <path className="kb-fill" fill="currentColor" d={Ju} />
-            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-          </g>
-          <g transform="translate(40 16) rotate(100) scale(.55)">
-            <path className="kb-fill" fill="currentColor" d={Ju} />
-            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-          </g>
-          <g transform="translate(16 40) rotate(170) scale(.55) scale(-1 1)">
-            <path className="kb-fill" fill="currentColor" d={Ju} />
-            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-          </g>
-          <path className="kb-line kb-curl" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(62 24) scale(1.1)" />
-          <path className="kb-line kb-curl" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(24 62) rotate(90) scale(1.1 -1.1)" />
-          <g transform="translate(92 22) rotate(90) scale(.42)">
-            <path className="kb-fill" fill="currentColor" d={Ju} />
-            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-          </g>
-          <g transform="translate(22 92) rotate(180) scale(.42) scale(-1 1)">
-            <path className="kb-fill" fill="currentColor" d={Ju} />
-            <path className="kb-line" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-          </g>
-          <circle className="kb-fill" fill="currentColor" cx="122" cy="14" r="2.4" />
-          <circle className="kb-fill" fill="currentColor" cx="14" cy="122" r="2.4" />
-        </g>
+    <svg className={`kbach-corner kb-${position} ${className}`} viewBox={`0 0 ${w} ${h}`} aria-hidden="true">
+      <g transform={transformMap[position] || ""}>
+        <g className="kb-sway" dangerouslySetInnerHTML={{ __html: kbachData.corner.g }} />
       </g>
     </svg>
   );
@@ -167,27 +92,40 @@ export function CornerGroup({ className = "cover__corners" }) {
   );
 }
 
-export function Divider({ className = "divider" }) {
+export function Divider({ className = "" }) {
+  const [w, h] = kbachData.divider.wh;
   return (
-    <svg className={`kbach-divider ${className}`} viewBox="-160 -40 320 50" aria-hidden="true">
-      <path className="kb-line" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" d="M-150 0 H-40 M40 0 H150" />
-      <path className="kb-line kb-curl" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(-40 0) scale(-.9 .9)" />
-      <path className="kb-line kb-curl" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" d={Xu} transform="translate(40 0) scale(.9)" />
-      <g transform="translate(0 2) scale(.5)">
-        <path className="kb-fill" fill="url(#g-foil)" d={Ju} />
-        <path className="kb-line" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-      </g>
-      <g transform="translate(-6 2) rotate(-40) scale(.36)">
-        <path className="kb-fill" fill="url(#g-foil)" d={Ju} />
-        <path className="kb-line" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" d={Yu} />
-      </g>
-      <g transform="translate(6 2) rotate(40) scale(.36)">
-        <path className="kb-fill" fill="url(#g-foil)" d={Ju} transform="scale(-1 1)" />
-        <path className="kb-line" fill="none" stroke="url(#g-foil)" strokeWidth="1.6" strokeLinecap="round" d={Yu} transform="scale(-1 1)" />
-      </g>
-      <circle className="kb-fill" fill="url(#g-foil)" cx="-154" cy="0" r="2.2" />
-      <circle className="kb-fill" fill="url(#g-foil)" cx="154" cy="0" r="2.2" />
-    </svg>
+    <svg
+      className={`kbach-divider divider ${className}`}
+      viewBox={`0 0 ${w} ${h}`}
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: kbachData.divider.g }}
+    />
+  );
+}
+
+export function Medallion({ className = "" }) {
+  const [w, h] = kbachData.medallion.wh;
+  return (
+    <svg
+      className={`kbach-medallion ${className}`}
+      viewBox={`0 0 ${w} ${h}`}
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: kbachData.medallion.g }}
+    />
+  );
+}
+
+export function FlapBorder({ className = "" }) {
+  const [w, h] = kbachData.flap.wh;
+  return (
+    <div className={`e2__flap-border ${className}`}>
+      <svg
+        viewBox={`0 0 ${w} ${h}`}
+        aria-hidden="true"
+        dangerouslySetInnerHTML={{ __html: kbachData.flap.g }}
+      />
+    </div>
   );
 }
 
@@ -224,6 +162,10 @@ function dd(e, t, n, r = 3) {
 }
 
 export function WaxSeal({ className = "e2__seal-svg" }) {
+  const [mw, mh] = kbachData.medallion.wh;
+  const size = 66;
+  const mr = size / mw;
+
   return (
     <svg viewBox="0 0 140 140" className={className} aria-hidden="true">
       <path
@@ -239,8 +181,11 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
       </g>
       <circle cx="70" cy="70" r="44" fill="none" stroke="#5e400f" strokeOpacity=".55" strokeWidth="1.4" />
       <circle cx="70" cy="70" r="39" fill="none" stroke="#f3dc9c" strokeOpacity=".35" strokeWidth=".8" strokeDasharray="1.6 3" />
-      <g filter="url(#wax-press)" transform="translate(70 92) scale(.36)" className="wax-crest">
-        <KbachCrestSvg foilId="g-foil" />
+      <g filter="url(#wax-press)" transform="translate(70 70)" className="wax-crest">
+        <g
+          transform={`translate(${-size / 2} ${-(mh * mr) / 2}) scale(${mr})`}
+          dangerouslySetInnerHTML={{ __html: kbachData.medallion.g }}
+        />
       </g>
     </svg>
   );
@@ -249,13 +194,18 @@ export function WaxSeal({ className = "e2__seal-svg" }) {
 export function Lockup({ groom = "រស្មី", bride = "ភក្ដី", crest = true, className = "" }) {
   const groomName = groom || "រស្មី";
   const brideName = bride || "ភក្ដី";
+  const [cw, ch] = kbachData.crest.wh;
+  const n = 220 / cw;
 
   return (
     <div className={`lockup ${className}`} role="img" aria-label={`${groomName} & ${brideName}`}>
       <svg className="lk-orn" viewBox="0 0 600 470" aria-hidden="true">
         {crest && (
           <g className="lk-crest" transform="translate(300 60) scale(.5)">
-            <KbachCrestSvg foilId="g-foil" />
+            <g
+              transform={`translate(-110 ${-(ch * n) + 6}) scale(${n})`}
+              dangerouslySetInnerHTML={{ __html: kbachData.crest.g }}
+            />
           </g>
         )}
         <path

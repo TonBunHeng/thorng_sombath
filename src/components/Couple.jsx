@@ -71,14 +71,17 @@ export function Couple({ wedding, t, lang }) {
       <div className="couple__stage">
         {/* Groom */}
         <div className="person" data-from="left">
-          <div className="caps">{t.groomLabel}</div>
-          <div className="person__name foil">{g.km}</div>
-          <div className="person__en">{g.en}</div>
+          <div className="caps" data-t="groomLabel">{t.groomLabel}</div>
+          <div className="person__name foil" data-name="groom-km">{g.km}</div>
+          <div className="person__en" data-name="groom-en">{g.en}</div>
           <div className="person__parents">
-            <span>{t.sonOf}</span>
+            <span data-t="sonOf">{t.sonOf}</span>
             <br />
-            <span>
-              {gp.father[lang]} {lang === "km" ? "និង" : "&"} {gp.mother[lang]}
+            <span data-parents="groom">
+              {gp.father[lang]}
+              <br />
+              {lang === "km" ? "និង" : "& "}
+              {gp.mother[lang]}
             </span>
           </div>
         </div>
@@ -108,14 +111,17 @@ export function Couple({ wedding, t, lang }) {
 
         {/* Bride */}
         <div className="person" data-from="right">
-          <div className="caps">{t.brideLabel}</div>
-          <div className="person__name foil">{b.km}</div>
-          <div className="person__en">{b.en}</div>
+          <div className="caps" data-t="brideLabel">{t.brideLabel}</div>
+          <div className="person__name foil" data-name="bride-km">{b.km}</div>
+          <div className="person__en" data-name="bride-en">{b.en}</div>
           <div className="person__parents">
-            <span>{t.daughterOf}</span>
+            <span data-t="daughterOf">{t.daughterOf}</span>
             <br />
-            <span>
-              {bp.father[lang]} {lang === "km" ? "និង" : "&"} {bp.mother[lang]}
+            <span data-parents="bride">
+              {bp.father[lang]}
+              <br />
+              {lang === "km" ? "និង" : "& "}
+              {bp.mother[lang]}
             </span>
           </div>
         </div>
