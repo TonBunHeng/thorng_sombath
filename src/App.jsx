@@ -16,7 +16,6 @@ import { InvitationWords } from "./components/InvitationWords";
 import { Couple } from "./components/Couple";
 import { Countdown } from "./components/Countdown";
 import { Programme } from "./components/Programme";
-import { Story } from "./components/Story";
 import { Pond } from "./components/Pond";
 import { Gallery } from "./components/Gallery";
 import { Venue } from "./components/Venue";
@@ -301,7 +300,6 @@ export function App() {
         <Couple wedding={weddingData} t={t} lang={lang} />
         <Countdown wedding={weddingData} t={t} lang={lang} />
         <Programme wedding={weddingData} t={t} lang={lang} />
-        <Story wedding={weddingData} t={t} lang={lang} />
         <Pond wedding={weddingData} t={t} lang={lang} />
         <Gallery t={t} onOpenLightbox={handleOpenLightbox} />
         <Venue wedding={weddingData} t={t} lang={lang} />

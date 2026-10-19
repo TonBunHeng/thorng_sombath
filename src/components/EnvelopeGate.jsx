@@ -154,7 +154,6 @@ export function EnvelopeGate({ wedding, t, lang, onOpen, startIntro = true }) {
       <div className="gate__stage">
         <div className="gate__invite">
           <div className="gate__kicker foil" data-t="kicker">{t.kicker}</div>
-          <div className="gate__sub" data-t="weddingInvitation">{t.weddingInvitation}</div>
         </div>
         <div id="env-mount">
           <div className="e2" id="env" onClick={handleTriggerOpen}>

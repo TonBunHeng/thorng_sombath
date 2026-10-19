@@ -20,10 +20,10 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
   // 0. Pre-initialize hidden states so there is zero pop/flash while covered
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set("#hero-media img", { scale: 1.22 });
+      gsap.set("#hero-media img", { scale: 1 });
       gsap.set(".cover__corners .kbach-corner", { opacity: 0, scale: 0.6 });
       gsap.set(".cover__crest", { opacity: 0, y: 20 });
-      gsap.set(".cover__kicker, .cover__sub", { opacity: 0, y: 16 });
+      gsap.set(".cover__kicker", { opacity: 0, y: 16 });
       gsap.set(".cover__lockup .lk-crest > *", { opacity: 0, scale: 0.4, transformOrigin: "50% 100%" });
       gsap.set(".cover__lockup .lk-groom", { clipPath: "inset(0% 100% 0% 0%)" });
       gsap.set(".cover__lockup .lk-bride", { clipPath: "inset(0% 100% 0% 0%)" });
@@ -51,10 +51,9 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
       // 1. Reveal Timeline
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-      tl.to("#hero-media img", { scale: 1.06, duration: 3.2 }, 0)
-        .to(".cover__corners .kbach-corner", { opacity: 1, scale: 1, duration: 1.4, stagger: 0.08 }, 0)
+      tl.to(".cover__corners .kbach-corner", { opacity: 1, scale: 1, duration: 1.4, stagger: 0.08 }, 0)
         .to(".cover__crest", { opacity: 1, y: 0, duration: 1.2 }, 0.15)
-        .to(".cover__kicker, .cover__sub", { opacity: 1, y: 0, duration: 1, stagger: 0.12 }, 0.3);
+        .to(".cover__kicker", { opacity: 1, y: 0, duration: 1 }, 0.3);
 
       // Lockup signature reveal
       tl.to(
@@ -113,7 +112,7 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
         delay: 3.0
       });
 
-      // 2. ScrollTrigger Scrub Pinning
+      // 2. ScrollTrigger Scrub Pinning (without image zoom/clip)
       gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
@@ -124,7 +123,6 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
           anticipatePin: 1
         }
       })
-      .to("#hero-media", { clipPath: "inset(7% 6% 7% 6% round 26px)", ease: "none" }, 0)
       .to(".cover__inner", { yPercent: -8, opacity: 0, ease: "none" }, 0)
       .to(".cover__corners", { opacity: 0, ease: "none" }, 0);
 
@@ -155,11 +153,10 @@ export function HeroCover({ wedding, t, lang, isGateOpen }) {
           <Crest />
         </div>
         <div className="cover__kicker foil">{t.kicker}</div>
-        <div className="cover__sub">{t.weddingInvitation}</div>
         <div className="cover__lockup">
           <Lockup groom={groomShort} bride={brideShort} className="lk-cover" />
         </div>
-        <div className="hero__en" id="names-en">
+        <div className="hero__en en-only" id="names-en">
           {wedding.couple.groom.en} &amp; {wedding.couple.bride.en}
         </div>
         <div className="cover__invite">{t.inviteTo}</div>
