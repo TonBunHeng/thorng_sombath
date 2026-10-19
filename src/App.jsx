@@ -230,10 +230,6 @@ export function App() {
     }
   };
 
-  const handleScrollToTop = (e) => {
-    if (e) e.preventDefault();
-    smoothScrollTo(0, { duration: 1.8 });
-  };
 
   const handleOpenLightbox = (index, photos) => {
     window.__lenis?.stop();
@@ -286,7 +282,6 @@ export function App() {
 
       {/* HUD navigation */}
       <Hud
-        lang={lang}
         onToggleLang={handleToggleLang}
         musicUrl={weddingData.music}
         isLightboxOpen={lightbox.isOpen}

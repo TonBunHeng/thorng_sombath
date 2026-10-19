@@ -142,8 +142,8 @@ export function EnvelopeGate({ wedding, t, lang, onOpen, startIntro = true }) {
   return (
     <div className="gate" id="gate" ref={gateRef} role="dialog" aria-modal="true" aria-labelledby="gate-guest">
       <picture className="gate__bg" aria-hidden="true">
-        <source media="(max-aspect-ratio: 1/1)" srcSet="/img/words-640.webp 640w, /img/words-1280.webp 1280w" sizes="100vw" />
-        <img src="/img/cozy-1280.webp" srcSet="/img/cozy-1280.webp 1280w, /img/cozy-2000.webp 2000w" sizes="100vw" alt="" />
+        <source media="(max-aspect-ratio: 1/1)" srcSet="/img/words/words-640.webp 640w, /img/words/words-1280.webp 1280w" sizes="100vw" />
+        <img src="/img/couple/cozy-1280.webp" srcSet="/img/couple/cozy-1280.webp 1280w, /img/couple/cozy-2000.webp 2000w" sizes="100vw" alt="" />
       </picture>
       <svg className="gate__florals emboss" id="gate-florals" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <g transform="translate(0 0)"><VineInner /></g>

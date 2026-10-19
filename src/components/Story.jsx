@@ -119,8 +119,8 @@ export function Story({ wedding, t, lang }) {
               >
                 <div className="shot__img">
                   <img
-                    src={`/img/${shot.k}-640.webp`}
-                    srcSet={`/img/${shot.k}-640.webp 640w, /img/${shot.k}-1280.webp 1280w`}
+                    src={`/img/story/${shot.k}-640.webp`}
+                    srcSet={`/img/story/${shot.k}-640.webp 640w, /img/story/${shot.k}-1280.webp 1280w`}
                     sizes={isTall ? "45vh" : "80vh"}
                     alt={shot.en}
                     loading={idx < 4 ? "eager" : "lazy"}

@@ -50,6 +50,10 @@ export function VineProgress({ progress }) {
 export function RsvpPill({ label, onClick }) {
   const pillRef = useRef(null);
 
+  useEffect(() => {
+    const el = pillRef.current;
+    if (!el) return;
+
     let st = null;
     const timer = setTimeout(() => {
       const coupleEl = document.querySelector("#couple");
@@ -71,6 +75,7 @@ export function RsvpPill({ label, onClick }) {
       clearTimeout(timer);
       if (st) st.kill();
     };
+  }, []);
 
   return (
     <a

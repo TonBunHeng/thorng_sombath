@@ -7,7 +7,7 @@ import { smoothScrollTo } from "../utils/scroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Hud({ lang, onToggleLang, musicUrl, isLightboxOpen = false, wedding }) {
+export function Hud({ onToggleLang, musicUrl, isLightboxOpen = false, wedding }) {
   const [isPlaying, setIsPlaying] = useState(() => getIsMusicPlaying());
   const [isScrolled, setIsScrolled] = useState(false);
 
